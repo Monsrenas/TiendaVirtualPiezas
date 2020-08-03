@@ -13,6 +13,6 @@ class Categoria extends Eloquent
     protected $primaryKey = 'codigo';
     protected $fillable = [
 							'codigo',
-              'descripciones'
-    ];
+              				'nombre'
+   						];
 }

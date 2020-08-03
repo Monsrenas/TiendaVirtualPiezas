@@ -14,6 +14,9 @@ use View;
 use Illuminate\Support\Collection;
 use App\Marca;
 use App\Modelo;
+use App\Categoria;
+use App\Fabricante;
+use App\Medida;
 
 class KaizenController extends Controller
 {
@@ -50,12 +53,71 @@ class KaizenController extends Controller
 
     public function MongoStore(Request $request)
     {
-        $a=false;
+     /*   $a=false;
         $todo=Marca:: when($a, function($q){
             return $q->whereHas('modelos', function($query){$query->where('nombre', 'Golf Plus'); });
         })->get();
         
-      return View('panel.editaMarcaModelo')->with('lista',$todo);     
+      return View('panel.editaMarcaModelo')->with('lista',$todo);    */
+      
+
+     $database=$this->index();
+
+      $reference = $database->getReference('Medidas');
+      $Snapshot=$reference->getSnapshot();
+      $categoria = $Snapshot->getValue();
+
+      
+       foreach ($categoria as $cod => $xItem) {   
+                             $Rcategoria= new Medida;
+                             
+                             $p = strpos($xItem['nombre'], ':');
+                             $Rcategoria->codigo=substr($xItem['nombre'],0,$p);
+                             $Rcategoria->nombre=substr($xItem['nombre'],$p+1);
+                             echo $Rcategoria->codigo." - ".$Rcategoria->nombre."<br>";
+                             $Rcategoria=collect($Rcategoria);
+                             Medida::create($Rcategoria->all());
+            }  
+
+
+/*
+      $database=$this->index();
+
+      $reference = $database->getReference('FABR');
+      $Snapshot=$reference->getSnapshot();
+      $categoria = $Snapshot->getValue();
+
+      
+       foreach ($categoria as $cod => $xItem) {
+                             $Rcategoria= new Fabricante;
+                             
+                             $Rcategoria->codigo=str_pad($cod, 4, "0", STR_PAD_LEFT);
+                             $Rcategoria->nombre=$xItem['nombre'];
+
+                             $Rcategoria=collect($Rcategoria);
+                             Fabricante::create($Rcategoria->all());
+            }  
+/*
+
+/*
+      $database=$this->index();
+
+      $reference = $database->getReference('categorias');
+      $Snapshot=$reference->getSnapshot();
+      $categoria = $Snapshot->getValue();
+
+      
+       foreach ($categoria as $cod => $xItem) {
+                             $Rcategoria= new Categoria;
+                             echo $cod."- ".$xItem."<br>";
+                             $Rcategoria->codigo=$cod;
+                             $Rcategoria->nombre=$xItem;
+                             $Rcategoria=collect($Rcategoria);
+                             Categoria::create($Rcategoria->all());
+            }  
+*/
+
+
 
     /*    $registro=new Marca;
         $Rmodelos=new Modelo;

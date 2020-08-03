@@ -9,6 +9,8 @@ use App\Modelo;
 use App\Categoria;
 use App\Fabricante;
 use App\Generacion;
+use App\Medida;
+use App\Producto;
 
 class MongoController extends Controller
 {
@@ -19,6 +21,9 @@ class MongoController extends Controller
         switch ($ind) {
           case 'Marca': return $tmodelo= new Marca; break;
           case 'Modelo': return $tmodelo= new Modelo;break;
+          case 'Categoria': return $tmodelo= new Categoria;break;
+          case 'Fabricante': return $tmodelo= new Fabricante;break;
+          case 'Medida': return $tmodelo= new Medida;break;
         }
     }
 
@@ -39,6 +44,24 @@ class MongoController extends Controller
 	      return View('panel.editaMarcaModelo')->with('lista',$todo);  
 	    }
  
+	public function GuardaProducto(Request $request)
+		{	dd($request);
+			$todo=Producto::where('codigo',$request->codigo)->first();
+			if (!$todo) {
+				Producto::create($request->all());
+			}
+		}
+
+   public function EditaProducto(Request $request, $id=null)
+	    {
+	    	if (isset($id)) {
+	    		$todo=Producto::where('codigo', $id)->first();
+		    } else {
+		    			$todo= new Producto;
+		    		}
+
+			return View('panel.editaProducto')->with('lista',$todo);	
+	    }
 
     public function nuevaMarca(Request $request, $id=null)
 	    {
@@ -90,4 +113,33 @@ class MongoController extends Controller
 		$todo->save();
 		return redirect('EdicionMarcaModelo');
 	}
+
+
+
+
+	public function saveFiles(Request $request)
+		{      
+		       //for ($y=0; $y<count($request->file('ImgsTL')); $y++) 
+		        foreach ($request->ImgsTL as $y => $value)
+		        {     
+		            if (isset($request->file('ImgsTL')[$y]))
+		            {
+		                 //obtenemos el campo file definido en el formulario
+		             $file = $request->file('ImgsTL')[$y];
+		            
+		             //obtenemos el nombre del archivo
+		             //$nombre = $file->getClientOriginalName();
+
+		             $nombre = $request->images[$y][1];
+		             
+		             //indicamos que queremos guardar un nuevo archivo en el disco local
+		             \Storage::disk('public')->put($nombre,  \File::get($file));
+		            }
+		            
+		       }
+
+		           
+		       return;
+		}
+
 }

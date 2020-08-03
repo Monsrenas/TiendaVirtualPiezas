@@ -14,11 +14,12 @@ class Producto extends Eloquent
     protected $fillable = [
 							'codigo',
               'codigosAd',
+              'nombre',
               'descripciones',
               'medidas',
-              'cod_fabricante',
+              'fabricante',
               'categorias',
-              'modelos'
+              'modelos',
               'fotos'
 							 
 							 
@@ -27,7 +28,7 @@ class Producto extends Eloquent
 
     public function fabricante()
       {
-          return $this->belongsTo(Fabricante::class);
+          return $this->belongsTo(Fabricante::class,'fabricante','codigo');
       }
 
 }

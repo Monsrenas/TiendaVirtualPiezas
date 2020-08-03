@@ -20,7 +20,7 @@
             	@foreach ($lista->fotos as $xItem)
           
                   <div class='col-md-12'>
-                    <input type='text' class='col-md-8' name='modelos[]' value='{{$xItem}}' readonly>
+                    <input type='text' class='col-md-8' name='fotos[]' value='{{$xItem}}' readonly>
                     <span class='col-md-2 control-sm'><button class='btn btn-default fa fa-trash-o' type='button'></button></span>
                   </div>
 
@@ -40,7 +40,7 @@
     </div>
       <!-- Modal footer -->
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="ActNumero('FotoADC', 'fotoNombre')">Cerrar</button>
       </div>
 
     </div>
@@ -68,10 +68,11 @@
   {
   
       $ItmFoto=imagenName;
-      var NewCateg="<div class='col-md-12'><input type='text' class='col-md-8' name='modelos[]' value='"+$ItmFoto+"' readonly><span class='col-md-2 control-sm'><button class='btn btn-default fa fa-trash-o' type='button'></button></span></div>";
+      var NewCateg="<div class='col-md-12'><input type='text' class='col-md-8' name='fotos[]' value='"+$ItmFoto+"' readonly><span class='col-md-2 control-sm'><button class='btn btn-default fa fa-trash-o' type='button'></button></span></div>";
 
       $('#FotoADC').append(NewCateg);
       
+      ActNumero('FotoADC', 'fotoNombre'); 
   }
 
        $data='{{ csrf_token()}}&url=panel.modal.galeria&campo=&descripcion=';

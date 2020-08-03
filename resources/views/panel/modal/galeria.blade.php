@@ -1,5 +1,5 @@
 <style type="text/css">
-  .marco_producto {
+  .marco_elemento {
             border: 1px solid #C4C4C4;
             float: left;
             border-radius: 8px ;
@@ -15,7 +15,7 @@
               background: white;
           }
 
-     .marco_producto:hover {
+     .marco_elemento:hover {
   transform: scale(2.02); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
  /* -webkit-box-shadow: 1px 3px 2px 2px rgba(58,58,58,0.79); 
 box-shadow: 1px 3px 2px 2px rgba(58,58,58,0.79);  */
@@ -25,7 +25,7 @@ transition-duration:0.2s;
 }
 
 
-.marco_producto a:hover { background: white; }
+.marco_elemento a:hover { background: white; }
 
   .marco_foto {
       width: 88%;
@@ -66,9 +66,9 @@ transition-duration:0.2s;
 
 <script type="text/javascript">
 
-  cargarListaImagen();
+  XcargarListaImagen();
 
-    function cargarListaImagen()
+    function XcargarListaImagen()
   {
      $data='{{ csrf_token()}}&referencia=productos';  
      $('#xCentro').empty();
@@ -77,7 +77,7 @@ transition-duration:0.2s;
         
           for (const imagen in subpage)
           {
-            insertaImagen(subpage[imagen]);
+            xinsertaImagen(subpage[imagen]);
           }
 
     }).fail(function() {
@@ -86,10 +86,10 @@ transition-duration:0.2s;
 
   }
 
-function insertaImagen($imagen)
+function xinsertaImagen($imagen)
 {   
   
-  $Marco="<div class='marco_producto'> <a class='btn btn-sm '><div class='marco_foto'><img class='foto' id='imagen' src='"+$imagen+"'/></div><div class='descripcion'><p></p> </div></a></div>";
+  $Marco="<div class='marco_elemento'> <a class='btn btn-sm '><div class='marco_foto'><img class='foto' id='imagen' src='"+$imagen+"'/></div><div class='descripcion'><p></p> </div></a></div>";
 
       var txt = document.getElementById('xCentro');
       txt.insertAdjacentHTML('beforeend', $Marco);

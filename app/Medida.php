@@ -13,6 +13,6 @@ class Medida extends Eloquent
     protected $primaryKey = 'codigo';
     protected $fillable = [
 							'codigo',
-              				'descripciones'
+              				'nombre'
     					  ];
 }

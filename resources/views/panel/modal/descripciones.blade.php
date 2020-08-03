@@ -16,7 +16,7 @@
 
 			 <div class='col-lg-10' style='margin-bottom:2px'>
 			  <div class='input-group'>
-			    <input type='text' class='form-control' name='descripciones[]' value='{{xItem}}'  placeholder='Código'>
+			    <input type='text' class='form-control' name='descripciones[]' value='{{$xItem}}'  placeholder='Código'>
 			    <span class="input-group-btn">
 			      <button class='btn btn-default fa fa-trash-o' type='button'></button>
 			    </span>
@@ -30,7 +30,7 @@
 
       <!-- Modal footer -->
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="ActNumero('NombresADC', 'otras_descripciones')">Cerrar</button>
       </div>
 
     </div>
@@ -42,8 +42,10 @@
 	
   $('#agregaNombre').on('click', function(){
   	  
-      var NewCateg="<div class='col-lg-12' style='margin-bottom:2px'> <div class='input-group'> <input type='text' class='form-control' name='descripciones[][]' placeholder='Descripción'> <span class='input-group-btn'> <button class='btn btn-default fa fa-trash-o' type='button'></button> </span> </div> </div>";
+      var NewCateg="<div class='col-lg-12' style='margin-bottom:2px'> <div class='input-group'> <input type='text' class='form-control' name='descripciones[]' placeholder='Descripción'> <span class='input-group-btn'> <button class='btn btn-default fa fa-trash-o' type='button'></button> </span> </div> </div>";
       $('#NombresADC').append(NewCateg);
+
+      ActNumero('NombresADC', 'otras_descripciones');
   });
   
 </script>

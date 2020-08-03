@@ -44,7 +44,7 @@
         
                  <div style='margin-top:4px' class="row col-md-12">
                   <div class="col-md-12">
-                    <input type='text' class='col-md-2' name='modelos[]' value='{{xItem}}'  placeholder='Código' readonly>
+                    <input type='text' class='col-md-2' name='modelos[]' value='{{$xItem}}'  placeholder='Código' readonly>
                     <label class="col-md-8">Prueba del texto que puede ir dentro</label>
                     <span class="col-md-2 control-sm">
                       <button class='btn btn-default fa fa-trash-o' type='button'></button>
@@ -59,7 +59,7 @@
 
       <!-- Modal footer -->
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="ActNumero('VersionADC', 'codigo_modelo')">Cerrar</button>
       </div>
 
     </div>
@@ -82,6 +82,9 @@
       vaciaSelecct('slctModelo');
        $seleccionado='';
        $CadDescr='';
+
+
+       ActNumero('VersionADC', 'codigo_modelo'); 
   });
 
         

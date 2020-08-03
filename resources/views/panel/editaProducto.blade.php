@@ -6,32 +6,39 @@
 	<div class="header">
     
   </div>
-	<form  method="POST"  action="javascript:GuardarDatos()" class="form-horizontal md-form" id="datosproducto" style="font-size: .85em;">
+	<form  method="POST"  action="{{url('GuardaProducto')}}" class="form-horizontal md-form" id="datosproducto" style="font-size: .85em;">
+  @csrf
+
     <div class="card-header card">
         <h6>Registro de productos</h6>
       </div>
     <div class="col-lg-12 card" style="background: white; padding: 20px; ">
       
         <div class="form-group row"  style="margin-bottom: 3px; ">
-            <label class="col-lg-2 col-form-label text-md-left text-lg-right" for="codigo_producto">Código Producto:</label>
+            <label class="col-lg-2 col-form-label text-md-left text-lg-right" for="codigo">Código Producto:</label>
             <div class="col-sm-3">
-              <input type="text" class="form-control form-control-sm" id="codigo_producto" name="codigo_producto" placeholder="Código">
+              <input type="text" class="form-control form-control-sm" id="codigo_producto" name="codigo" placeholder="Código" required>
               <div class="col-sm-12" id="grupocodigo">  </div>
             </div>
 
             <div class="col-sm-7" id="grupodescripcion">
-                  <input type="text" class="form-control form-control-sm" id="Xdescripcion" name="descripcion[]" placeholder="Descripcion del producto" required=''> 
+                  <input type="text" class="form-control form-control-sm" id="Xdescripcion" name="nombre" placeholder="Descripcion del producto" required=''> 
             </div>
         </div>
+
+ 
+@include('modal')
 
 @include('panel.modal.codigos')
 @include('panel.modal.descripciones')
 @include('panel.modal.modelos')
 @include('panel.modal.fotos')
+@include('panel.modal.medidas')
+
         <div class="form-group row NatJur" style="margin-bottom: 3px; ">
-            <label class="col-lg-2 col-form-label text-md-left text-lg-right " for="codigo_producto">Códigos Adicionales:</label>
+            <label class="col-lg-2 col-form-label text-md-left text-lg-right " for="codigo_adicionales">Códigos Adicionales:</label>
             <div class="col-sm-3 input-group" >
-                  <input type="text" class="form-control form-control-sm" id="codigo_adicionales" placeholder="(2)" disabled>
+                  <input type="text" class="form-control form-control-sm" id="codigo_adicionales" placeholder="(0)" disabled>
                       <div class="input-group-btn input-group-append">
                           <button  type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#CodAdicionales" >
                               <i class="fa fa-th"></i>
@@ -52,7 +59,7 @@
               <div class="form-group row NatJur" style="margin-bottom: 3px; ">
                   <label class="col-lg-2 col-form-label text-md-left text-lg-right " for="codigo_fabricante">Fabricante:</label>
                   <div class="col-sm-3 input-group" >
-                    <input type="text" class="form-control form-control-sm" id="codigo_fabricante" name="codigo_fabricante" placeholder="">
+                    <input type="text" class="form-control form-control-sm" id="codigo_fabricante" name="fabricante" placeholder="">
                     <div class="input-group-btn input-group-append">
                           <button  type="button" class="btn btn-info btn-sm"data-toggle="modal" data-target="#myModal" onclick="Modal('codificador.ObtenCodigoFabricante','codigo_fabricante','descr_fabricante')"><i class="fa fa-search"></i></button>
                     </div>
@@ -60,41 +67,28 @@
                   <label class="col-lg-2 col-form-label text-left" id="descr_fabricante"></label>
               </div>
 
-            <div id="medidas" class="grupoDT">
-             <div class="form-group row NatJur" style="margin-bottom: 3px; ">
-                  <label class="col-lg-2 col-form-label text-md-left text-lg-right " for="precio_Venta">Medidas:</label>
-                  <div class="col-sm-3 input-group">
-                    <select name="cars" id="cars">
-                      <option value="volvo">Alto interno</option>
-                      <option value="saab">Alto externo</option>
-                      <option value="mercedes">Profundidad interna</option>
-                      <option value="audi">Profundidad externa</option>
-
-                    </select>
-                    <input type="text" class="form-control form-control-sm" id="xMedidas" placeholder="">
-                    <div class="input-group-btn input-group-append">
-                      <button type="button" class="btn btn-success btn-sm" onclick="NuevaMedida()"><i class="fa fa-plus"></i></button>
-                    </div>
-                  </div>
-
-              </div>
-            </div>
-
-            <div id="categoria" class="grupoDT">    
               <div class="form-group row NatJur" style="margin-bottom: 3px; ">
-                  <label class="col-lg-2 col-form-label text-md-left text-lg-right " for="codigo_categoria">Categoría:</label>
-                  <div class="col-sm-3 input-group">
-                    <input type="text" class="form-control form-control-sm" id="codigo_categoria" name="codigo_categoria" placeholder="">
+                 <label class="col-lg-2 col-form-label text-md-left text-lg-right" for="codigo_categoria">Categoría:</label>
+                 <div class="col-sm-3 input-group">
+                    <input type="text" class="form-control form-control-sm" id="codigo_categoria" name="categorias" placeholder="">
                     <div class="input-group-btn input-group-append">
                           <button type="button" class="btn btn-info btn-sm"data-toggle="modal" data-target="#myModal" onclick="Modal('codificador.ObtenCodigoCategoria','codigo_categoria','descr_categoria')"><i class="fa fa-search"></i></button>
-                    </div>
-                                  
+                    </div>          
                  </div>
                   <label class="col-lg-2 col-form-label text-left" id="descr_categoria"></label>
               </div>
 
-            </div>  
-
+              <div class="form-group row NatJur " style="margin-bottom: 5px; ">
+                  <label class="col-lg-2 col-form-label text-md-left text-lg-right " for="codigo_medida">Medidas:</label>
+                  <div class="col-sm-3 input-group">
+                    <input type="text" class="form-control form-control-sm" id="codigo_medida" placeholder="(0)">
+                       <div class="input-group-btn input-group-append">
+                          <button type="button" class="btn btn-info btn-sm"data-toggle="modal" data-target="#xMedidas"><i class="fa fa-th"></i></button>
+                    </div>
+   
+                  </div>
+                   <label class="col-lg-2 col-form-label text-left" id="descr_modelo"></label><br>
+              </div>
 <!--
             <div id="precios" class="grupoDT">
              <div class="form-group row NatJur" style="margin-bottom: 3px; ">
@@ -116,7 +110,7 @@
                     
                       <input id="fotoNombre" class="form-control form-control-sm" type="text" placeholder="(0)" disabled>
                     <div class="input-group-btn input-group-append">
-                      <button type="button" class="btn btn-info btn-sm"data-toggle="modal" data-target="#xFotos" onclick="Modal('codificador.ObtenNombreImagen','foto','foto')"><i class="fa fa-th"></i></button>
+                      <button type="button" class="btn btn-info btn-sm"data-toggle="modal" data-target="#xFotos"><i class="fa fa-th"></i></button>
                     </div>
                   </div>
               </div>
@@ -126,7 +120,7 @@
              <div class="form-group row NatJur " style="margin-bottom: 5px; ">
                   <label class="col-lg-2 col-form-label text-md-left text-lg-right " for="codigo_modelo">Valido para los Modelos:</label>
                   <div class="col-sm-3 input-group">
-                    <input type="text" class="form-control form-control-sm" id="codigo_modelo" name="codigo_modelo" placeholder="(8)">
+                    <input type="text" class="form-control form-control-sm" id="codigo_modelo" placeholder="(0)">
                        <div class="input-group-btn input-group-append">
                           <button type="button" class="btn btn-info btn-sm"data-toggle="modal" data-target="#xVersiones"><i class="fa fa-th"></i></button>
                     </div>
@@ -140,7 +134,7 @@
     				<button class="btn btn-success" id="GuardarForm" type="submit">Guardar <i class="fa fa-save"></i></button>
  	  		  </div> 
        </div>
-
+        <button class="btn fa fa-save btn-success float-right"> Guardar</button>
   	 </form>
 </div>
 <script type="text/javascript">
@@ -151,5 +145,15 @@
     //$(this).parent().parent().attr('class')
  
 });
+
+
+function ActNumero(elemento, visual)
+{
+  $d='';
+  if (elemento=="NombresADC") {$d=" descripciones adicionales"}
+
+    $c=$("#"+elemento+" .fa-trash-o");
+      $('#'+visual).attr("placeholder", "("+$c.length+")"+$d);
+}
 </script>
 @endsection

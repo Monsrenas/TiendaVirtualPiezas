@@ -69,16 +69,18 @@ ul, #catUL {
 
 	function arbolCategorias()
 	{
-	 $data='{{ csrf_token()}}&referencia=categorias';	
 
-     $.get('DevuelveBase', $data, function(subpage){ 
-        
+
+    $data="coleccion=Categoria";
+
+     $.get('Resgistro', $data, function(subpage){ 
         for (const prop in subpage)
             {
-              var xSub=prop.length/3;
+
+              var xSub=(subpage[prop]['codigo']).length/3;
               for (var i = 0; i < xSub; i++) {  var $element='';
-              									var padre=prop.substring(0,((i-1)*3)+3);
-              									cod=prop.substring(0,(i*3)+3);
+              									var padre=subpage[prop]['codigo'].substring(0,((i-1)*3)+3);
+              									cod=(subpage[prop]['codigo']).substring(0,(i*3)+3);
               									var exist = document.getElementById("cat"+cod);
               	
               									if (exist==null){
@@ -86,11 +88,11 @@ ul, #catUL {
               									  	$("ul#cat"+padre).append(function(n){  
               									  		$("#pdr"+padre).removeClass("xcaretX");
               									  		$("#pdr"+padre).addClass("caretX");
-            	    									return "<li><span id='pdr"+cod+"' class='xcaretX' >"+subpage[prop]+"</span><ul class='nestedX' id='cat"+cod+"' ></ul></li>";
+            	    									return "<li><span id='pdr"+cod+"' class='xcaretX' >"+subpage[prop]['nombre']+"</span><ul class='nestedX' id='cat"+cod+"' ></ul></li>";
         											});
               									  			    } 
               									  else {	  		 
-              									  		  $('#catUL').append("<li><span id='pdr"+cod+"' class='xcaretX'>"+subpage[prop]+"</span><ul  class='nestedX' id='cat"+cod+"' ></ul></li>");
+              									  		  $('#catUL').append("<li><span id='pdr"+cod+"' class='xcaretX'>"+subpage[prop]['nombre']+"</span><ul  class='nestedX' id='cat"+cod+"' ></ul></li>");
               									  	   }
               	           					    }
               								}
