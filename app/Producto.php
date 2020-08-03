@@ -26,7 +26,7 @@ class Producto extends Eloquent
     ];
 
 
-    public function fabricante()
+    public function fabricantes()
       {
           return $this->belongsTo(Fabricante::class,'fabricante','codigo');
       }

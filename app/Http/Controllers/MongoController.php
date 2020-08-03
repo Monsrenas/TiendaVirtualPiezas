@@ -45,11 +45,11 @@ class MongoController extends Controller
 	    }
  
 	public function GuardaProducto(Request $request)
-		{	dd($request);
+		{	 
 			$todo=Producto::where('codigo',$request->codigo)->first();
 			if (!$todo) {
 				Producto::create($request->all());
-			}
+			} else { Producto::save($request->all()); }
 		}
 
    public function EditaProducto(Request $request, $id=null)
@@ -63,23 +63,8 @@ class MongoController extends Controller
 			return View('panel.editaProducto')->with('lista',$todo);	
 	    }
 
-    public function nuevaMarca(Request $request, $id=null)
-	    {
-	    	if (isset($id)) {
-	    		$todo=Marca::where('id_marca', $id)->first();
-		    } else {
-		    			$todo=Marca::orderBy('id_marca', 'desc')->first();	
-		    			$nuevoID=str_pad($todo->id_marca+1, 3, "0", STR_PAD_LEFT);
-		    			$todo=new Marca;
-		    			$todo->id_marca=$nuevoID;
-		    			$todo->nombre='';
-		    		}
 
-			return View('panel.NuevaMarca')->with('lista',$todo);	
-	    }
-
-
-	 public function Resgistro(Request $request)
+	public function Resgistro(Request $request)
 	    {
 	        
 	       $indice=strval($request->indice);
@@ -100,6 +85,25 @@ class MongoController extends Controller
 	        
 	      return $todo;  
 	    }    
+
+
+    public function nuevaMarca(Request $request, $id=null)
+	    {
+	    	if (isset($id)) {
+	    		$todo=Marca::where('id_marca', $id)->first();
+		    } else {
+		    			$todo=Marca::orderBy('id_marca', 'desc')->first();	
+		    			$nuevoID=str_pad($todo->id_marca+1, 3, "0", STR_PAD_LEFT);
+		    			$todo=new Marca;
+		    			$todo->id_marca=$nuevoID;
+		    			$todo->nombre='';
+		    		}
+
+			return View('panel.NuevaMarca')->with('lista',$todo);	
+	    }
+
+
+	 
 
 	public function ActualizaMarca(Request $request)
 	{

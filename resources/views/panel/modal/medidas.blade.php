@@ -36,7 +36,6 @@
                     </span>
                   </div>  
                 </div>
-
               @endforeach 
             @endif 
     
@@ -57,6 +56,7 @@
 
 $CadDescr="";  
 $seleccionado='';
+//ActNumero('MedidaADC', 'codigo_medida');
 
   $('#agregaMedida').on('click', function(){
 

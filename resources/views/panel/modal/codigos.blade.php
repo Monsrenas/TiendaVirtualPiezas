@@ -16,7 +16,7 @@
 
 			 <div class='col-lg-10' style='margin-bottom:2px'>
 			  <div class='input-group'>
-			    <input type='text' class='form-control' name='codigosAd[]' value='{{xCodigo}}'  placeholder='Código'>
+			    <input type='text' class='form-control' name='codigosAd[]' value='{{$xCodigo}}'  placeholder='Código'>
 			    <span class="input-group-btn">
 			      <button class='btn btn-default fa fa-trash-o' type='button'></button>
 			    </span>

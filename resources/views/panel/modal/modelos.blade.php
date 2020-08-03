@@ -38,9 +38,9 @@
               </div>
             </div>
         </div>
-
-            @if (isset($lista->generaciones))	
-            	@foreach ($lista->generaciones as $xItem)
+{{-- 
+            @if (isset($lista->modelos))	
+            	@foreach ($lista->modelos as $xItem)
         
                  <div style='margin-top:4px' class="row col-md-12">
                   <div class="col-md-12">
@@ -53,7 +53,7 @@
                 </div>
 
               @endforeach 
-            @endif 
+            @endif --}}
     
       </div>
 
@@ -92,9 +92,11 @@
 
   $data="coleccion=Marca&columnas=nombre,id_marca";
 
-  $.get('Resgistro', $data, function(subpage){ 
+  $.get('Resgistro', $data, function(subpage){
+      
      for (const indice in subpage)
       {
+        console.log(subpage);
                AgregaOpcion('slctMarca', subpage[indice]['nombre'], subpage[indice]['id_marca'] )
       }
 
