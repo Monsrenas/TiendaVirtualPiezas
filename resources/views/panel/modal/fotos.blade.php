@@ -84,9 +84,9 @@
 
   // http://duckranger.com/2012/06/pretty-file-input-field-in-bootstrap/ 
   // Cuando se pulsa el falso manda el click al autentico
-  $('#fotofile').on('click', function(){
-    $('#fotoUpl').click();
-  });
+//  $('#fotofile').on('click', function(){
+  //  $('#fotoUpl').click();
+ // });
   
   // Cuando el autentico cambia hace cambiar al falso
   $('input[type=file]').on('change', function(e){

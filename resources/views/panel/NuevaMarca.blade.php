@@ -37,7 +37,7 @@
    
 </div>
 
-     <script type="text/javascript" src="/jquery/main.js"></script>
+     <script type="text/javascript" src="{{Request::root()}}//jquery/main.js"></script>
 
 @endsection
 

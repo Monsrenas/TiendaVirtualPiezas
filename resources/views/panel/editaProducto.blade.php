@@ -26,15 +26,17 @@
             </div>
         </div>
 
- 
 @include('modal')
 
 @include('panel.modal.codigos')
 @include('panel.modal.descripciones')
-@include('panel.modal.modelos')
 @include('panel.modal.fotos') 
-@include('panel.modal.medidas')
 
+ 
+@include('panel.modal.medidas')
+@include('panel.modal.modelos')
+
+  
         <div class="form-group row NatJur" style="margin-bottom: 3px; ">
             <label class="col-lg-2 col-form-label text-md-left text-lg-right " for="codigo_adicionales">Códigos Adicionales:</label>
             <div class="col-sm-3 input-group" >
@@ -61,7 +63,7 @@
                   <div class="col-sm-3 input-group" >
                     <input type="text" class="form-control form-control-sm" id="codigo_fabricante" name="fabricante" placeholder="..." value="{{$lista->fabricante ?? ''}}">
                     <div class="input-group-btn input-group-append">
-                          <button  type="button" class="btn btn-info btn-sm"data-toggle="modal" data-target="#myModal" onclick="Modal('codificador.ObtenCodigoFabricante','codigo_fabricante','descr_fabricante')"><i class="fa fa-search"></i></button>
+                          <button  type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" onclick="Modal('codificador.ObtenCodigoFabricante','codigo_fabricante','descr_fabricante')"><i class="fa fa-search"></i></button>
                     </div>
                   </div>
                   <label class="col-lg-2 col-form-label text-left" id="descr_fabricante"></label>
@@ -138,6 +140,7 @@
   	 </form>
 </div>
 <script type="text/javascript">
+
     $('body').on('click', '.fa-trash-o', function()  //Boton que borra categoria
 {
     $(this).parent().parent().remove();  

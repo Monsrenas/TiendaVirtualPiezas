@@ -89,7 +89,7 @@ transition-duration:0.2s;
 function xinsertaImagen($imagen)
 {   
   
-  $Marco="<div class='marco_elemento'> <a class='btn btn-sm '><div class='marco_foto'><img class='foto' id='imagen' src='"+$imagen+"'/></div><div class='descripcion'><p></p> </div></a></div>";
+  $Marco="<div class='marco_elemento'> <a class='btn btn-sm '><div class='marco_foto'><img class='foto' id='imagen' src='{{Request::root()}}/"+$imagen+"'/></div><div class='descripcion'><p></p> </div></a></div>";
 
       var txt = document.getElementById('xCentro');
       txt.insertAdjacentHTML('beforeend', $Marco);
