@@ -42,11 +42,7 @@
     var providerData = user.providerData;
     // document.getElementById('login').innerHTML="LOGEADO "+ email;
     document.getElementById( 'login' ).innerHTML =
-    `<h1> Logueado ` + email +`</h1> <h2>`+verificacion+`</h2>
-    <button onclick = "cerrar()"> Cerra sesion </button>
-    <br><br>
-    
-    ` ;
+    '<h1> Logueado ' + email +'</h1> <h2>'+verificacion+'</h2><button onclick = "cerrar()"> Cerra sesion </button><br><br>' ;
     // console.log(user);
   } else {
     document.getElementById('login').innerHTML="";

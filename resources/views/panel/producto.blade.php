@@ -1,7 +1,7 @@
 
 @extends('panel.menu')
 @section('operaciones')
-
+ 
 <div id="Centro"  style="font-size: 0.8em;">
 	<form  method="POST"  action="javascript:GuardarDatos()" class="form-horizontal md-form" id="datosproducto" style="font-size: .85em;">
 
@@ -27,32 +27,25 @@
                                 <div class="row">
                                         <div class="col-lg-12">
                                             <div class="table-responsive">        
-                                                <table id="tablamarcas" class="table table-striped table-bordered" style="width:100%">
+                                                <table id="tablamarcas" class="table table-striped table-bordered">
                                                 <thead id="cuerpo">
                                                     <tr>
                                                         <th>Código</th>
                                                         <th>Nombre</th>
-                                                        <th>Sub-Codigo</th>
-                                                        <th>Código catálogo</th>
                                                         <th>Fabricante</th>
-                                                         
+                                                        <th>Categoria</th>
+
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-
                                                     @foreach($producto as $indice =>$patmt)
-                                                        <?php  
-                                                          $descripcion=array_values($patmt['descripcion'])[0];
-                                                        ?>                                
-
                                                         <tr>
-                                                          <td style="font-size: 0.7em;">
-                                                            {{$indice}}
-                                                          </td>
-                                                          <td>{{$descripcion}}</td>
-                                                            <td>{{$patmt['codigo_adicional'] ?? '' }}</td>                              
-                                                            <td>{{$patmt['codigo_catalogo'] ?? '' }}</td>                            
-                                                            <td>{{$patmt['codigo_fabricante'] ?? '' }}</td>
+                                                            <td style="font-size: 0.8em;"> 
+                                                             <a href="javascript:productos('{{$patmt['codigo']}}')">{{$patmt['codigo']}}</a> 
+                                                            </td>
+                                                            <td>{{$patmt['nombre'] ?? '' }}</td>                             
+                                                            <td>{{$patmt['fabricante'] ?? '' }}</td>
+                                                            <td>{{$patmt['categorias'] ?? '' }}</td>
                                                         </tr>
                                                     @endforeach                                      
                                                 </tbody>        
@@ -71,9 +64,8 @@
   </form>
 </div>
 
-     
-     
-    <script type="text/javascript" src="{{Request::root()}}//jquery/main.js"></script>
+
+<script type="text/javascript" src="{{Request::root()}}/jquery/main.js"></script>
 
 
 @endsection

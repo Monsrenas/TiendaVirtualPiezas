@@ -49,19 +49,28 @@ class MongoController extends Controller
 			$todo=Producto::where('codigo',$request->codigo)->first();
 			if (!$todo) {
 				Producto::create($request->all());
-			} else { Producto::save($request->all()); }
+			} else { $todo->update($request->all()); }
 		}
 
-   public function EditaProducto(Request $request, $id=null)
-	    {
-	    	if (isset($id)) {
-	    		$todo=Producto::where('codigo', $id)->first();
+   public function EditaProducto(Request $request)
+	    {  
+	    	if (isset($request->id)) {
+	    		$todo=Producto::where('codigo',$request->id)->first();
+	    		if (!$todo) {$todo= new Producto;	$todo->codigo=$request->id;}
 		    } else {
 		    			$todo= new Producto;
-		    		}
 
+		    		}
+		    		
 			return View('panel.editaProducto')->with('lista',$todo);	
 	    }
+
+
+    public function listadoProductos(Request $request)
+    {
+        $todo=Producto::get();
+        return view('panel.producto')->with('producto',$todo);
+    }
 
 
 	public function Resgistro(Request $request)

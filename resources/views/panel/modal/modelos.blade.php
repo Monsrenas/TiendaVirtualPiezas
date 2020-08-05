@@ -38,7 +38,7 @@
               </div>
             </div>
         </div>
-{{-- 
+ 
             @if (isset($lista->modelos))	
             	@foreach ($lista->modelos as $xItem)
         
@@ -53,7 +53,7 @@
                 </div>
 
               @endforeach 
-            @endif --}}
+            @endif  
     
       </div>
 
@@ -96,7 +96,7 @@
       
      for (const indice in subpage)
       {
-        console.log(subpage);
+   
                AgregaOpcion('slctMarca', subpage[indice]['nombre'], subpage[indice]['id_marca'] )
       }
 

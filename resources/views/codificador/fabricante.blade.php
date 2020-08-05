@@ -9,7 +9,7 @@
   <form class="form-grup" id="formBuscar">
       @csrf
       <input type="text" name="coleccion" value="Fabricante" hidden="">
-      <input type="text" name="busqueda" style="width: 100%; margin-bottom: 5%;" placeholder="Ocurrencia para busqueda" onkeyup="NuevaLista(this.value, 'ListaFabricante')" >    
+      <input type="text" name="busqueda" style="width: 100%; margin-bottom: 5%;" placeholder="Filtro" onkeyup="NuevaLista(this.value, 'ListaFabricante')" autocomplete="off" >    
   </form>
 
     <div id="MemoriaFabricantes" class="FabClas" hidden=""  >

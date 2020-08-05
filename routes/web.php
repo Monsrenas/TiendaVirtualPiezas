@@ -52,17 +52,17 @@ Route::get('/cat', function () {
 });
  
 
-Route::get('/inventario', function () { return view('menu'); });
+Route::get('inventario', function () { return view('menu'); });
 
 Route::get('listadoProductos','KaizenController@listadoProductos');
 
 
 //LO NUEVO
 
-Route::get('/admin', function () { return view('panel.menu'); });
+Route::get('admin', function () { return view('panel.menu'); });
 
 
-Route::get('listaProductos','KaizenController@listadoProductos'); //cambiar de controlador 
+Route::get('listaProductos','MongoController@listadoProductos'); //cambiar de controlador 
 
 
 
@@ -82,6 +82,8 @@ Route::get('ListaModelos','MongoController@ListaModelos');
 Route::get('/nuevaMarca/{id?}','MongoController@nuevaMarca')->name('nuevaMarca');
 Route::post('ActualizaMarca','MongoController@ActualizaMarca');
 Route::get('Resgistro','MongoController@Resgistro');
-Route::get('/productos/{id?}','MongoController@EditaProducto')->name('productos');
+
+
+Route::get('productos', 'MongoController@EditaProducto');
 
 

@@ -1,12 +1,9 @@
-
-@extends('panel.menu')
-@section('operaciones')
-
+ 
 <div id="Centro" style="font-size: 0.8em;">
 	<div class="header">
     
   </div>
-	<form  method="POST"  action="{{url('GuardaProducto')}}" class="form-horizontal md-form" id="datosproducto" style="font-size: .85em;">
+	<form  id="RegProducto" method="POST"  action="javascript:GuardarProducto()" class="form-horizontal md-form" id="datosproducto" style="font-size: .85em;">
   @csrf
 
     <div class="card-header card">
@@ -17,15 +14,15 @@
         <div class="form-group row"  style="margin-bottom: 3px; ">
             <label class="col-lg-2 col-form-label text-md-left text-lg-right" for="codigo">Código Producto:</label>
             <div class="col-sm-3">
-              <input type="text" class="form-control form-control-sm" id="codigo_producto" name="codigo" placeholder="Código" value="{{$lista->codigo ?? ''}}" required>
+              <input type="text" class="form-control form-control-sm" id="codigo_producto" name="codigo" placeholder="Código" value="{{$lista->codigo ?? ''}}" required  >
               <div class="col-sm-12" id="grupocodigo">  </div>
             </div>
 
             <div class="col-sm-7" id="grupodescripcion">
-                  <input type="text" class="form-control form-control-sm" id="Xdescripcion" name="nombre" placeholder="Descripcion del producto" required value="{{$lista->nombre ?? ''}}"> 
+                  <input type="text" class="form-control form-control-sm" id="Xdescripcion" name="nombre" placeholder="Descripcion del producto" required value="{{$lista->nombre ?? ''}}" <?php if ($lista->codigo<>'') { echo "autofocus";}?>> 
             </div>
         </div>
-
+  
 @include('modal')
 
 @include('panel.modal.codigos')
@@ -35,7 +32,7 @@
  
 @include('panel.modal.medidas')
 @include('panel.modal.modelos')
-
+ 
   
         <div class="form-group row NatJur" style="margin-bottom: 3px; ">
             <label class="col-lg-2 col-form-label text-md-left text-lg-right " for="codigo_adicionales">Códigos Adicionales:</label>
@@ -91,20 +88,7 @@
                   </div>
                    <label class="col-lg-2 col-form-label text-left" id="descr_modelo"></label><br>
               </div>
-<!--
-            <div id="precios" class="grupoDT">
-             <div class="form-group row NatJur" style="margin-bottom: 3px; ">
-                  <label class="col-lg-2 col-form-label text-md-left text-lg-right " for="precio_Venta">Precio de venta:</label>
-                  <div class="col-sm-3 input-group">
-                    <input type="text" class="form-control form-control-sm" id="precio_Venta" placeholder="">
-                    <div class="input-group-btn input-group-append">
-                      <button type="button" class="btn btn-success btn-sm" onclick="NuevoPrecio()"><i class="fa fa-plus"></i></button>
-                    </div>
-                  </div>
-
-              </div>
-            </div>
--->
+ 
             <div id="foto" class="grupoDT">
              <div class="form-group row" style="margin-bottom: 3px; ">
                   <label class="col-lg-2 col-form-label text-md-left text-lg-right " for="foto">Fotos:</label>
@@ -133,12 +117,13 @@
               </div>
       		  
       		  <div class="col-lg-10 text-md-left text-lg-right " id="espacioGuardar" hidden="">
-    				<button class="btn btn-success" id="GuardarForm" type="submit">Guardar <i class="fa fa-save"></i></button>
+    				<button class="btn btn-success"  id="GuardarForm" type="submit" >Guardar <i class="fa fa-save"></i></button>
  	  		  </div> 
        </div>
-        <button class="btn fa fa-save btn-success float-right"> Guardar</button>
+        <button id="btGuardaProd" class="btn fa fa-save btn-success float-right" disabled=""> Guardar</button>
   	 </form>
 </div>
+
 <script type="text/javascript">
 
     $('body').on('click', '.fa-trash-o', function()  //Boton que borra categoria
@@ -149,6 +134,38 @@
  
 });
 
+$('input').attr("autocomplete","off");
+
+$('body').on('change', '#codigo_producto', function()
+{
+    $data="id="+$(this).val(); 
+    $.get('productos', $data, function(subpage){
+       $('#EspacioAccion').html(subpage);        
+
+    }).fail(function() {
+       console.log('Error en carga de Datos');
+  });
+});
+
+
+$('body').on('change', 'input', function()
+{
+     
+      $("#btGuardaProd").attr('disabled',false);
+});
+
+function GuardarProducto()
+{
+  var data=$('#RegProducto').serialize();
+     var data="_token={{ csrf_token()}}&"+data;
+     console.log(data);
+      $.post('GuardaProducto', data, function(subpage){  
+        
+              $('#btGuardaProd').attr("disabled",true);
+              $("#codigo_producto").focus();
+    });
+}
+
 
 function ActNumero(elemento, visual)
 {
@@ -158,5 +175,5 @@ function ActNumero(elemento, visual)
     $c=$("#"+elemento+" .fa-trash-o");
       $('#'+visual).attr("placeholder", "("+$c.length+")"+$d);
 }
+
 </script>
-@endsection
