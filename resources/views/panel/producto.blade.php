@@ -15,7 +15,14 @@
 
         <div class="card">
             <div class="card-header bg-primary" style="color: white; " >
-              <strong class="col-lg-8" style="font-size: 1.6em;" ><i class="fa fa-list"></i> Productos </strong>
+             
+              <div class="row">  
+               <strong class="col-lg-10" style="font-size: 1.6em;" ><i class="fa fa-list"></i> Productos </strong>
+              <div class="col-lg-1"><a href="javascript:productos('')" class="btn fa fa-plus btn-success"></a></div>
+              </div>
+           
+
+
             </div>
 
             <div class="col-lg-12 card-body" style="background: white; padding: 0px; ">

@@ -1,8 +1,3 @@
-<?php 
-   
-   if (isset( $lista)) {echo 'Existe';} else {echo 'No existe';}
-?>
-
 <div class="container">
     <div class="row">
             <div class="col-lg-12">

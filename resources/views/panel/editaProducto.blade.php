@@ -14,7 +14,7 @@
         <div class="form-group row"  style="margin-bottom: 3px; ">
             <label class="col-lg-2 col-form-label text-md-left text-lg-right" for="codigo">Código Producto:</label>
             <div class="col-sm-3">
-              <input type="text" class="form-control form-control-sm" id="codigo_producto" name="codigo" placeholder="Código" value="{{$lista->codigo ?? ''}}" required  >
+              <input type="text" class="form-control form-control-sm" id="codigo_producto" name="codigo" placeholder="Código" value="{{$lista->codigo ?? ''}}" required <?php if ($lista->codigo=='') { echo "autofocus";}?> >
               <div class="col-sm-12" id="grupocodigo">  </div>
             </div>
 
@@ -149,6 +149,12 @@ $('body').on('change', '#codigo_producto', function()
 
 
 $('body').on('change', 'input', function()
+{
+     
+      $("#btGuardaProd").attr('disabled',false);
+});
+
+$('#RegProducto').on('input', function()
 {
      
       $("#btGuardaProd").attr('disabled',false);
