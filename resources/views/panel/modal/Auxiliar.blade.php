@@ -1,9 +1,8 @@
-<!-- The Modal -->
-<div class="modal" id="EdicionMarcaModelo">
+<div class="modal" id="ModalAuxiliar">
   <div class="modal-dialog">
     <div class="modal-content">
       <!-- Modal body -->
-      <div class="modal-cuerpo">
+      <div class="modal-body" id="modal-cuerpo-AUX">
          
 
 

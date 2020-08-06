@@ -16,7 +16,7 @@
             <div class="card-header bg-primary" style="color: white; " >
               <div class="row">  
               <strong class="col-lg-10" style="font-size: 1.6em;" ><i class="fa fa-list"></i> Marcas </strong>
-              <div class="col-lg-1"><a href="{{ url('/nuevaMarca') }}" class="btn fa fa-plus btn-success"></a></div>
+              <div class="col-lg-1"><a href="#" class="btn fa fa-plus btn-success" data-toggle="modal" data-target="#ModalAuxiliar" onclick="javascript:EditaMarca('', 'nuevaMarca')"></a></div>
               </div>
             </div>
 
@@ -42,9 +42,9 @@
                                     <tbody>
                                         @foreach ($lista as $marca)
                                             <tr HEIGHT="10">
-                                                <td><a href="{{ url('nuevaMarca/'.$marca->id_marca) }}" class="btn btn-sm" style="font-size: 0.8em;"><i class="fa fa-pencil" style="font-size: 1.3em;"></i></a>  </td>
+                                                <td><a href="#" class="btn btn-sm" style="font-size: 0.8em;" data-toggle="modal" data-target="#ModalAuxiliar" onclick="javascript:EditaMarca('{{ $marca->id_marca }}', 'nuevaMarca')"><i class="fa fa-pencil" style="font-size: 1.3em;"></i></a>  </td>
                                                 <td>{{ $marca->id_marca }}</td>
-                                                <td><a href="javascript:Muestra('{{$marca->modelos}}','{{ $marca->nombre }}')">{{ $marca->nombre }}</a></td>
+                                                <td><a href="javascript:Muestra('{{$marca->modelos}}','{{ $marca->nombre }}','{{ $marca->id_marca }}')">{{ $marca->nombre }}</a></td>
                                                 <td>{{ count($marca->modelos) }}</td>
                                                 <td><a href="#" class="btn btn-sm" style="font-size: 0.8em;"><i class="fa fa-trash-o" style="font-size: 1.3em;"></i></a> </td>
                                             </tr>
@@ -79,7 +79,7 @@
   </div>    
   
 </div>
-
+@include('panel.modal.Auxiliar')
      
      
     <script type="text/javascript" src="/jquery/main.js"></script>
@@ -99,7 +99,7 @@
     }
 
 
-    function Muestra($marca,$nombre)
+    function Muestra($marca,$nombre,$idMarca)
     {
         $marca=JSON.parse($marca);
              
@@ -114,7 +114,7 @@
         for (const prop in $marca)
         {
                 $miTab+="<tr>";
-                $miTab+="<td><a href='/nuevoModelo/"+$marca[prop]['id_modelo']+"' class='btn btn-sm' style='font-size: 0.8em;'><i class='fa fa-pencil' style='font-size: 1.3em;'></i></a> </td>";
+                $miTab+="<td><a href='#' class='btn btn-sm' style='font-size: 0.8em;' data-toggle='modal' data-target='#ModalAuxiliar' onclick=\"javascript:EditaMarca('"+$marca[prop]['id_modelo']+"', 'nuevoModelo')\" ><i class='fa fa-pencil' style='font-size: 1.3em;'></i></a> </td>";
                 $miTab+="<td>"+$marca[prop]['id_modelo']+"</td>";
                 $miTab+="<td>"+$marca[prop]['nombre']+"</td>";
                 $miTab+="<td><a href='#' class='btn btn-sm' style='font-size: 0.8em;'><i class='fa fa-trash-o' style='font-size: 1.3em;'></i></a> </td>";
@@ -134,7 +134,7 @@
         $('#ModelosTLE').append(' Modelos: '+$nombre);
 
          $('#btnNewModelo').empty(); 
-        $('#btnNewModelo').append("<button class='btn fa fa-plus btn-success'>");
+        $('#btnNewModelo').append("<a href='#' class='btn fa fa-plus btn-success' data-toggle='modal' data-target='#ModalAuxiliar' onclick=\"javascript:EditaMarca('"+$idMarca+"', 'nuevoModelo')\"></a>");
         
         $(document).ready(function() {    
             $tableModelos=$('#tablamodelos').DataTable({
@@ -176,6 +176,16 @@ $('#tablamarcas tbody').on( 'click', '.fa-trash-o', function () {
         .draw();
 } );
 
+function EditaMarca($id, controlador)
+{
+  $data="id="+$id;
+  $.get(controlador, $data, function(subpage){ 
+        $('#modal-cuerpo-AUX').html(subpage);
+
+    }).fail(function() {
+       console.log('Error en carga de Datos');
+  });
+}
 
 </script>
 

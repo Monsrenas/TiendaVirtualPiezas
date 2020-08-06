@@ -64,7 +64,7 @@
                     </span>
                     <ul class='nested'>
                         <li><a href="#">Despacho</a></li>
-                        <li><a href="#">Recepción</a></li>                        
+                        <li><a href="{{url('Pre_recepcion')}}">Recepción</a></li>                        
                     </ul>       
                 </li>
 

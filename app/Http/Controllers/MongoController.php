@@ -29,20 +29,13 @@ class MongoController extends Controller
 
 
 
-    public function store(Request $request)
+    public function prerecepcion(Request $request)
 	    {
-	        // Validate the request...
 
 	        Marca::create($request->all());
+	        return;
 	    }
 
-    public function ListaMarcas()
-	    {
-
-	        $todo=Marca::get();
-	        
-	      return View('panel.editaMarcaModelo')->with('lista',$todo);  
-	    }
  
 	public function GuardaProducto(Request $request)
 		{	 
@@ -64,7 +57,6 @@ class MongoController extends Controller
 		    		
 			return View('panel.editaProducto')->with('lista',$todo);	
 	    }
-
 
     public function listadoProductos(Request $request)
     {
@@ -91,11 +83,19 @@ class MongoController extends Controller
 	    }    
 
 
-    public function nuevaMarca(Request $request, $id=null)
+//Marcas y Modelos 
+    public function ListaMarcas()
 	    {
 
-	    	if (isset($id)) {
-	    		$todo=Marca::where('id_marca', $id)->first();
+	        $todo=Marca::get();
+	        
+	      return View('panel.editaMarcaModelo')->with('lista',$todo);  
+	    }
+
+    public function nuevaMarca(Request $request)
+	    {
+	    	if (isset($request->id)) {
+	    		$todo=Marca::where('id_marca', $request->id)->first();
 		    } else {
 		    			$todo=Marca::orderBy('id_marca', 'desc')->first();	
 		    			$nuevoID=str_pad($todo->id_marca+1, 3, "0", STR_PAD_LEFT);
@@ -107,13 +107,19 @@ class MongoController extends Controller
 			return View('panel.NuevaMarca')->with('lista',$todo);	
 	    }
 
- public function nuevoModelo(Request $request, $id=null)
+ public function nuevoModelo(Request $request)
 	    {
-	    	if ((isset($id))and(strlen($id)>3)) {
-	    		$todo=Modelo::where('id_modelo', $id)->first();
+	    	 
+	    	$id=$request->id;
+
+	    	if (strlen($id)>3) {
+	    		$todo=Modelo::orderBy('id_modelo')->where('id_modelo', $id)->first();
 		    } else {		
-		    			$todo=Modelo::orderBy('id_modelo', 'desc')->where('id_marca',$id)->first();	
-		    			$nuevoID=str_pad($todo->id_modelo+1, 3, "0", STR_PAD_LEFT);
+		    			$todo=Modelo::orderBy('id_modelo', 'desc')->where('id_marca',$id)->first();
+		    			if ($todo) {$nuevoID=str_pad($todo->id_modelo+1, 6, "0", STR_PAD_LEFT);}
+		    			else ($nuevoID=$id."001");	
+		    			
+
 		    			$todo=new Modelo;
 		    			$todo->id_modelo=$nuevoID;
 		    			$todo->id_marca=$id;
@@ -138,15 +144,22 @@ class MongoController extends Controller
 
 	public function ActualizaModelo(Request $request)
 	{	
-	 	$todo=Modelo::where('id_modelo', $request->id_modelo)->first();
 
+	 	$todo=Modelo::orderBy('id_modelo')->where('id_modelo', $request->id_modelo)->first();
+	 	 
 	 	if (!$todo) { Modelo::create($request->all());
-		     } else { $todo->update($request->all());}
-		
+		     } else {      			
+		     			$todo->nombre=$request->nombre;
+		     			 
+		     			$todo->update(); }
+				
 		return redirect('EdicionMarcaModelo');
 	}
 
 
+
+
+//Ficheros
 	public function saveFiles(Request $request)
 		{      
 		       //for ($y=0; $y<count($request->file('ImgsTL')); $y++) 
@@ -167,8 +180,7 @@ class MongoController extends Controller
 		            }
 		            
 		       }
-
-		           
+      
 		       return;
 		}
 

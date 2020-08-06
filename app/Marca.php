@@ -20,6 +20,6 @@ class Marca extends Eloquent
 
     public function modelos()
       {
-          return $this->hasMany(Modelo::class,'id_marca');
+          return $this->hasMany(Modelo::class,'id_marca','id_marca');
       }
 }

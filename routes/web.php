@@ -17,11 +17,9 @@ Route::get('login', function () {
     return view('autenticacion.Funciones_login');
 });
 
+
+
 Route::get('pagina','KaizenController@pagina');
-
-
-
-
 
 Route::get('ListaImagenes','KaizenController@getImageRelativePathsWfilenames');
 Route::get('firebase','KaizenController@index');
@@ -41,15 +39,6 @@ Route::get('CarritoCambiaCanti','KaizenController@CarritoCambiaCanti');
 Route::get('Detalle', function () {
     return view('Detalle_Producto');
 });
-
-
-Route::get('/', function () {
-    return view('Lista_Producto');
-});
-
-Route::get('/cat', function () {
-    return view('categorias');
-});
  
 
 Route::get('inventario', function () { return view('menu'); });
@@ -57,36 +46,32 @@ Route::get('inventario', function () { return view('menu'); });
 Route::get('listadoProductos','KaizenController@listadoProductos');
 
 
+Route::post('Traslado','KaizenController@MongoStore'); //UTILITARIO TEMPORAL
+Route::post('GuardaMongo','MongoController@Store');  //UTILITARIO TEMPORAL
+
+
 //LO NUEVO
+//Mongo
 
 Route::get('admin', function () { return view('panel.menu'); });
 
-
-Route::get('listaProductos','MongoController@listadoProductos'); //cambiar de controlador 
-
-
-
-//Mongo
- 
-Route::post('GuardaMongo','MongoController@Store');
-
-Route::get('Llena', function () {
-    return view('temporal');
-});
-Route::post('Traslado','KaizenController@MongoStore');
-
-
+Route::get('listaProductos','MongoController@listadoProductos');
+Route::get('Resgistro','MongoController@Resgistro');
 Route::post('GuardaProducto','MongoController@GuardaProducto');
+Route::get('productos', 'MongoController@EditaProducto');
+
 Route::get('EdicionMarcaModelo','MongoController@ListaMarcas');
 Route::get('ListaModelos','MongoController@ListaModelos');
-Route::get('/nuevaMarca/{id?}','MongoController@nuevaMarca')->name('nuevaMarca');
-Route::get('/nuevoModelo/{id?}','MongoController@nuevoModelo')->name('nuevoModelo');
+Route::get('nuevaMarca','MongoController@nuevaMarca');
+Route::get('nuevoModelo','MongoController@nuevoModelo');
 Route::post('ActualizaMarca','MongoController@ActualizaMarca');
 Route::post('ActualizaModelo','MongoController@ActualizaModelo');
 
-Route::get('Resgistro','MongoController@Resgistro');
+//Inventario
+
+Route::get('Pre_recepcion', function () { return view('inventario.Pre_recepcion'); });
 
 
-Route::get('productos', 'MongoController@EditaProducto');
+
 
 

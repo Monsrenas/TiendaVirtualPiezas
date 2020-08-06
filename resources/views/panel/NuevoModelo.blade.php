@@ -1,7 +1,3 @@
-
-@extends('panel.menu')
-@section('operaciones')
-
 <div id="Centro"  style="font-size: 0.9em;">
   <div class="card card-sm">
     <form action="{{ url('ActualizaModelo') }}" method="post">
@@ -38,6 +34,3 @@
 </div>
 
      <script type="text/javascript" src="{{Request::root()}}//jquery/main.js"></script>
-
-@endsection
-

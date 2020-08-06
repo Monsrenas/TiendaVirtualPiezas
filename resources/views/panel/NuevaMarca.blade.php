@@ -1,14 +1,10 @@
-
-@extends('panel.menu')
-@section('operaciones')
-
-<div id="Centro"  style="font-size: 0.9em;">
+ <div id="Centro"  style="font-size: 0.9em;">
   <div class="card card-sm">
     <form action="{{ url('ActualizaMarca') }}" method="post">
     @csrf        
     <div class="card-header">
         <div class="row">  
-              <strong class="col-lg-4" style="font-size: 1.6em;" ><i class="fa fa-edit"></i> Edición de Marcas </strong>
+              <strong class="col-lg-10" style="font-size: 1.6em;" ><i class="fa fa-edit"></i> Edición de Marcas </strong>
               <div class="col-lg-1"> <button class="btn fa fa-save btn-success" type="submit"></button> </div>
         </div>
     </div>
@@ -16,7 +12,7 @@
     <div class="card-body">
      
             <div class="row">
-            <div class="col-lg-4 card-body text-right" style=" padding: 20px; ">
+            <div class="col-lg-10 card-body text-right">
                 
 
                    <label>Código:</label>
@@ -37,7 +33,6 @@
    
 </div>
 
-     <script type="text/javascript" src="{{Request::root()}}//jquery/main.js"></script>
-
-@endsection
+<script type="text/javascript" src="{{Request::root()}}//jquery/main.js"></script>
+ 
 
