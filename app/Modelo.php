@@ -15,8 +15,7 @@ class Modelo extends Eloquent
               'id_marca',
 							'id_modelo',
 							'nombre'
-    ];
-
+    ];   
 
    public function versiones()
       {

@@ -86,11 +86,6 @@ class MongoController extends Controller
 	       												 $columnas=explode ( ',' ,request('columnas') , 10 );
             											 return $q->select($columnas);
         											  })->get();
-
-
-
-
-
 	        
 	      return $todo;  
 	    }    
@@ -98,6 +93,7 @@ class MongoController extends Controller
 
     public function nuevaMarca(Request $request, $id=null)
 	    {
+
 	    	if (isset($id)) {
 	    		$todo=Marca::where('id_marca', $id)->first();
 		    } else {
@@ -111,23 +107,44 @@ class MongoController extends Controller
 			return View('panel.NuevaMarca')->with('lista',$todo);	
 	    }
 
+ public function nuevoModelo(Request $request, $id=null)
+	    {
+	    	if ((isset($id))and(strlen($id)>3)) {
+	    		$todo=Modelo::where('id_modelo', $id)->first();
+		    } else {		
+		    			$todo=Modelo::orderBy('id_modelo', 'desc')->where('id_marca',$id)->first();	
+		    			$nuevoID=str_pad($todo->id_modelo+1, 3, "0", STR_PAD_LEFT);
+		    			$todo=new Modelo;
+		    			$todo->id_modelo=$nuevoID;
+		    			$todo->id_marca=$id;
+		    			$todo->nombre='';
+		    		}
 
+		    $Marca=Marca::where('id_marca',$todo->id_marca)->select(['nombre'])->first();	
+		    
+			return View('panel.NuevoModelo')->with('lista',$todo)->with('marca',$Marca->nombre);	
+	    }
 	 
 
 	public function ActualizaMarca(Request $request)
-	{
-
+	{	
 	 	$todo=Marca::where('id_marca', $request->id_marca)->first();
 
-	 	if (!$todo) {$todo=new Marca;}
+	 	if (!$todo) { Marca::create($request->all());
+		     } else { $todo->update($request->all());}
 
-		$todo->id_marca = $request->id_marca;
-		$todo->nombre = $request->nombre;
-		$todo->save();
 		return redirect('EdicionMarcaModelo');
 	}
 
+	public function ActualizaModelo(Request $request)
+	{	
+	 	$todo=Modelo::where('id_modelo', $request->id_modelo)->first();
 
+	 	if (!$todo) { Modelo::create($request->all());
+		     } else { $todo->update($request->all());}
+		
+		return redirect('EdicionMarcaModelo');
+	}
 
 
 	public function saveFiles(Request $request)

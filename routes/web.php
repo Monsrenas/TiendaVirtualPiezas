@@ -80,7 +80,10 @@ Route::post('GuardaProducto','MongoController@GuardaProducto');
 Route::get('EdicionMarcaModelo','MongoController@ListaMarcas');
 Route::get('ListaModelos','MongoController@ListaModelos');
 Route::get('/nuevaMarca/{id?}','MongoController@nuevaMarca')->name('nuevaMarca');
+Route::get('/nuevoModelo/{id?}','MongoController@nuevoModelo')->name('nuevoModelo');
 Route::post('ActualizaMarca','MongoController@ActualizaMarca');
+Route::post('ActualizaModelo','MongoController@ActualizaModelo');
+
 Route::get('Resgistro','MongoController@Resgistro');
 
 

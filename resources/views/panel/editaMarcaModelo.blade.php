@@ -114,7 +114,7 @@
         for (const prop in $marca)
         {
                 $miTab+="<tr>";
-                $miTab+="<td><a href='#' class='btn btn-sm' style='font-size: 0.8em;'><i class='fa fa-pencil' style='font-size: 1.3em;'></i></a> </td>";
+                $miTab+="<td><a href='/nuevoModelo/"+$marca[prop]['id_modelo']+"' class='btn btn-sm' style='font-size: 0.8em;'><i class='fa fa-pencil' style='font-size: 1.3em;'></i></a> </td>";
                 $miTab+="<td>"+$marca[prop]['id_modelo']+"</td>";
                 $miTab+="<td>"+$marca[prop]['nombre']+"</td>";
                 $miTab+="<td><a href='#' class='btn btn-sm' style='font-size: 0.8em;'><i class='fa fa-trash-o' style='font-size: 1.3em;'></i></a> </td>";

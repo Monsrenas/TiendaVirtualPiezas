@@ -41,7 +41,6 @@
                                                         <th>Nombre</th>
                                                         <th>Fabricante</th>
                                                         <th>Categoria</th>
-
                                                     </tr>
                                                 </thead>
                                                 <tbody>
