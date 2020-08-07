@@ -11,6 +11,7 @@ use App\Fabricante;
 use App\Generacion;
 use App\Medida;
 use App\Producto;
+use App\Pre_recepcion;
 
 class MongoController extends Controller
 {
@@ -29,12 +30,19 @@ class MongoController extends Controller
 
 
 
-    public function prerecepcion(Request $request)
+    public function addItemPre_recepcion(Request $request)
 	    {
-
-	        Marca::create($request->all());
-	        return;
+	    	$todo=Pre_recepcion::where('codigo',$request->codigo)->first();
+	    	if ($todo) {$todo->update($request->all());}	
+	      	else {$todo=Pre_recepcion::create($request->all());}
+	        return View('inventario.Pre_recepcion')->with('lista',$todo);;
 	    }
+
+	public function preRecepcionados(Request $request)
+	{
+		$todo=Pre_recepcion::get();
+		return View('inventario.lista_prerecepcion')->with('lista',$todo);
+	}
 
  
 	public function GuardaProducto(Request $request)
@@ -59,11 +67,16 @@ class MongoController extends Controller
 	    }
 
     public function listadoProductos(Request $request)
-    {
+    {	
+    	if (isset($request->codigo)){
+    		$todo=Producto::where('codigo',$request->codigo)->first();
+        return $todo;
+    	}
+
+
         $todo=Producto::get();
         return view('panel.producto')->with('producto',$todo);
     }
-
 
 	public function Resgistro(Request $request)
 	    {

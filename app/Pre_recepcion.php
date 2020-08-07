@@ -13,6 +13,7 @@ class Pre_recepcion extends Eloquent
     protected $primaryKey = 'codigo';
     protected $fillable = [
               'usuario',
+              'proveedor',
 							'documento',
               'fecha',
               'almacen',

@@ -48,6 +48,7 @@ Route::get('listadoProductos','KaizenController@listadoProductos');
 
 Route::post('Traslado','KaizenController@MongoStore'); //UTILITARIO TEMPORAL
 Route::post('GuardaMongo','MongoController@Store');  //UTILITARIO TEMPORAL
+Route::get('Pre', function () { return view('inventario.lista_prerecepcion'); });
 
 
 //LO NUEVO
@@ -70,6 +71,8 @@ Route::post('ActualizaModelo','MongoController@ActualizaModelo');
 //Inventario
 
 Route::get('Pre_recepcion', function () { return view('inventario.Pre_recepcion'); });
+Route::post('AddProductoRecepcion','MongoController@addItemPre_recepcion')->name('Pre_recepcion');
+Route::get('ListaRecepcionados','MongoController@preRecepcionados');
 
 
 

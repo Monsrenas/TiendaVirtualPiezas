@@ -1,9 +1,8 @@
- 
 <div id="Centro" style="font-size: 0.8em;">
-	<div class="header">
+  <div class="header">
     
   </div>
-	<form  id="RegProducto" method="POST"  action="javascript:GuardarProducto()" class="form-horizontal md-form" id="datosproducto" style="font-size: .85em;">
+  <form  id="RegProducto" method="POST"  action="javascript:GuardarProducto()" class="form-horizontal md-form" id="datosproducto" style="font-size: .85em;">
   @csrf
 
     <div class="card-header card">
@@ -115,17 +114,16 @@
                    <label class="col-lg-2 col-form-label text-left" id="descr_modelo"></label><br>
               </div>
               </div>
-      		  
-      		  <div class="col-lg-10 text-md-left text-lg-right " id="espacioGuardar" hidden="">
-    				<button class="btn btn-success"  id="GuardarForm" type="submit" >Guardar <i class="fa fa-save"></i></button>
- 	  		  </div> 
+            
+            <div class="col-lg-10 text-md-left text-lg-right " id="espacioGuardar" hidden="">
+            <button class="btn btn-success"  id="GuardarForm" type="submit" >Guardar <i class="fa fa-save"></i></button>
+          </div> 
        </div>
         <button id="btGuardaProd" class="btn fa fa-save btn-success float-right" disabled=""> Guardar</button>
-  	 </form>
+     </form>
 </div>
 
 <script type="text/javascript">
-
     $('body').on('click', '.fa-trash-o', function()  //Boton que borra categoria
 {
     $(this).parent().parent().remove();  
@@ -133,33 +131,26 @@
     //$(this).parent().parent().attr('class')
  
 });
-
 $('input').attr("autocomplete","off");
-
 $('body').on('change', '#codigo_producto', function()
 {
     $data="id="+$(this).val(); 
     $.get('productos', $data, function(subpage){
        $('#EspacioAccion').html(subpage);        
-
     }).fail(function() {
        console.log('Error en carga de Datos');
   });
 });
-
-
 $('body').on('change', 'input', function()
 {
      
       $("#btGuardaProd").attr('disabled',false);
 });
-
 $('#RegProducto').on('input', function()
 {
      
       $("#btGuardaProd").attr('disabled',false);
 });
-
 function GuardarProducto()
 {
   var data=$('#RegProducto').serialize();
@@ -171,15 +162,11 @@ function GuardarProducto()
               $("#codigo_producto").focus();
     });
 }
-
-
 function ActNumero(elemento, visual)
 {
   $d='';
   if (elemento=="NombresADC") {$d=" descripciones adicionales"}
-
     $c=$("#"+elemento+" .fa-trash-o");
       $('#'+visual).attr("placeholder", "("+$c.length+")"+$d);
 }
-
 </script>

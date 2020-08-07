@@ -141,7 +141,7 @@
 
 <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Note</button>-->
   <div class="modal" id="myModal">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="width: 1200px; max-width: 1000px;">
       <div class="modal-content">
         <!-- Modal body -->
         <div class="modal-body" id="modal-body" style="max-height: 600px; overflow: auto;">
