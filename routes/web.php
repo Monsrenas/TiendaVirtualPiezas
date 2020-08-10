@@ -72,7 +72,9 @@ Route::post('ActualizaModelo','MongoController@ActualizaModelo');
 
 Route::get('Pre_recepcion', function () { return view('inventario.Pre_recepcion'); });
 Route::post('AddProductoRecepcion','MongoController@addItemPre_recepcion')->name('Pre_recepcion');
-Route::get('ListaRecepcionados','MongoController@preRecepcionados');
+
+Route::post('BorraItem','MongoController@BorraItem');
+ 
 
 
 

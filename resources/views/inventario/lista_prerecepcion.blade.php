@@ -1,16 +1,5 @@
 <?php if (!isset($lista)) {$lista=[];} ?> 
 
-<style type="text/css">
-    input:invalid+span:after {
-    content: '✖';
-    padding-left: 5px;
-}
-
-input:valid+span:after {
-    content: '✓';
-    padding-left: 5px;
-}
-</style>
 <div id="Centro"  style="font-size: 1.2em;">
   <div class="card card-sm">
     <div class="card-header">
@@ -29,7 +18,6 @@ input:valid+span:after {
                                     <table id="tablamarcas" class="table table-striped table-bordered" style="">
                                     <thead id="cuerpo">
                                         <tr HEIGHT="10">
-                                            
                                             <th>No.</th>
                                             <th></th>
                                             <th>Código</th>
@@ -48,12 +36,11 @@ input:valid+span:after {
                                                 <td><a href="#">{{ $producto->cantidad }}</a></td>
                                                 <td>{{ $producto->precio }}</td>
                                                 <td>{{ $producto->almacen }}</td>
-                                                <td width="5"><a href="#"><i class="fa fa-trash-o"> </i></a></td>
+                                                <td width="5"><a href="javascript:borraItem('BorraItem', 'Pre_recepcion', ['codigo','{{ $producto->codigo}}'])"  class="btn btn-sm fa fa-trash-o"> </a></td>
                                             </tr>
                                         @endforeach                  
                                     </tbody>        
                                    </table>
-
                                 </div>
                             </div>
                     </div>  
@@ -67,24 +54,14 @@ input:valid+span:after {
 <script type="text/javascript" src="{{Request::root()}}/jquery/main.js"></script>
 
 <script type="text/javascript">
-    <?php if (isset($lista[0])) {  
-                                    $fecha=$lista[$i-2]->fecha;
-                                    $proveedor=$lista[$i-2]->proveedor;
-                                    $documento=$lista[$i-2]->documento;
-                                    $almacen=$lista[$i-2]->almacen;
-                                } else  { 
-                                            if (isset($lista->fecha)){ 
-                                                                        $fecha=$lista->fecha;
-                                                                        $proveedor=$lista->proveedor;
-                                                                        $documento=$lista->documento;
-                                                                        $almacen=$lista->almacen;
-                                                                       } else { 
-                                                                                    $fecha='';
-                                                                                    $documento='';
-                                                                                    $almacen='';
-                                                                                    $proveedor='';    
-                                                                              }
-                                        } 
+    <?php
+        $infoCabezera=$lista ?? [];
+        if (isset($lista[0])) {  $infoCabezera=$lista[$i-2]; }
+                                    
+        $fecha=$infoCabezera->fecha ?? '';
+        $proveedor=$infoCabezera->proveedor ?? '';
+        $documento=$infoCabezera->documento ?? '';
+        $almacen=$infoCabezera->almacen ?? '';               
     ?>
    
     $('#fecha').val('{{$fecha}}');
@@ -96,12 +73,9 @@ input:valid+span:after {
     {
         $codigo=JSON.parse($codigo);    
 
- 
-
         $('#codigo').val($codigo['codigo']);
         $('#cantidad').val($codigo['cantidad']);
         $('#precio').val($codigo['precio']);
-
     
     }
 

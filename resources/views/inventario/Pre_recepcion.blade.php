@@ -14,20 +14,20 @@
       </div>
     <div class="col-lg-12 card" style="background: white; padding: 20px; ">
         <div class="row" style="margin-bottom: 3px;">
-            <div class="col-lg-12">
+            <div class="table-responsive">
                         
                     <table  class="table table-striped table-bordered" style="width:100%">
                     <thead id="cuerpo">
                         <tr>
                             <th>Fecha: <input type="date" class="form-control-sm" id="fecha" name="fecha" required></th>
-                            <th>Almacen: <select class="form-control-sm" id="almacen" name="almacen" required>
+                            <th>Proveedor: <input type="text" class="form-control-sm" id="proveedor" name="proveedor"  required> </th> 
+                            <th>No. Documento: <input type="text" class="form-control-sm" id="documento" name="documento"  required> </th> 
+                             <th>Almacen: <select class="form-control-sm" id="almacen" name="almacen" required>
                               <option value="" selected>...</option>
                               <option value="001">Almacen 1</option> 
                               <option value="002">Almacen 2</option>
                               <option value="003">Almacen 3</option>
                             </select></th>
-                            <th>Proveedor: <input type="text" class="form-control-sm" id="proveedor" name="proveedor"  required> </th> 
-                            <th>No. Documento: <input type="text" class="form-control-sm" id="documento" name="documento"  required> </th> 
                         </tr>
                     </thead>
               </table>                  
@@ -42,7 +42,7 @@
                           <button  type="button" class="btn btn-info btn-sm"data-toggle="modal" data-target="#myModal" onclick="Modal('codificador.ObtenCodigoProducto','codigo','descr_producto')"><i class="fa fa-search"></i></button>
                     </div>
                   </div>
-                  <label class="col-lg-2 col-form-label text-left" id="descr_producto"></label>
+                  <label class="col-lg-6 col-form-label text-left" id="descr_producto" style="font-size: 1.2em; color:blue"></label>
         </div>
 
         
@@ -80,32 +80,50 @@
  <script type="text/javascript">
    
 
-   $data="";
-
-  $.get('ListaRecepcionados', $data, function(subpage){ 
+   $data="vista=inventario.lista_prerecepcion&coleccion=Pre_recepcion";
+   
+  $.get('Resgistro', $data, function(subpage){ 
      $('#ListaPrerecepcion').html(subpage);
 
     }).fail(function() {
        console.log('Error en carga de Datos');
   });
 
- 
-$('body').on('input', '#precio', function()
+$('body').on('blur', '#codigo', function()
     { 
-
-    });
-
-
-$('body').on('change', '#codigo', function()
-    { console.log(this.value); 
-        $data="id="+$id;
-      $.get(controlador, $data, function(subpage){ 
-            $('#modal-cuerpo-AUX').html(subpage);
+      $data="indice=codigo&ocurrencia="+this.value+"&columnas=codigo,nombre&coleccion=Producto";
+      $.get('Resgistro', $data, function(subpage){ 
+            if (subpage[0]) {  $('#descr_producto').text(subpage[0]['nombre']);
+                              $('#descr_producto').css('color','blue');  
+                            }
+                else { $('#descr_producto').text('CÓDIGO DESCONOCIDO');
+                        $('#descr_producto').css('color','red');  
+                        $('#codigo').focus();}
 
         }).fail(function() {
            console.log('Error en carga de Datos');
         });   
     });
+  
+  function borraItem(controlador, clase, condicion)
+  {
+      $data="_token={{ csrf_token()}}&clase="+clase+"&condicion="+condicion;
+ 
+      $.post(controlador, $data, function(subpage){ 
+            console.log(subpage);
+      }).fail(function() {
+           console.log('Error en carga de Datos');
+      });
+  }
+
+
+  $('body').on( 'click', '.fa-trash-o', function () {  
+                                                                            $tablaMarcas
+                                                                                .row( $(this).parents('tr') )
+                                                                                .remove()
+                                                                                .draw();
+                                                                            } );
 
  </script>
+  }
 @endsection

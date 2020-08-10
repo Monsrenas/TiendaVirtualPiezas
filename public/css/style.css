@@ -169,6 +169,20 @@ color: white;
 display: block;
 }
 
+a.fa:hover {
+text-decoration:none;
+color: white;
+display: inline-block;
+}
+
+a.fa-trash-o:hover {
+text-decoration:none;
+background: red;
+color: white;
+border: 1px solid #800a0a; 
+
+}
+
 nav {
 -webkit-user-select:none;
 -moz-user-select:none;

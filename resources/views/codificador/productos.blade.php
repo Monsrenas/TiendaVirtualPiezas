@@ -21,7 +21,7 @@
                                                     @foreach($producto as $indice =>$patmt)
                                                         <tr>
                                                             <td> 
-                                                             <a href="#">{{$patmt['codigo']}}</a> 
+                                                             <a href="#" data-nombre="{{$patmt['nombre'] ?? '' }}" class="ProCod">{{$patmt['codigo']}}</a> 
                                                             </td>
                                                             <td>{{$patmt['nombre'] ?? '' }}</td>                             
                                                             <td>{{$patmt['fabricante'] ?? '' }}</td>

@@ -12,23 +12,16 @@ use App\Generacion;
 use App\Medida;
 use App\Producto;
 use App\Pre_recepcion;
-
+ 
 class MongoController extends Controller
 {
     //
 
     public function Clase($ind)
     {
-        switch ($ind) {
-          case 'Marca': return $tmodelo= new Marca; break;
-          case 'Modelo': return $tmodelo= new Modelo;break;
-          case 'Categoria': return $tmodelo= new Categoria;break;
-          case 'Fabricante': return $tmodelo= new Fabricante;break;
-          case 'Medida': return $tmodelo= new Medida;break;
-        }
+    	$ind='App\\'.$ind;
+    	return $tmodelo=new $ind;
     }
-
-
 
     public function addItemPre_recepcion(Request $request)
 	    {
@@ -38,13 +31,14 @@ class MongoController extends Controller
 	        return View('inventario.Pre_recepcion')->with('lista',$todo);;
 	    }
 
-	public function preRecepcionados(Request $request)
-	{
-		$todo=Pre_recepcion::get();
-		return View('inventario.lista_prerecepcion')->with('lista',$todo);
-	}
+ 	public function BorraItem(Request $request)
+	 	{
+	 		$Clase=$this->Clase($request->clase);
+	 		$condicion=explode ( ',' ,$request->condicion , 6 );   										 
+	 		$todo=$Clase::where($condicion[0],$condicion[1])->delete();
+	 		return $todo;
+	 	}
 
- 
 	public function GuardaProducto(Request $request)
 		{	 
 			$todo=Producto::where('codigo',$request->codigo)->first();
@@ -58,30 +52,21 @@ class MongoController extends Controller
 	    	if (isset($request->id)) {
 	    		$todo=Producto::where('codigo',$request->id)->first();
 	    		if (!$todo) {$todo= new Producto;	$todo->codigo=$request->id;}
-		    } else {
+		    } else 	{
 		    			$todo= new Producto;
-
 		    		}
 		    		
 			return View('panel.editaProducto')->with('lista',$todo);	
 	    }
 
     public function listadoProductos(Request $request)
-    {	
-    	if (isset($request->codigo)){
-    		$todo=Producto::where('codigo',$request->codigo)->first();
-        return $todo;
-    	}
-
-
+    {								
         $todo=Producto::get();
         return view('panel.producto')->with('producto',$todo);
     }
 
 	public function Resgistro(Request $request)
 	    {
-	        
-	       $indice=strval($request->indice);
 	       $Clase=$this->Clase($request->coleccion);	
 	       $todo=$Clase:: 
 	       when((isset($request->indice)), function($q){
@@ -91,17 +76,18 @@ class MongoController extends Controller
 	       												 $columnas=explode ( ',' ,request('columnas') , 10 );
             											 return $q->select($columnas);
         											  })->get();
-	        
-	      return $todo;  
+	       if (isset($request->vista)) {   
+										$view = View::make($request->vista);
+										return $view->with('lista',$todo);
+										}
+	       return $todo;
 	    }    
 
 
 //Marcas y Modelos 
     public function ListaMarcas()
 	    {
-
-	        $todo=Marca::get();
-	        
+	        $todo=Marca::get();   
 	      return View('panel.editaMarcaModelo')->with('lista',$todo);  
 	    }
 
@@ -120,19 +106,16 @@ class MongoController extends Controller
 			return View('panel.NuevaMarca')->with('lista',$todo);	
 	    }
 
- public function nuevoModelo(Request $request)
+ 	public function nuevoModelo(Request $request)
 	    {
 	    	 
 	    	$id=$request->id;
-
 	    	if (strlen($id)>3) {
 	    		$todo=Modelo::orderBy('id_modelo')->where('id_modelo', $id)->first();
 		    } else {		
 		    			$todo=Modelo::orderBy('id_modelo', 'desc')->where('id_marca',$id)->first();
 		    			if ($todo) {$nuevoID=str_pad($todo->id_modelo+1, 6, "0", STR_PAD_LEFT);}
 		    			else ($nuevoID=$id."001");	
-		    			
-
 		    			$todo=new Modelo;
 		    			$todo->id_modelo=$nuevoID;
 		    			$todo->id_marca=$id;
@@ -159,20 +142,16 @@ class MongoController extends Controller
 	{	
 
 	 	$todo=Modelo::orderBy('id_modelo')->where('id_modelo', $request->id_modelo)->first();
-	 	 
 	 	if (!$todo) { Modelo::create($request->all());
 		     } else {      			
 		     			$todo->nombre=$request->nombre;
-		     			 
-		     			$todo->update(); }
-				
+		     			$todo->update(); 
+		     		}	
 		return redirect('EdicionMarcaModelo');
 	}
 
 
-
-
-//Ficheros
+	//Ficheros
 	public function saveFiles(Request $request)
 		{      
 		       //for ($y=0; $y<count($request->file('ImgsTL')); $y++) 
@@ -193,7 +172,6 @@ class MongoController extends Controller
 		            }
 		            
 		       }
-      
 		       return;
 		}
 

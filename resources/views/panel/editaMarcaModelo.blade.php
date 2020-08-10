@@ -21,7 +21,6 @@
             </div>
 
             <div class="col-lg-12 card-body" style="background: white; padding: 20px; ">
-            
                                           
                 <!--Ejemplo tabla con DataTables-->
                 <div class="container">
@@ -36,7 +35,7 @@
                                             <th>Código</th>
                                             <th>Marca</th>
                                             <th>Modelos</th>
-                                            <th></th>
+                                            <th WIDTH='4'></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -46,7 +45,7 @@
                                                 <td>{{ $marca->id_marca }}</td>
                                                 <td><a href="javascript:Muestra('{{$marca->modelos}}','{{ $marca->nombre }}','{{ $marca->id_marca }}')">{{ $marca->nombre }}</a></td>
                                                 <td>{{ count($marca->modelos) }}</td>
-                                                <td><a href="#" class="btn btn-sm" style="font-size: 0.8em;"><i class="fa fa-trash-o" style="font-size: 1.3em;"></i></a> </td>
+                                                <td><a href="#" class="btn btn-sm fa fa-trash-o" ></a> </td>
                                             </tr>
                                         @endforeach                  
                                     </tbody>        
@@ -117,7 +116,7 @@
                 $miTab+="<td><a href='#' class='btn btn-sm' style='font-size: 0.8em;' data-toggle='modal' data-target='#ModalAuxiliar' onclick=\"javascript:EditaMarca('"+$marca[prop]['id_modelo']+"', 'nuevoModelo')\" ><i class='fa fa-pencil' style='font-size: 1.3em;'></i></a> </td>";
                 $miTab+="<td>"+$marca[prop]['id_modelo']+"</td>";
                 $miTab+="<td>"+$marca[prop]['nombre']+"</td>";
-                $miTab+="<td><a href='#' class='btn btn-sm' style='font-size: 0.8em;'><i class='fa fa-trash-o' style='font-size: 1.3em;'></i></a> </td>";
+                $miTab+="<td><a href='#' class='btn btn-sm fa fa-trash-o'></a> </td>";
                 $miTab+="</tr>";            
         }
                   
