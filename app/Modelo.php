@@ -10,12 +10,18 @@ class Modelo extends Eloquent
     //
     protected $connection = 'mongodb';
     protected $collection = 'modelos';
-    protected $primaryKey = 'id_marca';
+    protected $primaryKey = 'id_modelo';
     protected $fillable = [
               'id_marca',
 							'id_modelo',
 							'nombre'
     ];   
+
+
+   public function marca()
+      {
+          return $this->belongsTo(Marca::class,'id_marca');
+      }
 
    public function versiones()
       {

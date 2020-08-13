@@ -12,10 +12,15 @@ use App\Generacion;
 use App\Medida;
 use App\Producto;
 use App\Pre_recepcion;
+use Illuminate\Support\Facades\Hash;
  
 class MongoController extends Controller
 {
     //
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     public function Clase($ind)
     {
@@ -140,14 +145,29 @@ class MongoController extends Controller
 
 	public function ActualizaModelo(Request $request)
 	{	
+		if (isset($request->_id)) {
+									$todo=Modelo::find($request->id_modelo); 
+									$todo->nombre=$request->get('nombre'); 
+									$todo->save();  
+								  } else { 
+								  			Modelo::create($request->all());
+									     }
 
-	 	$todo=Modelo::orderBy('id_modelo')->where('id_modelo', $request->id_modelo)->first();
-	 	if (!$todo) { Modelo::create($request->all());
-		     } else {      			
-		     			$todo->nombre=$request->nombre;
-		     			$todo->update(); 
-		     		}	
 		return redirect('EdicionMarcaModelo');
+	}
+
+	public function RegistrarUsuario(Request $request)
+	{	
+
+		$request['password']=Hash::make($request->password);
+		$Clase=$this->Clase('Usuario');
+	 	$todo=$Clase::orderBy('email')->where('email', $request->email)->first();
+	 	if (!$todo) {
+	 					$Clase::create($request->all());
+	 				} 
+	 	else { $todo->update($request->all()); }
+		     
+		return redirect('panel.menu');	
 	}
 
 

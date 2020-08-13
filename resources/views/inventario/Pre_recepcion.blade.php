@@ -8,7 +8,7 @@
 	<form  method="POST"  action="{{url('AddProductoRecepcion')}}" class="form-horizontal md-form" id="datosrecepcion" style="font-size: .85em;">
   @csrf
 
-  
+    <input type="text" name="usuario" value="{{Auth::user()->_id}}">
     <div class="card-header card">
         <h6>Recepción de productos</h6>
       </div>
@@ -70,11 +70,15 @@
         </div> 
 
       		  
-    		  <div class="col-lg-10 text-md-left text-lg-right ">
-  				  <button class="btn btn-success btn-sm" id="GuardarForm" type="submit">Recepcionar <i class="fa fa-save"></i></button>
-    		  </div> 
+    		  
     </div>
       
+  </form>
+  <form action="{{url('Recepcionar')}}" method="post">
+    @csrf
+    <div class="col-lg-10 text-md-left text-lg-right ">
+            <button  type="submit" class="btn btn-success btn-sm">Recepcionar <i class="fa fa-save"></i></button>
+          </div> 
   </form>
 </div>
  <script type="text/javascript">
@@ -88,6 +92,7 @@
     }).fail(function() {
        console.log('Error en carga de Datos');
   });
+
 
 $('body').on('blur', '#codigo', function()
     { 
@@ -104,7 +109,7 @@ $('body').on('blur', '#codigo', function()
            console.log('Error en carga de Datos');
         });   
     });
-  
+
   function borraItem(controlador, clase, condicion)
   {
       $data="_token={{ csrf_token()}}&clase="+clase+"&condicion="+condicion;

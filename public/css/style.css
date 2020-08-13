@@ -22,15 +22,17 @@ ul, #catUL {
           user-select: none;
         }
 
+
+
 .caret::before {
 
-  font-size: 0.8em;  
+  font-size: 0.6em;  
   content: "\25B6";
-  color: #2771D7;
+  color: black;
   float: right;
   display: inline-block;
   margin-top: 12px;
-  margin-right: 4px; 
+  margin-right: 12px; 
 
 }
 
@@ -40,8 +42,28 @@ ul, #catUL {
   transform: rotate(90deg);  
 }
 
+
+.dropdown-toggle .caret::before {
+
+  font-size: 0.1em;  
+  content: "";
+  color: #2771D7;
+  float: right;
+  display: inline-block;
+  margin-top: 12px;
+  margin-right: 4px; 
+
+}
+
+.dropdown-toggle .caret-down::before {
+  -ms-transform: rotate(90deg); /* IE 9 */
+  -webkit-transform: rotate(90deg); /* Safari */'
+  transform: rotate(90deg);  
+}
+
 .nested  { 
-  margin-left: 60px;
+  margin-left: 0px;
+  padding-left: 60px;
   display: none;
 }
 
@@ -160,7 +182,7 @@ overflow-y:auto;
 overflow:visible;
 }
 
-a { color: black; }
+a { color: black;}
 
 a:hover {
 text-decoration:none;
@@ -181,6 +203,13 @@ background: red;
 color: white;
 border: 1px solid #800a0a; 
 
+}
+
+a.nav-link{
+  text-decoration:none;
+  display: inline-block;
+  float: none;
+  background: none;
 }
 
 nav {

@@ -13,13 +13,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', function () {
+    return view('Lista_Producto');
+});
+
 Route::get('login', function () {
     return view('autenticacion.Funciones_login');
 });
 
 
 
-Route::get('pagina','KaizenController@pagina');
+Route::get('pagina','InventarioController@pagina');
 
 Route::get('ListaImagenes','KaizenController@getImageRelativePathsWfilenames');
 Route::get('firebase','KaizenController@index');
@@ -51,32 +55,38 @@ Route::post('GuardaMongo','MongoController@Store');  //UTILITARIO TEMPORAL
 Route::get('Pre', function () { return view('inventario.lista_prerecepcion'); });
 
 
-//LO NUEVO
-//Mongo
+/*Rutas privadas solo para usuarios autenticados*/
+Route::group(['middleware' => 'auth'], function()
+{
+   		//Route::get('/', 'HomeController@showWelcome'); // Vista de inicio
+		Route::get('/panel', function () { return view('panel.menu'); });
 
-Route::get('admin', function () { return view('panel.menu'); });
+		Route::get('listaProductos','MongoController@listadoProductos');
+		Route::get('Resgistro','MongoController@Resgistro');
+		Route::post('GuardaProducto','MongoController@GuardaProducto');
+		Route::get('productos', 'MongoController@EditaProducto');
 
-Route::get('listaProductos','MongoController@listadoProductos');
-Route::get('Resgistro','MongoController@Resgistro');
-Route::post('GuardaProducto','MongoController@GuardaProducto');
-Route::get('productos', 'MongoController@EditaProducto');
+		Route::get('EdicionMarcaModelo','MongoController@ListaMarcas');
+		Route::get('ListaModelos','MongoController@ListaModelos');
+		Route::get('nuevaMarca','MongoController@nuevaMarca');
+		Route::get('nuevoModelo','MongoController@nuevoModelo');
+		Route::post('ActualizaMarca','MongoController@ActualizaMarca');
+		Route::post('ActualizaModelo','MongoController@ActualizaModelo');
 
-Route::get('EdicionMarcaModelo','MongoController@ListaMarcas');
-Route::get('ListaModelos','MongoController@ListaModelos');
-Route::get('nuevaMarca','MongoController@nuevaMarca');
-Route::get('nuevoModelo','MongoController@nuevoModelo');
-Route::post('ActualizaMarca','MongoController@ActualizaMarca');
-Route::post('ActualizaModelo','MongoController@ActualizaModelo');
+		//Inventario
+		Route::get('Pre_recepcion', function () { return view('inventario.Pre_recepcion'); });
+		Route::post('AddProductoRecepcion','MongoController@addItemPre_recepcion')->name('Pre_recepcion');
+		Route::post('Recepcionar','InventarioController@Recepcionar');
+		Route::get('ListadoRecepciones','InventarioController@ListadoRecepciones');
 
-//Inventario
-
-Route::get('Pre_recepcion', function () { return view('inventario.Pre_recepcion'); });
-Route::post('AddProductoRecepcion','MongoController@addItemPre_recepcion')->name('Pre_recepcion');
-
-Route::post('BorraItem','MongoController@BorraItem');
- 
-
-
+		//Usuarios
+		Route::post('RegistrarUsuario','MongoController@RegistrarUsuario');
+		
+		//Operaciones Comunes
+		Route::post('BorraItem','MongoController@BorraItem'); 
+});
 
 
+Auth::routes();
 
+Route::get('/admin', 'HomeController@index')->name('admin');

@@ -7,11 +7,11 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
              
     <!--datables CSS básico-->
     <link rel="stylesheet" type="text/css" href="{{Request::root()}}/datatables/datatables.min.css"/>
@@ -29,28 +29,53 @@
 <!-- partial:index.partial.html -->
 <html>
 
-<div data-component="navbar">
-<nav class="navbar  fixed-top">
-<div>
-  <div class="right-links float-right mr-4">
-    <div class="d-inline dropdown">
-      <a class="dropdown-toggle" id="messages" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">
-        <img src="http://1.gravatar.com/avatar/47db31bd2e0b161008607d84c74305b5?s=96&d=mm&r=g">
-      </a> William
-      <div class="dropdown-menu dropdown-menu-right rounded-0" aria-labelledby="messages">
-        <a class="dropdown-item" href="#">Editar Datos</a>
-        <a class="dropdown-item" href="#">Cerrar sesión</a>
-      </div> <!-- /.dropdown-menu -->
-    </div> <!-- /.dropdown -->
-    
-  </div> <!-- /.right-links -->
-  
-  </div>
+<nav class="navbar navbar-expand-md navbar-light fixed-top" style="background-color: #FFFFFF;  -webkit-box-shadow: 0 8px 6px -6px #999;
+   -moz-box-shadow: 0 8px 6px -6px #999;
+   box-shadow: 0 8px 6px -6px #999;">
+
+        <button class="navbar-toggler navbar-nav mr-auto" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span> 
+        </button>
+
+        <a class="navbar-brand mx-auto" href="#">MAZ Partes</a>
+        @guest
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('login') }}">Entrar</a>
+            </li>
+        @else
+        <ul class="nav navbar-nav ml-md--auto"> 
+
+                <li class="dropdown"> 
+
+                    <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false"> 
+                            {{ Auth::user()->nombre }} <b class="caret"></b>
+                        </a>
+
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="#">Mi perfil</a>
+                          
+                                <div class="dropdown-divider"></div>
+                               
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        Cerrar Sección
+                                    </a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
+                        </div>
+
+                </li> 
+        </ul>
+        @endguest
+
 
 </nav>
-</div> <!-- END TOP NAVBAR -->
 
-  <body><div class="area"></div>
+  <body>
+    <div class="area"></div>
     <nav class="main-menu" style="color: black; color: black; margin-top: 57px;">
             <ul>     
                 <li>
@@ -58,13 +83,14 @@
                         <a href="#" >
                             <i class="fa fa-book fa-2x"></i>
                             <span class="fa">
-                                Operaciones
+                                Inventario
                             </span>
                         </a>
                     </span>
                     <ul class='nested'>
-                        <li><a href="#">Despacho</a></li>
-                        <li><a href="{{url('Pre_recepcion')}}">Recepción</a></li>                        
+                        
+                        <li><a href="{{url('Pre_recepcion')}}">Recepción</a></li>    
+                        <li><a href="{{url('ListadoRecepciones')}}">Movimientos</a></li>                    
                     </ul>       
                 </li>
 
@@ -107,8 +133,18 @@
                         </a>
                     </span>
                     <ul class='nested'>
-                        <li><a href="#">Personas</a></li>                    
-                    </ul>       
+                        <li>
+                           
+                           <a href="javascript:Registros('panel.Lista_personas', 'Usuario', '', '')" style="float: left;" >Personas </a>
+                            <a href="javascript:Registros('panel.registraPersona', 'Usuario', '', '')">
+                                  <i class="fa fa-plus-square-o text-right" style=" font-size: 0.98em; vertical-align: middle; height: 21px; width: 121px; padding-right: 2px;"></i>
+                       
+                            </a>
+                           
+                                
+
+                        </li>     
+                    </ul>           
                 </li>
 
 
@@ -117,15 +153,15 @@
                         <a href="#"  >
                             <i class="fa fa-cogs" aria-hidden="true"></i>
                             <span class="fa">
-                                Parametros
+                                Configuración
                             </span>
                         </a>
                     </span>
                     <ul class='nested'>
                         <li><a href="#">Datos de la empresa</a></li>
-                        <li><a href="#">Parametros de búsqueda</a></li>
+                        <li><a href="#">Opciones de búsqueda</a></li>
                         <li><a href="#">Parametros de visualización</a></li>
-                        <li><a href="#">Otros</a></li>                        
+                        <li><a href="#">Modulos Instalados</a></li>                 
                     </ul>       
                 </li>
 
@@ -156,14 +192,15 @@
   </div>
 <!-- 
    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
- -->
+
 
 
 <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/js/bootstrap.min.js'></script>
-
+ -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 </body>
 </html>
-
+  
 <script type="text/javascript">
      var toggler = document.getElementsByClassName("caret");
             var i;
@@ -185,5 +222,33 @@ function productos($id)
     }).fail(function() {
        console.log('Error en carga de Datos');
   });
+
+
+
+     $(document).ready(function(){
+        $('.dropdown-toggle').dropdown()
+    });
+
 }
+
+
+function Registros(vista, coleccion, condiciones, columnas)
+{
+  $data="vista="+vista+"&coleccion="+coleccion+"";
+   
+  $.get('Resgistro', $data, function(subpage){ 
+     $('#EspacioAccion').html(subpage);
+
+    }).fail(function() {
+       console.log('Error en carga de Datos');
+  });}
+
+
+
+//Activar boton de guardar para el formulario activo 
+$('body').on('change', 'input', function()
+{
+     
+      $("#btGuardaProd").attr('disabled',false);
+});
 </script>

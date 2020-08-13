@@ -13,13 +13,14 @@ class Inventario extends Eloquent
     protected $primaryKey = 'codigo';
     protected $fillable = [
 							'codigo',
+              'producto',
 							'almacen',
 							'precio',
               				'cantidad'
     					  ];
    public function producto()
       {
-          return $this->belongsTo(Producto::class);
+          return $this->belongsTo(Producto::class, 'codigo','producto');
       }
 
 }
