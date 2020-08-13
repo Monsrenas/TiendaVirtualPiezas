@@ -91,13 +91,13 @@ class InventarioController extends Controller
         //$ListDescuento=$this->DevuelveBase($request);
         $ListProducto=Inventario::get(); 
         $filtrado=[];
+        
         return $ListProducto;
-
         foreach ($ListProducto as $key => $value) { 
             $value['codigo']=$key;
-        
              
             if ($this->enFiltro($request, $value)) { 
+                                                        return $ListProducto[$key]->detalle;
                                                     $value['descuento']=$this->descuento($value, $ListDescuento);
                                                     $filtrado[]=$value;
         }                                          }

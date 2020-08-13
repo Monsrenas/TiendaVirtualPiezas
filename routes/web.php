@@ -80,7 +80,7 @@ Route::group(['middleware' => 'auth'], function()
 		Route::get('ListadoRecepciones','InventarioController@ListadoRecepciones');
 
 		//Usuarios
-		Route::post('RegistrarUsuario','MongoController@RegistrarUsuario');
+		
 		
 		//Operaciones Comunes
 		Route::post('BorraItem','MongoController@BorraItem'); 
@@ -90,3 +90,8 @@ Route::group(['middleware' => 'auth'], function()
 Auth::routes();
 
 Route::get('/admin', 'HomeController@index')->name('admin');
+Route::post('RegistrarUsuario','MongoController@RegistrarUsuario');
+Route::get('CreaBases', function () {
+    return view('creabases');
+});
+

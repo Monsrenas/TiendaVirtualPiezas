@@ -19,7 +19,7 @@ class MongoController extends Controller
     //
     public function __construct()
     {
-        $this->middleware('auth');
+        //$this->middleware('auth');
     }
 
     public function Clase($ind)
@@ -87,6 +87,7 @@ class MongoController extends Controller
 										}
 	       return $todo;
 	    }    
+
 
 
 //Marcas y Modelos 
@@ -158,7 +159,6 @@ class MongoController extends Controller
 
 	public function RegistrarUsuario(Request $request)
 	{	
-
 		$request['password']=Hash::make($request->password);
 		$Clase=$this->Clase('Usuario');
 	 	$todo=$Clase::orderBy('email')->where('email', $request->email)->first();
@@ -169,6 +169,7 @@ class MongoController extends Controller
 		     
 		return redirect('panel.menu');	
 	}
+ 
 
 
 	//Ficheros

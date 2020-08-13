@@ -61,6 +61,7 @@ class KaizenController extends Controller
       return View('panel.editaMarcaModelo')->with('lista',$todo);    */
       
 
+/*
      $database=$this->index();
 
       $reference = $database->getReference('Medidas');
@@ -97,9 +98,10 @@ class KaizenController extends Controller
                              $Rcategoria=collect($Rcategoria);
                              Fabricante::create($Rcategoria->all());
             }  
-/*
+*/
 
 /*
+
       $database=$this->index();
 
       $reference = $database->getReference('categorias');
@@ -115,9 +117,9 @@ class KaizenController extends Controller
                              $Rcategoria=collect($Rcategoria);
                              Categoria::create($Rcategoria->all());
             }  
+
+
 */
-
-
 
     /*    $registro=new Marca;
         $Rmodelos=new Modelo;

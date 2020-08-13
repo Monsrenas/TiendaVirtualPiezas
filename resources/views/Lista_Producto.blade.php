@@ -35,7 +35,7 @@ function cargarListaProductos(condiciones)
 
      $.get('pagina', $data, function(subpage){ 
         var $element='';  var $elemenX='';
-        console.log(subpage);
+        console.log(subpage[0]['detalle']);
         for (const prop in subpage)
             {    
  			   insertaProducto(subpage[prop]);   

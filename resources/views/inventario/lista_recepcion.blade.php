@@ -1,5 +1,6 @@
 @extends('panel.menu')
 @section('operaciones')
+@include('modal')
 <?php if (!isset($lista)) {$lista=[];} 
 ?> 
 
@@ -35,9 +36,10 @@
                                         @foreach ($lista as $recp)
                                             <tr>
                                                 <td width="5">{{$i++}}</td>
-                                                <td><a href="#"><i class="fa fa-eye"> </i></a></td>
+                                                <td><button  type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" onclick="Modal('inventario.detalle_recepcion','{{ $recp->id ?? ''}}','descr_producto')" style="background: none; border: none; color: black;"><i class="fa fa-eye" ></i></button>
+                                                </td>
                                                 <td >{{ $recp->created_at ?? '' }}</td>
-                                                <td>{{ $recp->id ?? ''}}</td>
+                                                <td>{{ substr($recp->id,0,14) ?? ''}}</td>
                                                 <td >{{ $recp->proveedor ?? ''}}</td>
                                                 <td >{{ $recp->persona->nombre ?? ''}}</td>
                                                 <td width="5"> {{ $recp->almacen ?? ''}}</td>
@@ -57,20 +59,7 @@
 
 <script type="text/javascript" src="{{Request::root()}}/jquery/main.js"></script>
 <script type="text/javascript">
-    $('body').on('blur', '#codigo', function()
-    { 
-      $data="indice=codigo&ocurrencia="+this.value+"&columnas=codigo,nombre&coleccion=Producto";
-      $.get('Resgistro', $data, function(subpage){ 
-            if (subpage[0]) {  $('#descr_producto').text(subpage[0]['nombre']);
-                              $('#descr_producto').css('color','blue');  
-                            }
-                else { $('#descr_producto').text('CÓDIGO DESCONOCIDO');
-                        $('#descr_producto').css('color','red');  
-                        $('#codigo').focus();}
 
-        }).fail(function() {
-           console.log('Error en carga de Datos');
-        });   
-    });
+    
 </script>
 @endsection

@@ -8,7 +8,7 @@
 	<form  method="POST"  action="{{url('AddProductoRecepcion')}}" class="form-horizontal md-form" id="datosrecepcion" style="font-size: .85em;">
   @csrf
 
-    <input type="text" name="usuario" value="{{Auth::user()->_id}}">
+    <input type="text" name="usuario" value="{{Auth::user()->_id}}" hidden>
     <div class="card-header card">
         <h6>Recepción de productos</h6>
       </div>
@@ -39,7 +39,7 @@
                   <div class="col-sm-3 input-group" >
                     <input type="text" class="form-control form-control-sm" id="codigo" name="codigo" required>
                     <div class="input-group-btn input-group-append">
-                          <button  type="button" class="btn btn-info btn-sm"data-toggle="modal" data-target="#myModal" onclick="Modal('codificador.ObtenCodigoProducto','codigo','descr_producto')"><i class="fa fa-search"></i></button>
+                          <button  type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" onclick="Modal('codificador.ObtenCodigoProducto','codigo','descr_producto')"><i class="fa fa-search"></i></button>
                     </div>
                   </div>
                   <label class="col-lg-6 col-form-label text-left" id="descr_producto" style="font-size: 1.2em; color:blue"></label>

@@ -16,9 +16,9 @@ class Inventario extends Eloquent
               'producto',
 							'almacen',
 							'precio',
-              				'cantidad'
+              'cantidad'
     					  ];
-   public function producto()
+   public function detalle()
       {
           return $this->belongsTo(Producto::class, 'codigo','producto');
       }
