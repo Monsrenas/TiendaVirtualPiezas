@@ -45,7 +45,9 @@
                                                     @foreach($lista as $indice =>$patmt)
                                                         <tr>
                                                             <td style="font-size: 0.8em;"> 
-                                                             <a href="#">{{$patmt['idpersonal'] ?? ''}}</a> 
+                                                             <a href="javascript:Registros('panel.registraPersona', 'Usuario', '_id,{{$patmt['_id']}}', '')">
+                                                                  {{$patmt['idpersonal'] ?? ''}}
+                                                              </a> 
                                                             </td>
                                                             <td>{{$patmt['rol'] ?? '' }}</td>
                                                             <td>{{$patmt['nombre'] ?? '' }}</td>                             

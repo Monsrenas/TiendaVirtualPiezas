@@ -90,7 +90,9 @@
                     <ul class='nested'>
                         
                         <li><a href="{{url('Pre_recepcion')}}">Recepción</a></li>    
-                        <li><a href="{{url('ListadoRecepciones')}}">Movimientos</a></li>                    
+                        <li><a href="{{url('ListadoRecepciones')}}">Movimientos</a></li> 
+                        <li><a href="{{url('ListadoInventario ')}}">Existencia</a></li> 
+                                          
                     </ul>       
                 </li>
 
@@ -234,7 +236,12 @@ function productos($id)
 
 function Registros(vista, coleccion, condiciones, columnas)
 {
-  $data="vista="+vista+"&coleccion="+coleccion+"";
+  let aux=['',''];
+  if (condiciones) {
+                      aux=condiciones.split(',');
+                    }
+
+  $data="vista="+vista+"&coleccion="+coleccion+"&indice="+aux[0]+"&ocurrencia="+aux[1];
    
   $.get('Resgistro', $data, function(subpage){ 
      $('#EspacioAccion').html(subpage);

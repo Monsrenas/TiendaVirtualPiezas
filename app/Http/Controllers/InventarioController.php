@@ -85,23 +85,20 @@ class InventarioController extends Controller
         $lista=Recepcion::groupBy('id')->select('id','proveedor','documento','usuario','almacen','created_at')->get();
         return View('inventario.lista_recepcion')->with('lista',$lista);
     }
+
+
+     public function ListadoInventario()
+    {
+        $lista=Inventario::get();
+        return View('inventario.existencia')->with('lista',$lista);
+    }
 //Filtro
     public function pagina(Request $request)
     {
         //$ListDescuento=$this->DevuelveBase($request);
-        $ListProducto=Inventario::get(); 
-        $filtrado=[];
+        $ListProducto=Inventario::paginate(); 
         
-        return $ListProducto;
-        foreach ($ListProducto as $key => $value) { 
-            $value['codigo']=$key;
-             
-            if ($this->enFiltro($request, $value)) { 
-                                                        return $ListProducto[$key]->detalle;
-                                                    $value['descuento']=$this->descuento($value, $ListDescuento);
-                                                    $filtrado[]=$value;
-        }                                          }
-        return  $filtrado;                             
+        return $ListProducto;                            
     }
 
     public function enFiltro(Request $request, $producto)

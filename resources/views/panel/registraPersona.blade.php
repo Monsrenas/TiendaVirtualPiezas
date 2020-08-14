@@ -1,3 +1,5 @@
+
+
 <div id="Centro" style="font-size: 0.8em;">
   <div class="header">
     <h4>Registro de Personas</h4>
@@ -36,14 +38,14 @@
               <div class="form-group row" style="margin-bottom: 3px; ">
                   <label class="col-lg-2 col-form-label text-right" for="ruc">RUC/ Cédula:</label>
                   <div class="col-sm-3">
-                    <input type="text" class="form-control form-control-sm" id="idpersonal" name="idpersonal" placeholder="" required  >
+                    <input type="text" class="form-control form-control-sm" id="idpersonal" name="idpersonal" placeholder="" value="{{$lista[0]->idpersonal ?? ''}}" required  >
                   </div>
               </div>
 
              <div class="form-group row" style="margin-bottom: 3px; ">
                   <label class="col-lg-2 col-form-label text-right" for="nombre">Nombre:</label>
                   <div class="col-sm-3">
-                    <input type="text" class="form-control form-control-sm" id="nombre" name="nombre" placeholder="">
+                    <input type="text" class="form-control form-control-sm" id="nombre" name="nombre" placeholder="" value="{{$lista[0]->nombre ?? ''}}" >
                   </div>
               </div>
  
@@ -51,21 +53,21 @@
              <div class="form-group row" style="margin-bottom: 3px; ">
                   <label class="col-lg-2 col-form-label text-right" for="telefono">Teléfono:</label>
                   <div class="col-sm-3">
-                    <input type="tel" class="form-control form-control-sm" id="telefono" name="telefono" placeholder="">
+                    <input type="tel" class="form-control form-control-sm" id="telefono" name="telefono" placeholder="" value="{{$lista[0]->telefono ?? ''}}" >
                   </div>
               </div>
 
               <div class="form-group row" style="margin-bottom: 3px; ">
                   <label class="col-lg-2 col-form-label text-right" for="direccion">Dirección:</label>
                   <div class="col-sm-3">
-                    <input type="text" class="form-control form-control-sm" id="direccion" name="direccion" placeholder="">
+                    <input type="text" class="form-control form-control-sm" id="direccion" name="direccion" placeholder="" value="{{$lista[0]->direccion ?? ''}}">
                   </div>
               </div>
 
                <div class="form-group row" style="margin-bottom: 3px; ">
                   <label class="col-lg-2 col-form-label text-right" for="correo">Correo electrónico :</label>
                   <div class="col-sm-3">
-                    <input type="email" class="form-control form-control-sm" id="correo" name="email" placeholder="">
+                    <input type="email" class="form-control form-control-sm" id="correo" name="email" placeholder="" value="{{$lista[0]->email ?? ''}}">
                   </div>
               </div>
       </div>    

@@ -8,7 +8,6 @@
 
 </div>
 
-
 @INCLUDE('reloj') 
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
@@ -35,7 +34,7 @@ function cargarListaProductos(condiciones)
 
      $.get('pagina', $data, function(subpage){ 
         var $element='';  var $elemenX='';
-        console.log(subpage[0]['detalle']);
+        console.log(subpage);
         for (const prop in subpage)
             {    
  			   insertaProducto(subpage[prop]);   
@@ -46,34 +45,6 @@ function cargarListaProductos(condiciones)
   });
 
   }
-
-function descuentos(subpage, prop)
-{	var $valor=0;
-	
-	for (const indice in subpage[1])
-	{	
-		$condiciones=new Array();
-		for (const cond in subpage[1][indice]['condiciones'])
-		{	
-			condicion=subpage[1][indice]['condiciones'][cond];
-			 	
-			if (condicion['campo']=='codigo') {
-												if (condicion['codigo']==prop){
-																                 $valor+=subpage[1][indice]['valor'];
-																               }
-			} else {
-						$condiciones[condicion['campo']]=[];
-						$condiciones[condicion['campo']].push( condicion['codigo']);
-					}
-		}
-	 
-		if (enFiltro(subpage[0][prop] ,$condiciones)) 
-                                                {
-			                                             if (len($condiciones)>0)	{ $valor+=subpage[1][indice]['valor']; }
-                                                }
-	}
-	return $valor;
-}
 
 function insertaProducto($subpage)
 { 	

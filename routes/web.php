@@ -78,6 +78,8 @@ Route::group(['middleware' => 'auth'], function()
 		Route::post('AddProductoRecepcion','MongoController@addItemPre_recepcion')->name('Pre_recepcion');
 		Route::post('Recepcionar','InventarioController@Recepcionar');
 		Route::get('ListadoRecepciones','InventarioController@ListadoRecepciones');
+		Route::get('ListadoInventario','InventarioController@ListadoInventario');
+		
 
 		//Usuarios
 		
