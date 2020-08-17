@@ -34,7 +34,7 @@
   {  
      $data=$("#"+$ElForm).serialize();
 
-     $.get('Resgistro', $data, function(subpage){ 
+     $.get('/Resgistro', $data, function(subpage){ 
         var $element='';  var $elemenX='';
         for (const prop in subpage)
             {

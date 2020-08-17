@@ -47,5 +47,5 @@
 
       ActNumero('NombresADC', 'otras_descripciones');
   });
-  
+  $(document).ready(function(){ ActNumero('NombresADC', 'otras_descripciones');  });
 </script>

@@ -64,18 +64,15 @@ class MongoController extends Controller
 			return View('panel.editaProducto')->with('lista',$todo);	
 	    }
 
-    public function listadoProductos(Request $request)
-    {								
-        $todo=Producto::get();
-        return view('panel.producto')->with('producto',$todo);
-    }
-
 	public function Resgistro(Request $request)
-	    {
+	    {	
 	       $Clase=$this->Clase($request->coleccion);	
 	       $todo=$Clase:: 
 	       when((isset($request->indice)), function($q){
             											 return $q->where(request('indice'),request('ocurrencia'));
+        											  })->
+	       when((isset($request->signo)), function($q){
+            											 return $q->where(request('indice'),request('signo'),request('ocurrencia'));
         											  })->
 	       when((isset($request->columnas)), function($q){
 	       												 $columnas=explode ( ',' ,request('columnas') , 10 );
@@ -90,12 +87,50 @@ class MongoController extends Controller
 
 
 
+public function Listas($clase, $vista, $condicion=null)
+	    {
+
+	      $Clase=$this->Clase($clase);
+
+	      $todo=$Clase:: when((isset($condicion)), function($q){
+	      												$cndcn=explode ( ',' ,request('condicion') , 3 );
+	      												 //dd($cndcn);
+	      												if (count($cndcn)==3)
+	      												{
+	      													return $q->where($cndcn[0],$cndcn[1],$cndcn[2]);	
+	      												 }	else{
+	      												            return $q->where($cndcn[0],$cndcn[1]);}
+        											  })->
+	      					get();
+
+	      return View($vista)->with('lista',$todo);  
+	    }
+
+
+
+
 //Marcas y Modelos 
     public function ListaMarcas()
 	    {
 	        $todo=Marca::get();   
 	      return View('panel.editaMarcaModelo')->with('lista',$todo);  
 	    }
+
+	public function CadenaMarcaModelo(Request $request)
+	{
+		
+		if (strlen($request->codigo)==6)
+		{
+			$modelo=Modelo::where('id_modelo',$request->codigo)->first();
+			return $modelo->marca->nombre.": ".$modelo->nombre;	
+		}
+
+		if (strlen($request->codigo)==3)
+		{
+			$modelo=Marca::where('id_marca',$request->codigo)->first();
+			return $modelo->nombre;	
+		}
+	}   
 
     public function nuevaMarca(Request $request)
 	    {
@@ -161,13 +196,15 @@ class MongoController extends Controller
 	{	
 		$request['password']=Hash::make($request->password);
 		$Clase=$this->Clase('Usuario');
+
 	 	$todo=$Clase::orderBy('email')->where('email', $request->email)->first();
 	 	if (!$todo) {
 	 					$Clase::create($request->all());
 	 				} 
 	 	else { $todo->update($request->all()); }
-		     
-		return redirect('panel.menu');	
+	 	
+
+		return redirect('Listas/Usuario/panel.Lista_personas');	
 	}
  
 

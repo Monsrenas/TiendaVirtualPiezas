@@ -44,7 +44,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach($producto as $indice =>$patmt)
+                                                    @foreach($lista as $indice =>$patmt)
                                                         <tr>
                                                             <td style="font-size: 0.8em;"> 
                                                              <a href="javascript:productos('{{$patmt['codigo']}}')">{{$patmt['codigo']}}</a> 

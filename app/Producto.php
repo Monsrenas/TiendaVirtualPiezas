@@ -31,4 +31,9 @@ class Producto extends Eloquent
           return $this->belongsTo(Fabricante::class,'fabricante','codigo');
       }
 
+    public function categoria_detalle()
+      {
+          return $this->belongsTo(Categoria::class,'categorias','codigo');
+      }  
+
 }

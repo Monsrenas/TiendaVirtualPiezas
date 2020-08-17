@@ -1,3 +1,19 @@
+<script type="text/javascript">
+    function CadenaMarcaModelo(codigo)
+  {
+      $data="codigo="+codigo;
+      
+      $.get('/CadenaMarcaModelo', $data, function(subpage){
+          
+         NombraElemento(subpage, 'MMV'+codigo);
+
+        }).fail(function() {
+           console.log('Error en carga de Datos');
+      });
+
+  }
+
+</script>
 <div class="modal" id="xVersiones" data-backdrop="false"  >
   <div class="modal-dialog" style="width: 1200px; max-width: 600px;">
     <div class="modal-content">
@@ -45,7 +61,8 @@
                  <div style='margin-top:4px' class="row col-md-12">
                   <div class="col-md-12">
                     <input type='text' class='col-md-2' name='modelos[]' value='{{$xItem}}'  placeholder='Código' readonly>
-                    <label class="col-md-8">Prueba del texto que puede ir dentro</label>
+                    <label class="col-md-8" id="MMV{{$xItem}}"></label>
+                    <script type="text/javascript">CadenaMarcaModelo('{{$xItem}}');</script>
                     <span class="col-md-2 control-sm">
                       <button class='btn btn-default fa fa-trash-o' type='button'></button>
                     </span>
@@ -92,7 +109,7 @@
 
   $data="coleccion=Marca&columnas=nombre,id_marca";
 
-  $.get('Resgistro', $data, function(subpage){
+  $.get('/Resgistro', $data, function(subpage){
       
      for (const indice in subpage)
       {
@@ -125,7 +142,7 @@
         vaciaSelecct(casilla);
         $data="coleccion="+coleccion+"&columnas="+columnas+"&indice="+campo+"&ocurrencia="+valor.value;
         
-        $.get('Resgistro', $data, function(subpage){ 
+        $.get('/Resgistro', $data, function(subpage){ 
            for (const indice in subpage)
             {
                      AgregaOpcion(casilla, subpage[indice]['nombre'], subpage[indice][ID] );
@@ -156,7 +173,7 @@
         return x;
     }
 
-
+   $(document).ready(function(){ ActNumero('VersionADC', 'codigo_modelo');  });
 </script>
 
 

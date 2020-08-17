@@ -73,7 +73,7 @@ ul, #catUL {
 
     $data="coleccion=Categoria";
 
-     $.get('Resgistro', $data, function(subpage){ 
+     $.get('/Resgistro', $data, function(subpage){ 
         for (const prop in subpage)
             {
 

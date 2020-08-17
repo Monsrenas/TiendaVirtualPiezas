@@ -12,17 +12,21 @@
   
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 
-             
-    <!--datables CSS básico-->
-    <link rel="stylesheet" type="text/css" href="{{Request::root()}}/datatables/datatables.min.css"/>
-      
-    <!-- datatables JS -->
-    <script type="text/javascript" src="{{Request::root()}}/datatables/datatables.min.js"></script>    
 
 
+<link rel="stylesheet" href="{{ URL::asset('dataTables-1.10.21/DataTables-1.10.21/css/jquery.dataTables.min.css') }}">
 
-<link rel="stylesheet" href="{{Request::root()}}/css/style.css">
 
+{{-- datatables--}}
+    <script type="text/javascript" src="{{ asset('dataTables-1.10.21/DataTables-1.10.21/js/jquery.dataTables.min.js')}}"></script>
+
+
+<?php  
+    $rol=Auth::user()->rol ?? 10;
+?>
+
+
+<link rel="stylesheet" href="{{asset('css/style.css')}}">
 
 </head>
 <body style="background: #ECF0F1;">
@@ -37,7 +41,7 @@
               <span class="navbar-toggler-icon"></span> 
         </button>
 
-        <a class="navbar-brand mx-auto" href="#">MAZ Partes</a>
+        <a class="navbar-brand mx-auto" href="#">MAZPartes</a>
         @guest
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('login') }}">Entrar</a>
@@ -88,11 +92,17 @@
                         </a>
                     </span>
                     <ul class='nested'>
-                        
-                        <li><a href="{{url('Pre_recepcion')}}">Recepción</a></li>    
+                      @if ( isset(Auth::user()->acceso['or'] ))  
+                        <li><a href="{{url('Pre_recepcion')}}">Recepción</a></li>
+                      @endif
+
+                      @if ( isset(Auth::user()->acceso['om'] ))      
                         <li><a href="{{url('ListadoRecepciones')}}">Movimientos</a></li> 
+                      @endif
+
+                      @if ( isset(Auth::user()->acceso['oe'] )) 
                         <li><a href="{{url('ListadoInventario ')}}">Existencia</a></li> 
-                                          
+                      @endif                   
                     </ul>       
                 </li>
 
@@ -106,21 +116,29 @@
                         </a>
                     </span>
                     <ul class='nested'>
-                        <li>
-                           
-                           <a href="{{url('listaProductos')}}" style="float: left;" >Productos </a>
-                            <a href="javascript: productos('')">
-                                  <i class="fa fa-plus-square-o text-right" style=" font-size: 0.98em; vertical-align: middle; height: 21px; width: 121px; padding-right: 2px;"></i>
-                       
-                            </a>
-                           
-                                
 
+                       @if ( isset(Auth::user()->acceso['cp'] ))
+                        <li> 
+                           <a href="{{url('/Listas/Producto/panel.producto')}}" style="float: left;" >Productos </a>
+                            <a href="javascript: productos('')">
+                                  <i class="fa fa-plus-square-o text-right" style=" font-size: 0.98em; vertical-align: middle; height: 21px; width: 121px; padding-right: 2px; color: white;"></i>
+                       
+                            </a> 
                         </li>
-                        
+                        @endif
+
+                        @if ( isset(Auth::user()->acceso['cf'] ))
                         <li><a href="#">Fabricantes</a></li>
+                        @endif
+
+                        @if ( isset(Auth::user()->acceso['cm'] ))
                         <li><a href="{{url('EdicionMarcaModelo')}}">Marcas y Modelos</a></li>
-                        <li><a href="#">Categorias</a></li>                        
+                        @endif
+
+                        @if ( isset(Auth::user()->acceso['cc'] ))
+                        <li><a href="#">Categorias</a></li>    
+                        @endif
+
                     </ul>       
                 </li>
 
@@ -135,20 +153,18 @@
                         </a>
                     </span>
                     <ul class='nested'>
+                       @if (( isset(Auth::user()->acceso['pp'] ))or( !isset(Auth::user()->acceso )))
                         <li>
                            
-                           <a href="javascript:Registros('panel.Lista_personas', 'Usuario', '', '')" style="float: left;" >Personas </a>
-                            <a href="javascript:Registros('panel.registraPersona', 'Usuario', '', '')">
-                                  <i class="fa fa-plus-square-o text-right" style=" font-size: 0.98em; vertical-align: middle; height: 21px; width: 121px; padding-right: 2px;"></i>
-                       
-                            </a>
-                           
-                                
-
-                        </li>     
+                           <a href="{{url('Listas/Usuario/panel.Lista_personas/rol,>=,'.$rol.' ')}}" style="float: left;" >Personas </a>
+                            <a href="javascript:Registros('panel.registraPersona', 'Usuario', '_id,'', '')">
+                                  <i class="fa fa-plus-square-o text-right" style=" font-size: 0.98em; vertical-align: middle; height: 21px; width: 121px; padding-right: 2px; color: white;"></i>
+                            </a> 
+                        </li>
+                        @endif     
                     </ul>           
                 </li>
-
+ 
 
                 <li>
                     <span  class='caret'>
@@ -218,7 +234,7 @@
 function productos($id)
 { 
     $data="id="+$id;    
-    $.get('productos', $data, function(subpage){
+    $.get('/productos', $data, function(subpage){
        $('#EspacioAccion').html(subpage);        
 
     }).fail(function() {
@@ -236,14 +252,16 @@ function productos($id)
 
 function Registros(vista, coleccion, condiciones, columnas)
 {
+
   let aux=['',''];
   if (condiciones) {
                       aux=condiciones.split(',');
+
                     }
 
   $data="vista="+vista+"&coleccion="+coleccion+"&indice="+aux[0]+"&ocurrencia="+aux[1];
    
-  $.get('Resgistro', $data, function(subpage){ 
+  $.get('/Resgistro', $data, function(subpage){ 
      $('#EspacioAccion').html(subpage);
 
     }).fail(function() {

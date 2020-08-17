@@ -6,7 +6,10 @@
   @csrf
 
     <div class="card-header card">
-        <h6>Registro de productos</h6>
+         <div class="row">  
+               <strong class="col-lg-10" style="font-size: 1.6em;" >Registro de productos</strong>
+              <div class="col-lg-1"><a href="javascript:productos('')" class="btn fa fa-plus btn-success"></a></div>
+         </div>
       </div>
     <div class="col-lg-12 card" style="background: white; padding: 20px; ">
       
@@ -56,24 +59,54 @@
 
               <div class="form-group row NatJur" style="margin-bottom: 3px; ">
                   <label class="col-lg-2 col-form-label text-md-left text-lg-right " for="codigo_fabricante">Fabricante:</label>
+            {{--       
                   <div class="col-sm-3 input-group" >
                     <input type="text" class="form-control form-control-sm" id="codigo_fabricante" name="fabricante" placeholder="..." value="{{$lista->fabricante ?? ''}}">
                     <div class="input-group-btn input-group-append">
                           <button  type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" onclick="Modal('codificador.ObtenCodigoFabricante','codigo_fabricante','descr_fabricante')"><i class="fa fa-search"></i></button>
                     </div>
                   </div>
-                  <label class="col-lg-2 col-form-label text-left" id="descr_fabricante"></label>
+            --}}
+
+              <div class="input-group col-sm-3">
+                <input type="text" class="form-control form-control-sm " id="codigo_fabricante" name="fabricante" placeholder="..." value="{{$lista->fabricante ?? ''}}" >
+                <div class="input-group-prepend" >
+                  <span class="input-group-append form-control form-control-sm form-inline" id="descr_fabricante"  
+                        style="width: 100%; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;" >
+                     {{$lista->fabricantes->nombre ?? ''}}
+                  </span>
+                </div>
+                <div class="input-group-btn input-group-append ">
+                  <button  type="button" class="btn btn-info form-control form-control-sm btn-sm" data-toggle="modal" data-target="#myModal" onclick="Modal('codificador.ObtenCodigoFabricante','codigo_fabricante','descr_fabricante')"><i class="fa fa-search"></i></button>
+                </div>
+              </div>
+
               </div>
 
               <div class="form-group row NatJur" style="margin-bottom: 3px; ">
                  <label class="col-lg-2 col-form-label text-md-left text-lg-right" for="codigo_categoria">Categoría:</label>
+             {{--    
                  <div class="col-sm-3 input-group">
                     <input type="text" class="form-control form-control-sm" id="codigo_categoria" name="categorias" placeholder="..." value="{{$lista->categorias ?? ''}}">
                     <div class="input-group-btn input-group-append">
                           <button type="button" class="btn btn-info btn-sm"data-toggle="modal" data-target="#myModal" onclick="Modal('codificador.ObtenCodigoCategoria','codigo_categoria','descr_categoria')"><i class="fa fa-search"></i></button>
                     </div>          
                  </div>
-                  <label class="col-lg-2 col-form-label text-left" id="descr_categoria"></label>
+              --}}
+
+              <div class="input-group col-sm-3">
+                <input type="text" class="form-control form-control-sm " id="codigo_categoria" name="categorias" placeholder="..." value="{{$lista->categorias ?? ''}}" >
+                <div class="input-group-prepend" >
+                  <span class="input-group-append form-control form-control-sm form-inline" id="descr_categoria"  
+                        style="width: 100%; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;" >
+                     {{$lista->categoria_detalle->nombre ?? ''}}
+                  </span>
+                </div>
+                <div class="input-group-btn input-group-append ">
+                  <button  type="button" class="btn btn-info form-control form-control-sm btn-sm" data-toggle="modal" data-target="#myModal" onclick="Modal('codificador.ObtenCodigoCategoria','codigo_categoria','descr_categoria')"><i class="fa fa-search"></i></button>
+                </div>
+              </div>
+
               </div>
 
               <div class="form-group row NatJur " style="margin-bottom: 5px; ">
@@ -112,6 +145,7 @@
    
                   </div>
                    <label class="col-lg-2 col-form-label text-left" id="descr_modelo"></label><br>
+
               </div>
               </div>
             
@@ -123,19 +157,23 @@
      </form>
 </div>
 
+  
+
 <script type="text/javascript">
     $('body').on('click', '.fa-trash-o', function()  //Boton que borra categoria
 {
     $(this).parent().parent().remove();  
+    $("#btGuardaProd").attr('disabled',false);
     //$(this).parent().siblings().find('input').val()
     //$(this).parent().parent().attr('class')
- 
+    
 });
+
 $('input').attr("autocomplete","off");
-$('body').on('change', '#codigo_producto', function()
+$('body').on('change paste', '#codigo_producto', function()
 {
     $data="id="+$(this).val(); 
-    $.get('productos', $data, function(subpage){
+    $.get('/productos', $data, function(subpage){
        $('#EspacioAccion').html(subpage);        
     }).fail(function() {
        console.log('Error en carga de Datos');
@@ -155,13 +193,22 @@ function GuardarProducto()
 {
   var data=$('#RegProducto').serialize();
      var data="_token={{ csrf_token()}}&"+data;
-     console.log(data);
-      $.post('GuardaProducto', data, function(subpage){  
+      $.post('/GuardaProducto', data, function(subpage){  
         
               $('#btGuardaProd').attr("disabled",true);
               $("#codigo_producto").focus();
     });
 }
+
+function NombraElemento(nombre, item)
+{
+   etiqt=$('#'+item);
+
+   if (etiqt.length>0) {
+                         etiqt[0]['textContent']=nombre; 
+                        }
+}
+
 function ActNumero(elemento, visual)
 {
   $d='';

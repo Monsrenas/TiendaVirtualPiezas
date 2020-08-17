@@ -73,7 +73,7 @@ transition-duration:0.2s;
      $data='{{ csrf_token()}}&referencia=productos';  
      $('#xCentro').empty();
 
-     $.get('ListaImagenes', $data, function(subpage){ 
+     $.get('/ListaImagenes', $data, function(subpage){ 
         
           for (const imagen in subpage)
           {

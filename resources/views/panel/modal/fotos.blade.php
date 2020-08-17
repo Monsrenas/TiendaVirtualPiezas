@@ -76,7 +76,7 @@
   }
 
        $data='{{ csrf_token()}}&url=panel.modal.galeria&campo=&descripcion=';
-         $.get('Vista', $data, function(subpage){ 
+         $.get('/Vista', $data, function(subpage){ 
                                 $('#FotoGaleria').empty().append(subpage);
                                     }).fail(function() {
                                            console.log('Error en carga de Datos');
@@ -92,5 +92,5 @@
   $('input[type=file]').on('change', function(e){
     $(this).next().find('input').val($(this).val());
   });
- 
+ $(document).ready(function(){ ActNumero('FotoADC', 'fotoNombre');  });
 </script>

@@ -1,3 +1,4 @@
+ 
 <div class="modal" id="xMedidas" data-backdrop="false"  >
   <div class="modal-dialog" style="width: 1200px; max-width: 600px;">
     <div class="modal-content">
@@ -24,13 +25,14 @@
             <div class="col-md-5 control-lg"> <input type="text" class="form-control input-lg" id="DATNumerico" placeholder="Valor" style="display: none;"></div>
         </div>
 
-            @if (isset($lista->medidas))	
-            	@foreach ($lista->medidas as $xItem)
+            @if (isset($lista->medidas))
+
+            	@foreach ($lista->medidas as $key=>$xItem)
         
                  <div style='margin-top:4px' class="row col-md-12">
                   <div class="col-md-12">
-                    <input type='text' class='col-md-2' name='medidas[]' value='{{$xItem}}'  placeholder='Código' readonly>
-                    <label class="col-md-8"> </label>
+                    <input type='text' class='col-md-2' name='medidas[{{$key}}]' value='{{$xItem}}'  placeholder='Código' readonly>
+                    <label class="col-md-8" id="medida{{$key}}"> </label>
                     <span class="col-md-2 control-sm">
                       <button class='btn btn-default fa fa-trash-o' type='button'></button>
                     </span>
@@ -61,10 +63,11 @@ $seleccionado='';
   $('#agregaMedida').on('click', function(){
 
       valor=parseInt($('#DATNumerico').val(), 10);
-      console.log(valor);
+      
   	  if ((! $seleccionado)||(valor==0)) {return;}
       
-      var NewCateg="<div style='margin-top:4px' class='row col-md-12'><div class='col-md-12'><input type='text' class='col-md-2' name=\"medidas["+$seleccionado+"]\" value='"+valor+"' readonly> <label class='col-md-8'>"+$CadDescr+"</label><span class='col-md-2 control-sm'><button class='btn btn-default fa fa-trash-o' type='button'></button></span></div></div>";
+      
+      var NewCateg="<div style='margin-top:4px' class='row col-md-12'><div class='col-md-12'><input type='text' class='col-md-2' name='medidas["+$seleccionado+"]' value='"+valor+"' readonly> <label class='col-md-8'>"+$CadDescr+"</label><span class='col-md-2 control-sm'><button class='btn btn-default fa fa-trash-o' type='button'></button></span></div></div>";
 
       $('#MedidaADC').append(NewCateg);
       $("#slctMedida").val('0');
@@ -82,18 +85,21 @@ $seleccionado='';
 
   $data="coleccion=Medida";
 
-  $.get('Resgistro', $data, function(subpage){ 
+  $.get('/Resgistro', $data, function(subpage){ 
      for (const indice in subpage)
       {
+
                AgregaOpcion('slctMedida', subpage[indice]['nombre'], subpage[indice]['codigo'] )
+               NombraElemento(subpage[indice]['nombre'],'medida'+subpage[indice]['codigo']);
       }
 
     }).fail(function() {
        console.log('Error en carga de Datos');
   });
   
-     function AgregaOpcion($id, $opcion, $valor)
+  function AgregaOpcion($id, $opcion, $valor)
    {
+
       var x = document.getElementById($id);
       var option = document.createElement("option");    
       option.text = $opcion ;
@@ -112,6 +118,7 @@ function xSelecciona(valor)
   $('#DATNumerico').css("display", "block");
   $('#DATNumerico').focus();
 }
+$(document).ready(function(){ ActNumero('MedidaADC', 'codigo_medida');  });
 </script>
 
 

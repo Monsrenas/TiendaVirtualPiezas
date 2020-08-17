@@ -33,7 +33,7 @@ Route::get('DevuelveBase','KaizenController@DevuelveBase');
 Route::get('Info_Producto','KaizenController@Info_Producto');
 Route::post('GuardaRegistro','KaizenController@GuardaRegistro');
 
-Route::get('Vista','KaizenController@Vista');
+Route::get('/Vista','KaizenController@Vista');
 
 Route::get('CarritoAgregarItem','KaizenController@CarritoAgregarItem');
 Route::get('CarritoEliminaItem','KaizenController@CarritoEliminaItem');
@@ -61,7 +61,7 @@ Route::group(['middleware' => 'auth'], function()
    		//Route::get('/', 'HomeController@showWelcome'); // Vista de inicio
 		Route::get('/panel', function () { return view('panel.menu'); });
 
-		Route::get('listaProductos','MongoController@listadoProductos');
+		 
 		Route::get('Resgistro','MongoController@Resgistro');
 		Route::post('GuardaProducto','MongoController@GuardaProducto');
 		Route::get('productos', 'MongoController@EditaProducto');
@@ -86,6 +86,8 @@ Route::group(['middleware' => 'auth'], function()
 		
 		//Operaciones Comunes
 		Route::post('BorraItem','MongoController@BorraItem'); 
+
+		Route::get('CadenaMarcaModelo','MongoController@CadenaMarcaModelo');
 });
 
 
@@ -97,3 +99,4 @@ Route::get('CreaBases', function () {
     return view('creabases');
 });
 
+Route::get('Listas/{clase}/{vista}/{condicion}', 'MongoController@Listas');

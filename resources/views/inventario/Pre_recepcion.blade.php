@@ -44,8 +44,7 @@
                   </div>
                   <label class="col-lg-6 col-form-label text-left" id="descr_producto" style="font-size: 1.2em; color:blue"></label>
         </div>
-
-        
+   
        <div class="form-group row"  style="margin-bottom: 3px; ">
             <label class="col-lg-2 col-form-label text-md-left text-lg-right" for="codigo">Cantidad:</label>
             <div class="col-sm-3">
@@ -67,10 +66,7 @@
                              
         <div class="card" id="ListaPrerecepcion"  style="margin-top: 20px;">
  
-        </div> 
-
-      		  
-    		  
+        </div>		  
     </div>
       
   </form>
@@ -92,7 +88,6 @@
     }).fail(function() {
        console.log('Error en carga de Datos');
   });
-
 
 $('body').on('blur', '#codigo', function()
     { 
@@ -121,14 +116,12 @@ $('body').on('blur', '#codigo', function()
       });
   }
 
-
   $('body').on( 'click', '.fa-trash-o', function () {  
                                                                             $tablaMarcas
                                                                                 .row( $(this).parents('tr') )
                                                                                 .remove()
                                                                                 .draw();
                                                                             } );
-
  </script>
   }
 @endsection

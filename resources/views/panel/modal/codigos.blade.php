@@ -47,5 +47,5 @@
 
       ActNumero('CodigosADC', 'codigo_adicionales');      
   });
-  
+  $(document).ready(function(){ ActNumero('CodigosADC', 'codigo_adicionales');  });
 </script>

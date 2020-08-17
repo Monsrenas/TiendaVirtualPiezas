@@ -1,5 +1,11 @@
 
+<script type="text/javascript">
+  function abrirColapse(elemento)
+  {
+    $('#'+elemento).collapse('show');
+  }
 
+</script>
 <div id="Centro" style="font-size: 0.8em;">
   <div class="header">
     <h4>Registro de Personas</h4>
@@ -25,7 +31,7 @@
 
               <div class="form-group row" style="margin-bottom: 3px; "> 
                   <label class="col-lg-2 col-form-label text-right" for="tipo">Rol:</label>
-                  <div class="col-sm-2">
+                  <div class="col-sm-3">
                     <select class="form-control" id="rol" name="rol" style="font-size: 1em;">
                       <option value=1 >Super Administrador</option>
                       <option value=2 >Administrador de sistema</option>
@@ -34,7 +40,8 @@
                     </select>
                   </div>
               </div>
-
+              <script type="text/javascript">$("#rol").val('{{$lista[0]->rol ?? ''}}');</script>
+               
               <div class="form-group row" style="margin-bottom: 3px; ">
                   <label class="col-lg-2 col-form-label text-right" for="ruc">RUC/ Cédula:</label>
                   <div class="col-sm-3">
@@ -73,29 +80,35 @@
       </div>    
   </div>
 
-
-
 <div class="card-header card">
         <h5>Nivel de acceso</h5>
 </div>
 <div class="col-lg-12" style="background: white; padding: 20px; ">
-
+          
           <div class="card-header" id="headingOne" style="background: #e7e7e7;">
-            <input type="checkbox" data-toggle="collapse" data-target="#collapsediv1" > Operaciones</>
+            <input type="checkbox" data-toggle="collapse" data-target="#collapsediv1"> Operaciones</>
           </div>
           <div id='collapsediv1' class='collapse p-4  border  col-lg-12 row' style="margin-left:1px;">
-              <div class="col-lg-4">              
-                          <input type="checkbox" class="control-sm col-lg-1" id="recepcion" name="acceso[or]">
-                          <label class="col-lg-4 col-form-label" for="recepcion">Recepción:</label>
+            <div class="col-lg-4">  
+              <div class="form-group">            
+                <input type="checkbox" class="control-sm col-lg-1" id="recepcion" name="acceso[or]">
+                <label class="col-lg-4 col-form-label" for="recepcion">Recepción:</label>
               </div>
+              <div class="form-group t-1 b-1">
+                <input type="checkbox" class="control-sm col-lg-1" id="movimientos" name="acceso[om]">
+                <label class="col-lg-4 col-form-label control-sm" for="movimientos">Movimientos:</label>
+              </div>
+              <div class="form-group">
+                <input type="checkbox" class="control-sm col-lg-1" id="existencias" name="acceso[oe]">
+                <label class="col-lg-4 col-form-label control-sm" for="existencias">Existencias:</label>
+              </div>
+            </div>
           </div>
         
-
-
           <div class="card-header" id="headingOne" style="background: #e7e7e7;">
-            <input type="checkbox" data-toggle="collapse" data-target="#collapsedivX"> Catálogo</>
+            <input type="checkbox" data-toggle="collapse" data-target="#collapsediv2"> Catálogo</>
           </div>
-          <div id='collapsedivX' class='collapse p-4  border  col-lg-12 row' style="margin-left:1px;">
+          <div id='collapsediv2' class='collapse p-4  border  col-lg-12 row' style="margin-left:1px;">
 
 
           <div class="col-lg-4">         
@@ -120,16 +133,11 @@
                       </div>
           </div>
       </div>
-
-
-
-
-
        
       <div class="card-header col-sm-12" id="headingOne" style="background: #e7e7e7;">
-        <input type="checkbox" data-toggle="collapse" data-target="#collapsediv2"> Personas</>
+        <input type="checkbox" data-toggle="collapse" data-target="#collapsediv3"> Personas</>
       </div>
-          <div id='collapsediv2' class='collapse p-4  border'>
+          <div id='collapsediv3' class='collapse p-4  border'>
                   <div class="col-lg-4">
                       <div class="form-group" style="margin-bottom: 3px; ">
                           <input type="checkbox" class="control-sm col-lg-1" id="personas" name="acceso[pp]">
@@ -143,6 +151,24 @@
      </form>
 </div>
 
+
+<?php $grp=[['or'=>0, 'om'=>0,'oe'=>0],['cp'=>0,'cf'=>0,'cm'=>0,'cc'=>0],['pp'=>0]] ?>
+@if (isset($lista[0]->acceso))
+  @foreach ($lista[0]->acceso as $key=>$opciones)      
+       <script type="text/javascript">
+         ($('input[type="checkbox"][name="acceso[{{$key}}]"]'))[0]['checked']='true';
+       </script> 
+  @endforeach
+  @foreach ($grp as $opp=>$opciones) 
+       @if ( count( array_intersect_key($lista[0]->acceso,$opciones) )>0 ) 
+       <script type="text/javascript">
+         ($('input[type="checkbox"][data-target="#collapsediv{{$opp+1}}"]'))[0]['checked']='true';
+         abrirColapse('collapsediv{{$opp+1}}');       
+       </script>
+       @endif                
+  @endforeach
+@endif
+
 <script type="text/javascript">
     $('body').on('click', '.fa-trash-o', function()  //Boton que borra categoria
 {
@@ -151,7 +177,9 @@
     //$(this).parent().parent().attr('class')
  
 });
+
 $('input').attr("autocomplete","off");
+
 $('body').on('change', '#email', function()
 {
     $data="id="+$(this).val(); 
@@ -161,7 +189,6 @@ $('body').on('change', '#email', function()
        console.log('Error en carga de Datos');
   });
 });
-
  
 function GuardarPersona()
 {
@@ -174,5 +201,4 @@ function GuardarPersona()
               $("#codigo_producto").focus();
     });
 }
-
 </script>
