@@ -7,7 +7,7 @@
 <div id="Centro"  style="font-size: .7em;">
   <div class="card card-sm">
     <div class="card-header">
-        <h6>Listado de Recepción</h6>
+        <h6>Listado de Movimientos</h6>
     </div>
     <div class="card-body">
        
@@ -28,7 +28,7 @@
                                             <th>Recepción</th>
                                             <th>Proveedor</th>
                                             
-                                            <th>Usuario</th>
+                                            <th>Realizada por</th>
                                             <th>Almacén</th>
                                         </tr>
                                     </thead>

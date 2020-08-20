@@ -12,7 +12,7 @@
                 <th>
                     <li> <strong>Recepción: </strong> {{ substr($info->campo,0,14)}}</li>  
                     <li><strong>fecha: </strong>{{$lista[0]->created_at}} </li>
-                    <li><strong>Usuario: </strong>{{$lista[0]->persona->nombre}}   </li>
+                    <li><strong>Realizada por: </strong>{{$lista[0]->persona->nombre}}   </li>
                 </th>
                 <th>
                    <li> <strong>Destino: </strong> {{ $lista[0]->almacen}}</li>
@@ -44,10 +44,10 @@
                                             <tr>
                                                 <td width="5">{{$i++}}</td>
                                                 <td>{{ $recp->codigo ?? '' }}</td>
-                                                <td >{{ $recp->codigo ?? '' }}</td>
-                                                <td>{{ $recp->cantidad ?? ''}}</td>
-                                                <td >{{ $recp->cantidad ?? ''}}</td>
-                                                <td >{{ $recp->precio ?? ''}}</td>
+                                                <td >{{ $recp->detalles->nombre ?? '' }}</td>
+                                                <td style="text-align: right;">{{ $recp->cantidad ?? 0}}</td>
+                                                <td style="text-align: right;">{{ $recp->cantidad ?? ''}}</td>
+                                                <td style="text-align: right;">{{ $recp->precio ?? ''}}</td>
                                             </tr>
                                         @endforeach                  
                                     </tbody>        

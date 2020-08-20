@@ -13,15 +13,30 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('Lista_Producto');
+//Route::get('/', function () { return view('welcome1'); });
+Route::get('/','InventarioController@pagina');
+Route::get('/producto', function () {
+    return view('vista_productos_categoria');
 });
+
+Route::get('/pago', function () {
+    return view('pago_producto');
+});
+
+Route::get('/ventaproducto', function () {
+    return view('venta_producto');
+});
+
+Route::get('/venta', function () {
+    return view('vista_detalle_producto');
+});
+
+
+
 
 Route::get('login', function () {
     return view('autenticacion.Funciones_login');
 });
-
-
 
 Route::get('pagina','InventarioController@pagina');
 
@@ -49,10 +64,11 @@ Route::get('inventario', function () { return view('menu'); });
 
 Route::get('listadoProductos','KaizenController@listadoProductos');
 
-
+ 
 Route::post('Traslado','KaizenController@MongoStore'); //UTILITARIO TEMPORAL
 Route::post('GuardaMongo','MongoController@Store');  //UTILITARIO TEMPORAL
-Route::get('Pre', function () { return view('inventario.lista_prerecepcion'); });
+//Route::get('CreaBases', function () {  return view('creabases'); });
+//Route::get('Pre', function () { return view('inventario.lista_prerecepcion'); });
 
 
 /*Rutas privadas solo para usuarios autenticados*/
@@ -72,6 +88,9 @@ Route::group(['middleware' => 'auth'], function()
 		Route::get('nuevoModelo','MongoController@nuevoModelo');
 		Route::post('ActualizaMarca','MongoController@ActualizaMarca');
 		Route::post('ActualizaModelo','MongoController@ActualizaModelo');
+		Route::get('nuevaFabricante','MongoController@nuevaFabricante');
+		Route::post('ActualizaFabricante','MongoController@ActualizaFabricante');
+		
 
 		//Inventario
 		Route::get('Pre_recepcion', function () { return view('inventario.Pre_recepcion'); });
@@ -90,13 +109,26 @@ Route::group(['middleware' => 'auth'], function()
 		Route::get('CadenaMarcaModelo','MongoController@CadenaMarcaModelo');
 });
 
-
+//Usuarios
 Auth::routes();
 
 Route::get('/admin', 'HomeController@index')->name('admin');
 Route::post('RegistrarUsuario','MongoController@RegistrarUsuario');
-Route::get('CreaBases', function () {
-    return view('creabases');
+
+
+
+Route::get('Listas/{clase}/{vista}/{condicion?}', 'MongoController@Listas');
+
+
+
+
+
+//Gabriel
+
+Route::get('/datosempresa', function () {
+    return view('administracion/datosempresa');
 });
 
-Route::get('Listas/{clase}/{vista}/{condicion}', 'MongoController@Listas');
+Route::get('/reporte', function () {
+    return view('administracion/reporte');
+});

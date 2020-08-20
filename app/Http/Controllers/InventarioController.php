@@ -36,7 +36,7 @@ class InventarioController extends Controller
             if ($recepcion) {
                              $recepcion->cantidad+=$value->cantidad;
                              $recepcion->save();
-                             echo 'Existent: ';
+                             
                            } else {
                                     $recepcion=new Inventario;
                                     $recepcion=[
@@ -47,8 +47,7 @@ class InventarioController extends Controller
                                             'cantidad'=>$value->cantidad ];
                                             Inventario::create($recepcion);
                                   }
-                                
-            echo $recepcion['codigo'].',   Cantidad:'.$recepcion['cantidad'].'<br>';                     
+                                                     
             
         }
         $this->CreaInformeRecepcion($PreRecepcion);
@@ -76,7 +75,7 @@ class InventarioController extends Controller
                                   }
          
 
-       return $pre_recepcion;
+       return View('inventario.lista_recepcion')->with('lista',$pre_recepcion);
     }
 
 
@@ -87,7 +86,7 @@ class InventarioController extends Controller
     }
 
 
-     public function ListadoInventario()
+    public function ListadoInventario()
     {
         $lista=Inventario::get();
         return View('inventario.existencia')->with('lista',$lista);
@@ -96,9 +95,9 @@ class InventarioController extends Controller
     public function pagina(Request $request)
     {
         //$ListDescuento=$this->DevuelveBase($request);
-        $ListProducto=Inventario::paginate(); 
-        
-        return $ListProducto;                            
+        $ListProducto=Inventario::paginate(9); 
+         $view = View::make('single');
+        return $view->with('lista',$ListProducto);                           
     }
 
     public function enFiltro(Request $request, $producto)
@@ -171,7 +170,7 @@ class InventarioController extends Controller
                 }      
             }      
         }            
-
+$view->with('info',$request);
         if ((isset($condicion['fabricante']))and(strpos( $fabricante, $condicion['fabricante'][0] )!==FALSE))
         { 
             $bndr=$bndr+1;      $bandera['fabricante']='1';

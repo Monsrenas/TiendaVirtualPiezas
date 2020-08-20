@@ -35,7 +35,7 @@
                                             <tr>
                                                 <td width="5">{{$i++}}</td>
                                                 <td>{{$recp->producto}}</td>
-                                                <td >{{ $recp->producto ?? '' }}</td>
+                                                <td >{{ $recp->detalles->nombre ?? '' }}</td>
                                                 <td style="text-align: right;">{{ $recp->precio ?? ''}}</td>
                                                 <td style="text-align: right;">{{ $recp->cantidad ?? ''}}</td>
                                                 <td style="text-align: center;">{{ $recp->almacen ?? ''}}</td>

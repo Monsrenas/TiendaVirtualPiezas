@@ -21,10 +21,7 @@
     <script type="text/javascript" src="{{ asset('dataTables-1.10.21/DataTables-1.10.21/js/jquery.dataTables.min.js')}}"></script>
 
 
-<?php  
-    $rol=Auth::user()->rol ?? 10;
-?>
-
+  
 
 <link rel="stylesheet" href="{{asset('css/style.css')}}">
 
@@ -80,7 +77,7 @@
 
   <body>
     <div class="area"></div>
-    <nav class="main-menu" style="color: black; color: black; margin-top: 57px;">
+    <nav class="main-menu" style="color: black; color: black; margin-top: 57px; position: fixed;">
             <ul>     
                 <li>
                     <span  class='caret'>
@@ -117,7 +114,7 @@
                     </span>
                     <ul class='nested'>
 
-                       @if ( isset(Auth::user()->acceso['cp'] ))
+                       @if (( isset(Auth::user()->acceso['cp'] ))or(Auth::user()->rol=1))
                         <li> 
                            <a href="{{url('/Listas/Producto/panel.producto')}}" style="float: left;" >Productos </a>
                             <a href="javascript: productos('')">
@@ -127,15 +124,15 @@
                         </li>
                         @endif
 
-                        @if ( isset(Auth::user()->acceso['cf'] ))
-                        <li><a href="#">Fabricantes</a></li>
+                        @if (( isset(Auth::user()->acceso['cf'] ))or(Auth::user()->rol=1))
+                        <li><a href="{{url('/Listas/Fabricante/panel.lista_fabricante')}}">Fabricantes</a></li>
                         @endif
 
-                        @if ( isset(Auth::user()->acceso['cm'] ))
+                        @if (( isset(Auth::user()->acceso['cm'] ))or(Auth::user()->rol=1))
                         <li><a href="{{url('EdicionMarcaModelo')}}">Marcas y Modelos</a></li>
                         @endif
 
-                        @if ( isset(Auth::user()->acceso['cc'] ))
+                        @if (( isset(Auth::user()->acceso['cc'] ))or(Auth::user()->rol=1))
                         <li><a href="#">Categorias</a></li>    
                         @endif
 
@@ -156,7 +153,7 @@
                        @if (( isset(Auth::user()->acceso['pp'] ))or( !isset(Auth::user()->acceso )))
                         <li>
                            
-                           <a href="{{url('Listas/Usuario/panel.Lista_personas/rol,>=,'.$rol.' ')}}" style="float: left;" >Personas </a>
+                           <a href="{{url('Listas/Usuario/panel.Lista_personas')}}" style="float: left;" >Personas </a>
                             <a href="javascript:Registros('panel.registraPersona', 'Usuario', '_id,'', '')">
                                   <i class="fa fa-plus-square-o text-right" style=" font-size: 0.98em; vertical-align: middle; height: 21px; width: 121px; padding-right: 2px; color: white;"></i>
                             </a> 
@@ -186,7 +183,7 @@
         </nav>
 <div class="row">
     <div class="col-sm-1"></div>
-    <div id="EspacioAccion" class="col-sm-11" style="margin: 62px;">
+    <div id="EspacioAccion" class="col-sm-11" style="margin: 62px; ">
             @yield('operaciones')
     </div>
 </div>

@@ -50,8 +50,8 @@
                                                              <a href="javascript:productos('{{$patmt['codigo']}}')">{{$patmt['codigo']}}</a> 
                                                             </td>
                                                             <td>{{$patmt['nombre'] ?? '' }}</td>                             
-                                                            <td>{{$patmt['fabricante'] ?? '' }}</td>
-                                                            <td>{{$patmt['categorias'] ?? '' }}</td>
+                                                            <td>{{$patmt['fabricantes']['nombre'] ?? '' }}</td>
+                                                            <td>{{$patmt['categoria_detalle']['nombre'] ?? '' }}</td>
                                                         </tr>
                                                     @endforeach                                      
                                                 </tbody>        
@@ -75,3 +75,4 @@
 
 
 @endsection
+ 

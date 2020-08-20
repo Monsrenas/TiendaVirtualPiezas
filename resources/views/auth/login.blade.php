@@ -1,4 +1,7 @@
- 
+<?php
+    use App\Usuario;
+    $Cuantos= Usuario::count();
+?> 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 <div class="container" style="margin-top: 100px;">
     <div class="row justify-content-center">
@@ -55,13 +58,13 @@
                                 <button type="submit" class="btn btn-primary">
                                     Entrar
                                 </button>
-                            {{--        
+                              @if ($Cuantos<1)     
                                 @if (Route::has('password.request'))
                                     <a class="btn btn-link" href="{{ route('password.request') }}">
                                         {{ __('Forgot Your Password?') }}
                                     </a>
                                 @endif
-                              --}}  
+                              @endif  
                             </div>
                         </div>
                     </form>

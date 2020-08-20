@@ -23,9 +23,9 @@ class Recepcion extends Eloquent
               'precio',
     ];
 
-      public function producto()
+      public function detalles()
       {
-          return $this->belongsTo(Producto::class);
+          return $this->belongsTo(Producto::class, 'codigo','codigo');
       }
 
       public function persona()

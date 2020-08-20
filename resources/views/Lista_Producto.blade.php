@@ -1,6 +1,4 @@
-
-@extends('welcome')
-@section('lista_productos')
+ 
 
 <link rel="stylesheet" href="{{'css/listProducto.css'}}">
 
@@ -19,26 +17,26 @@ for (var i = 1; i < 12; i++) {
 cargarListaProductos('');
   
 function cargarListaProductos(condiciones)
-  {		
-  	 console.log(condiciones);
-  	 var $dataCond='';
-	 for (const prop in condiciones){
-	 	  if ((condiciones[prop]).length>0){	
-	 	  		  $dataCond+='&'+prop+'='+condiciones[prop];
-	 	  }
-	 }
+  {   
 
-     $data=$dataCond;	
+     console.log(condiciones);
+     var $dataCond='';
+   for (const prop in condiciones){
+      if ((condiciones[prop]).length>0){  
+            $dataCond+='&'+prop+'='+condiciones[prop];
+      }
+   }
+      
+     $data=$dataCond; 
+
      $('#Centro').empty();
+ 
      $('#timer').modal('show');
 
      $.get('pagina', $data, function(subpage){ 
         var $element='';  var $elemenX='';
-        console.log(subpage);
-        for (const prop in subpage)
-            {    
- 			   insertaProducto(subpage[prop]);   
-            }      
+               
+       $('#Centro').append(subpage);      
       $('#timer').modal('hide');
     }).fail(function() {
        console.log('Error en carga de Datos');
@@ -132,4 +130,4 @@ function len(arr) {
 
 </script>
 
-@endsection
+ 
