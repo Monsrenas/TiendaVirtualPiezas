@@ -1,4 +1,5 @@
-<?php if (!isset($lista)) {$lista=[];} ?> 
+<?php if (!isset($lista[0])) {return;} 
+?> 
 
 <div id="Centro"  style="font-size: 1.2em;">
   <div class="card card-sm">

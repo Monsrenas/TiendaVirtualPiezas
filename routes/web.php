@@ -98,6 +98,8 @@ Route::group(['middleware' => 'auth'], function()
 		Route::post('Recepcionar','InventarioController@Recepcionar');
 		Route::get('ListadoRecepciones','InventarioController@ListadoRecepciones');
 		Route::get('ListadoInventario','InventarioController@ListadoInventario');
+		Route::get('InfoPrevioARecepcon','InventarioController@InfoPrevioARecepcon');
+		
 		
 
 		//Usuarios

@@ -1,6 +1,21 @@
 @extends('panel.menu')
 @section('operaciones')
 @include('modal')
+<style type="">
+  table {
+   width: 100%;
+}
+th {
+   padding-right: 10px;
+   text-align: left;
+}
+
+td {
+   padding-right: 20px;
+   text-align: right;
+}
+
+</style>
 <div id="Centro" style="font-size: 0.8em;">
 	<div class="header">
     
@@ -19,7 +34,7 @@
                     <table  class="table table-striped table-bordered" style="width:100%">
                     <thead id="cuerpo">
                         <tr>
-                            <th>Fecha: <input type="date" class="form-control-sm" id="fecha" name="fecha" required></th>
+                            <th>Fecha: <input type="date" class="form-control-sm" id="fecha" name="fecha" value="{{date("Y-m-d")}}" required></th>
                             <th>Proveedor: <input type="text" class="form-control-sm" id="proveedor" name="proveedor"  required> </th> 
                             <th>No. Documento: <input type="text" class="form-control-sm" id="documento" name="documento"  required> </th> 
                              <th>Almacen: <select class="form-control-sm" id="almacen" name="almacen" required>
@@ -49,14 +64,18 @@
             <label class="col-lg-2 col-form-label text-md-left text-lg-right" for="codigo">Cantidad:</label>
             <div class="col-sm-3">
               <input type="text" class="form-control form-control-sm" id="cantidad" name="cantidad"  required>
+              <input type="text" class="form-control form-control-sm" id="existencia" name="existencia" hidden>
               <div class="col-sm-12" id="grupocodigo">  </div>
-            </div>           
+            </div>    
+            <div class="col-sm-3" id="info">
+              
+            </div>       
         </div>
 
         <div class="form-group row"  style="margin-bottom: 3px; ">
-            <label class="col-lg-2 col-form-label text-md-left text-lg-right" for="codigo">Precio:</label>
+            <label class="col-lg-2 col-form-label text-md-left text-lg-right" for="precio">Precio:</label>
             <div class="col-sm-3">
-              <input type='number' step='0.01' placeholder='0.00' class="form-control form-control-sm" id="precio" name="precio" required>
+              <input type='number' placeholder='0.00' step=".01" class="form-control form-control-sm" id="precio" name="precio" required>
               <div class="col-sm-12" id="grupocodigo">  </div>
             </div>
         </div>
@@ -80,7 +99,7 @@
  <script type="text/javascript">
    
 
-   $data="vista=inventario.lista_prerecepcion&coleccion=Pre_recepcion";
+   $data="vista=inventario.lista_prerecepcion&coleccion=Pre_recepcion&indice=usuario&ocurrencia={{ Auth::user()->_id}}";
    
   $.get('Resgistro', $data, function(subpage){ 
      $('#ListaPrerecepcion').html(subpage);
@@ -89,12 +108,86 @@
        console.log('Error en carga de Datos');
   });
 
+(function($){
+    var originalVal = $.fn.val;
+    $.fn.val = function(){
+        var result =originalVal.apply(this,arguments);
+        if(arguments.length>0)
+            $(this).change(); // OR with custom event $(this).trigger('value-changed');
+        return result;
+    };
+})(jQuery);
+
+$('body').on('change blur', '#codigo', function(){ infoPrevia(); });
+$('body').on('change', '#almacen', function(){ infoPrevia(); });
+
+ function infoPrevia()
+    { 
+      if ($('#codigo').val()=='') {return;}
+      $('#info').empty();
+      $('#descr_producto').css('color','blue');
+      $data="codigo="+$('#codigo').val()+"&almacen="+$('#almacen').val();
+      $.get('InfoPrevioARecepcon', $data, function(subpage){ 
+      
+            if (subpage[0]) {  
+                              if (typeof subpage[0]['nombre'] !== 'undefined')
+                                        {
+
+                                          $('#descr_producto').text(subpage[0]['nombre']);
+                                           
+                                        } else {  
+                                                  $('#info').empty();
+                                                  $xst="<th>Existencia: </th>";
+                                                  $prc="<th>Precios</th>";
+                                                  $lmc="<th>Ubicación</th>";
+                                                 for (const prop in subpage)
+                                                 {
+                                                   
+                                                      $lmc+="<td>"+subpage[prop]['almacen']+"</td>";
+                                                      $prc+="<td>"+subpage[prop]['precio']+"</td>";
+                                                      $xst+="<td>"+subpage[prop]['cantidad']+"</td>";
+                                                      if (subpage[prop]['almacen']==$('#almacen').val())
+                                                        {
+                                                          $('#precio').val(subpage[prop]['precio'].replace(",","."));
+                                                          $('#existencia').val(subpage[prop]['cantidad']);
+                                                        }
+                                                 }
+                                                 $('#info').append("<table id='info'>");
+                                                 $('#info').append("<tr>"+$lmc+"</tr>");
+                                                 $('#info').append("<tr>"+$xst+"</tr>");
+                                                 $('#info').append("<tr>"+$prc+"</tr></table>");   
+                                                  
+                                                 if (subpage[0]['detalles']!==null)
+                                                  {
+                                                    $('#descr_producto').text(subpage[0]['detalles']['nombre']);
+                                                  } else {
+                                                            $('#descr_producto').text('CÓDIGO DESCONOCIDO');
+                                                            $('#descr_producto').css('color','red');  
+                                                            $('#codigo').focus();
+                                                            return;
+                                                          }         
+                                              }
+
+                              $('#cantidad').focus();
+                            }
+                else { $('#descr_producto').text('CÓDIGO DESCONOCIDO');
+                        $('#descr_producto').css('color','red');  
+                        $('#codigo').focus();}
+
+        }).fail(function() {
+           console.log('Error en carga de Datos');
+        });   
+    }
+
+/*
 $('body').on('blur', '#codigo', function()
     { 
       $data="indice=codigo&ocurrencia="+this.value+"&columnas=codigo,nombre&coleccion=Producto";
       $.get('Resgistro', $data, function(subpage){ 
             if (subpage[0]) {  $('#descr_producto').text(subpage[0]['nombre']);
-                              $('#descr_producto').css('color','blue');  
+                              $('#descr_producto').css('color','blue'); 
+
+
                             }
                 else { $('#descr_producto').text('CÓDIGO DESCONOCIDO');
                         $('#descr_producto').css('color','red');  
@@ -104,7 +197,7 @@ $('body').on('blur', '#codigo', function()
            console.log('Error en carga de Datos');
         });   
     });
-
+*/
   function borraItem(controlador, clase, condicion)
   {
       $data="_token={{ csrf_token()}}&clase="+clase+"&condicion="+condicion;
@@ -123,5 +216,5 @@ $('body').on('blur', '#codigo', function()
                                                                                 .draw();
                                                                             } );
  </script>
-  }
+  
 @endsection

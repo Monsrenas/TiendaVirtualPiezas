@@ -85,7 +85,7 @@ class MongoController extends Controller
 	       if (isset($request->vista)) {   
 										$view = View::make($request->vista);
 										return $view->with('lista',$todo);
-										}
+										}							
 	       return $todo;
 	    }    
 
@@ -116,9 +116,6 @@ public function Listas($clase, $vista)
 
 	      return View($vista)->with('lista',$todo);  
 	    }
-
-
-
 
 //Marcas y Modelos 
     public function ListaMarcas()

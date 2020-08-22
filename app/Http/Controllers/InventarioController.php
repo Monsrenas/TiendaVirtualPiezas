@@ -12,6 +12,7 @@ use View;
 use App\Inventario;
 use App\Pre_recepcion;
 use App\Recepcion;
+use App\Producto;
 use Illuminate\Support\Collection;
 use Auth;
 
@@ -31,8 +32,7 @@ class InventarioController extends Controller
         $PreRecepcion=Pre_recepcion::where('usuario',Auth::user()->_id)->get();
         foreach ($PreRecepcion as $key => $value) 
         { 
-            $recepcion=Inventario::find($value->codigo.$value->precio);
-
+            $recepcion=Inventario::orderBy('codigo')->find($value->codigo.$value->precio.$value->almacen);
             if ($recepcion) {
                              $recepcion->cantidad+=$value->cantidad;
                              $recepcion->save();
@@ -40,10 +40,10 @@ class InventarioController extends Controller
                            } else {
                                     $recepcion=new Inventario;
                                     $recepcion=[
-                                            'codigo'=>$value->codigo.$value->precio,
+                                            'codigo'=>$value->codigo.$value->precio.$value->almacen,
                                             'producto'=>$value->codigo,
                                             'almacen'=>$value->almacen,
-                                            'precio'=>$value->precio,
+                                            'precio'=>number_format($value['precio'], 2, ',', ' '),
                                             'cantidad'=>$value->cantidad ];
                                             Inventario::create($recepcion);
                                   }
@@ -51,6 +51,7 @@ class InventarioController extends Controller
             
         }
         $this->CreaInformeRecepcion($PreRecepcion);
+        return redirect('Pre_recepcion');
     }
  
     public function CreaInformeRecepcion($pre_recepcion)
@@ -66,22 +67,23 @@ class InventarioController extends Controller
                                             'documento'=>$value['documento'],
                                             'codigo'=>$value['codigo'],
                                             'almacen'=>$value['almacen'],
-                                            'precio'=>$value['precio'],
+                                            'precio'=>number_format($value['precio'], 2, ',', ' '),
                                             'cantidad'=>$value['cantidad'] ];
                                     Recepcion::create($recepcion);
 
-                                    $borrar=Pre_recepcion::find(($value['_id']));
-                                    $borrar->delete();     
+                                    $borrar=Pre_recepcion::orderBy('_id')->find(($value['_id']));
+                                    
+                                    $borrar->delete();   
                                   }
          
 
-       return View('inventario.lista_recepcion')->with('lista',$pre_recepcion);
+       return;
     }
 
 
     public function ListadoRecepciones()
     {
-        $lista=Recepcion::groupBy('id')->select('id','proveedor','documento','usuario','almacen','created_at')->get();
+        $lista=Recepcion::groupBy('id')->select('id','proveedor','documento','usuario','almacen','created_at')->orderBy('created_at', 'desc')->get();
         return View('inventario.lista_recepcion')->with('lista',$lista);
     }
 
@@ -90,6 +92,31 @@ class InventarioController extends Controller
     {
         $lista=Inventario::get();
         return View('inventario.existencia')->with('lista',$lista);
+    }
+
+    public function InfoPrevioARecepcon(Request $request)
+    {
+
+       $inventario=Inventario::where('producto',$request->codigo)->
+                               select(['producto','almacen', 'precio', 'cantidad'])->
+                               with(['detalles:codigo,producto,nombre'])->
+                               when((isset($request->almacen)), function($q){
+                                                         return $q->where('almacen',request('almacen'));
+                                                      })->get();
+       if (count($inventario)>0) { return $inventario; }
+
+        $inventario=Inventario::where('producto',$request->codigo)->
+                               select(['producto','almacen', 'precio', 'cantidad'])->
+                               with(['detalles:codigo,producto,nombre'])->get();
+
+       if (count($inventario)>0) { return $inventario; }
+
+       $producto=Producto::orderBy('codigo')->where('codigo', $request->codigo)->get();
+       
+       
+       return $producto;
+
+       
     }
 //Filtro
     public function pagina(Request $request)
