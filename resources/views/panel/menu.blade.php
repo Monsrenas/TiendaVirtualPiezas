@@ -133,7 +133,7 @@
                         @endif
 
                         @if (( isset(Auth::user()->acceso['cc'] ))or(Auth::user()->rol=1))
-                        <li><a href="#">Categorias</a></li>    
+                        <li><a href="{{url('/editaCategoria')}}">Categorias</a></li>    
                         @endif
 
                     </ul>       

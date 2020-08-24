@@ -176,14 +176,15 @@ function LoadDataList() {
             var $año="";
           //   $element=$element+"<li id='mdl"+prop+"'><a  href='javascript:FiltrarModelo(\""+$id+prop+"\");' id='"+prop+"' class='dmrc"+$id+"'>"+$submenu[prop]['nombre']+"</a></li>" ;
           $modName="<b style='color: gray'>- "+$submenu[prop]['nombre']+"</b>";
-          if (typeof $submenu[prop]['motor'] != "undefined") { $modName+=" "+$submenu[prop]['motor']}
-          if (typeof $submenu[prop]['cilindraje'] != "undefined") { $modName+=" "+$submenu[prop]['cilindraje']}  
-          if (typeof $submenu[prop]['inicio'] != "undefined") { $año+=$submenu[prop]['inicio']}
+         
+         // if (typeof $submenu[prop]['motor'] != "undefined") { $modName+=" "+$submenu[prop]['motor']}
+         // if (typeof $submenu[prop]['cilindraje'] != "undefined") { $modName+=" "+$submenu[prop]['cilindraje']}  
+         // if (typeof $submenu[prop]['inicio'] != "undefined") { $año+=$submenu[prop]['inicio']}
 
-          if (typeof $submenu[prop]['final'] != "undefined") { $año+="-"+$submenu[prop]['final']}
-          if (typeof $submenu[prop]['info'] != "undefined") { $burbuja=$submenu[prop]['info']}
+         // if (typeof $submenu[prop]['final'] != "undefined") { $año+="-"+$submenu[prop]['final']}
+         // if (typeof $submenu[prop]['info'] != "undefined") { $burbuja=$submenu[prop]['info']}
              
-          if ($año!="") { $modName+=" ( "+$año+" )"; }
+         // if ($año!="") { $modName+=" ( "+$año+" )"; }
 
           $element=$element+"<li id='mdl"+prop+"'><a href='#' id='"+prop+"' class='dmrc"+$id+" xModelo'><span tooltip='"+$burbuja+"'  >"+$modName+"</span></a></li>" ;
           }

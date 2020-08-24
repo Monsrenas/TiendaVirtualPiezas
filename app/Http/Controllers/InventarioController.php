@@ -26,6 +26,19 @@ class InventarioController extends Controller
      */
     protected $variable;
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    public function addItemPre_recepcion(Request $request)
+        {
+            $todo=Pre_recepcion::where('codigo',$request->codigo)->first();
+            if ($todo) {$todo->update($request->all());}    
+            else {$todo=Pre_recepcion::create($request->all());}
+            return View('inventario.Pre_recepcion')->with('lista',$todo);;
+        }
+
     public function Recepcionar(Request $request)
     {
        

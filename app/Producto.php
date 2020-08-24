@@ -35,5 +35,10 @@ class Producto extends Eloquent
       {
           return $this->belongsTo(Categoria::class,'categorias','codigo');
       }  
-
+   
+    public function existencia()
+    {
+        return $this->belongsToMany(Inventario::class, 'codigo', 'producto');
+    }
+      
 }

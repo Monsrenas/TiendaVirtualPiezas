@@ -35,7 +35,9 @@
                                             <th>Código</th>
                                             <th>Marca</th>
                                             <th>Modelos</th>
-                                            <th WIDTH='4'></th>
+                                            <th style="text-align: center; font-size: 1.4em;">
+                                                 <i class="fa fa-trash-o" ></i>
+                                            </th>
                                             
                                         </tr>
                                     </thead>
@@ -46,12 +48,13 @@
                                                 <td>{{ $marca->id_marca }}</td>
                                                 <td><a href="javascript:Muestra('{{$marca->modelos}}','{{ $marca->nombre }}','{{ $marca->id_marca }}')">{{ $marca->nombre }}</a></td>
                                                 <td>{{ count($marca->modelos) }}</td>
-                                                <td>
+                                                <td style="text-align: center;">
                                                    @if (!$marca->modelos->isNotEmpty()) 
-                                                    <a href="#" class="btn btn-sm fa fa-trash-o" ></a>
+                                                    <a href="#"  id="{{ $marca->_id }}" class="btn btn-sm fa fa-trash-o" ></a>
+                                                     @else 
+                                                      <i class="fa fa-chain" style="color: gray;"></i>  
                                                    @endif 
                                                 </td>
-                                                
                                             </tr>
                                         @endforeach                  
                                     </tbody>        
@@ -86,13 +89,13 @@
 </div>
 @include('panel.modal.Auxiliar')
      
-     
-    <script type="text/javascript" src="/jquery/main.js"></script>
+
+<script type="text/javascript" src="/jquery/main.js"></script>
 
 <script type="text/javascript">
     var $tableModelos='';
     var $tablaMarcas='';
-    
+
 
     function CargaModelos()
     {
@@ -122,7 +125,7 @@
                 $miTab+="<td><a href='#' class='btn btn-sm' style='font-size: 0.8em;' data-toggle='modal' data-target='#ModalAuxiliar' onclick=\"javascript:EditaMarca('"+$marca[prop]['id_modelo']+"', 'nuevoModelo')\" ><i class='fa fa-pencil' style='font-size: 1.3em;'></i></a> </td>";
                 $miTab+="<td>"+$marca[prop]['id_modelo']+"</td>";
                 $miTab+="<td>"+$marca[prop]['nombre']+"</td>";
-                $miTab+="<td><a href='#' class='btn btn-sm fa fa-trash-o'></a> </td>";
+                $miTab+="<td><a href='#' id='"+$marca[prop]['_id']+"' class='btn btn-sm fa fa-trash-o'></a> </td>";
                 $miTab+="</tr>";            
         }
                   
@@ -163,34 +166,53 @@
         });
 
 
-        $('#tablamodelos tbody').on( 'click', '.fa-trash-o', function () {
-                                                                            $tableModelos
-                                                                                .row( $(this).parents('tr') )
-                                                                                .remove()
-                                                                                .draw();
-                                                                            } );
+        $('#tablamodelos tbody').on( 'click', '.fa-trash-o', function () 
+        {
+            $tableModelos
+                .row( $(this).parents('tr') )
+                .remove()
+                .draw();
+              var data="_token={{ csrf_token()}}&clase=Modelo&condicion=_id,"+$(this)[0]['id'];
+              $.post('/BorraItem', data, function(subpage){  
+              } );   
+
+            } );
     }
 
 
  
  
-$('#tablamarcas tbody').on( 'click', '.fa-trash-o', function () {
-    $tablaMarcas
-        .row( $(this).parents('tr') )
-        .remove()
-        .draw();
-} );
+    $('#tablamarcas tbody').on( 'click', '.fa-trash-o', function () {
 
-function EditaMarca($id, controlador)
-{
-  $data="id="+$id;
-  $.get(controlador, $data, function(subpage){ 
-        $('#modal-cuerpo-AUX').html(subpage);
+        $tablaMarcas
+            .row( $(this).parents('tr') )
+            .remove()
+            .draw();
+           
 
-    }).fail(function() {
-       console.log('Error en carga de Datos');
-  });
-}
+         var data="_token={{ csrf_token()}}&clase=Marca&condicion=_id,"+$(this)[0]['id'];
+             $.post('/BorraItem', data, function(subpage){  
+                } );
+          /*
+          $.get('/eliminar_template/'+$(this)[0]['id'], 'token={{ csrf_token()}}', function(subpage){ 
+            console.log(subpage);
+
+        }).fail(function() {
+           console.log('Error en carga de Datos');
+        });*/
+
+    } );
+
+    function EditaMarca($id, controlador)
+    {
+      $data="id="+$id;
+      $.get(controlador, $data, function(subpage){ 
+            $('#modal-cuerpo-AUX').html(subpage);
+
+        }).fail(function() {
+           console.log('Error en carga de Datos');
+      });
+    }
 
 </script>
 

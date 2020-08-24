@@ -8,7 +8,8 @@
     <div class="card-header card">
          <div class="row">  
                <strong class="col-lg-10" style="font-size: 1.6em;" >Registro de productos</strong>
-              <div class="col-lg-1"><a href="javascript:productos('')" class="btn fa fa-plus btn-success"></a></div>
+               <div class="col-lg-1"><a href="javascript:productos('')" class="btn fa fa-plus btn-success"></a></div>
+              <div class="col-lg-1"><a href="{{url('/Listas/Producto/panel.producto')}}" class="btn fa fa-list "></a></div>
          </div>
       </div>
     <div class="col-lg-12 card" style="background: white; padding: 20px; ">

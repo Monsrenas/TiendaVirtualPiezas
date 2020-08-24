@@ -90,11 +90,11 @@ Route::group(['middleware' => 'auth'], function()
 		Route::post('ActualizaModelo','MongoController@ActualizaModelo');
 		Route::get('nuevaFabricante','MongoController@nuevaFabricante');
 		Route::post('ActualizaFabricante','MongoController@ActualizaFabricante');
-		
+		Route::get('/editaCategoria', function () { return view('panel.editaCategorias'); });
 
 		//Inventario
 		Route::get('Pre_recepcion', function () { return view('inventario.Pre_recepcion'); });
-		Route::post('AddProductoRecepcion','MongoController@addItemPre_recepcion')->name('Pre_recepcion');
+		Route::post('AddProductoRecepcion','InventarioController@addItemPre_recepcion')->name('Pre_recepcion');
 		Route::post('Recepcionar','InventarioController@Recepcionar');
 		Route::get('ListadoRecepciones','InventarioController@ListadoRecepciones');
 		Route::get('ListadoInventario','InventarioController@ListadoInventario');
@@ -122,6 +122,7 @@ Route::post('RegistrarUsuario','MongoController@RegistrarUsuario');
 Route::get('Listas/{clase}/{vista}/{condicion?}', 'MongoController@Listas');
 
 
+Route::get('/eliminar_template/{marca}', 'MongoController@eliminar_template');
 
 
 

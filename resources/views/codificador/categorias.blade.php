@@ -53,7 +53,7 @@ ul, #catUL {
   display: none;
 }
 
-.activeX {
+.activeX {  
   display: block;
 }
 </style>
@@ -76,29 +76,46 @@ ul, #catUL {
      $.get('/Resgistro', $data, function(subpage){ 
         for (const prop in subpage)
             {
+             addCategoria(subpage[prop]['codigo'], subpage[prop]['nombre']);
 
-              var xSub=(subpage[prop]['codigo']).length/3;
-              for (var i = 0; i < xSub; i++) {  var $element='';
-              									var padre=subpage[prop]['codigo'].substring(0,((i-1)*3)+3);
-              									cod=(subpage[prop]['codigo']).substring(0,(i*3)+3);
-              									var exist = document.getElementById("cat"+cod);
-              	
-              									if (exist==null){
-              									  if (padre.length>0) {  	
-              									  	$("ul#cat"+padre).append(function(n){  
-              									  		$("#pdr"+padre).removeClass("xcaretX");
-              									  		$("#pdr"+padre).addClass("caretX");
-            	    									return "<li><span id='pdr"+cod+"' class='xcaretX' >"+subpage[prop]['nombre']+"</span><ul class='nestedX' id='cat"+cod+"' ></ul></li>";
-        											});
-              									  			    } 
-              									  else {	  		 
-              									  		  $('#catUL').append("<li><span id='pdr"+cod+"' class='xcaretX'>"+subpage[prop]['nombre']+"</span><ul  class='nestedX' id='cat"+cod+"' ></ul></li>");
-              									  	   }
-              	           					    }
-              								}
-            }      
+            }
+            activaCategoria();      
+        
+    }).fail(function() {
+       console.log('Error en carga de Datos');
+  });
+	}
 
-          var toggler = document.getElementsByClassName("caretX");
+  function addCategoria(codigo, nombre)
+  {
+    var xSub=codigo.length/3;
+    for (var i = 0; i < xSub; i++) 
+     {  
+        var $element='';
+        var padre=codigo.substring(0,((i-1)*3)+3);
+        cod=codigo.substring(0,(i*3)+3);
+        var exist = document.getElementById("cat"+cod);
+
+        if (exist==null)
+        {
+          if (padre.length>0) {   
+            $("ul#cat"+padre).append(function(n)
+            {  
+              $("#pdr"+padre).removeClass("xcaretX");
+              $("#pdr"+padre).addClass("caretX");
+              return "<li><span id='pdr"+cod+"' class='xcaretX' >"+nombre+"</span><ul class='nestedX' id='cat"+cod+"' ></ul></li>";
+            });
+          } 
+          else {         
+                $('#catUL').append("<li><span id='pdr"+cod+"' class='xcaretX'>"+nombre+"</span><ul  class='nestedX' id='cat"+cod+"'></ul></li>");
+               }
+        }
+      }
+  }
+
+  function activaCategoria()
+  {
+     var toggler = document.getElementsByClassName("caretX");
             var i;
 
             for (i = 0; i < toggler.length; i++) {
@@ -107,11 +124,7 @@ ul, #catUL {
                 this.classList.toggle("caretX-down");
               });
             }
-          
-
-    }).fail(function() {
-       console.log('Error en carga de Datos');
-  });
-	}
+  }
 
 </script>
+

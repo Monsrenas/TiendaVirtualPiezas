@@ -26,27 +26,28 @@ class MongoController extends Controller
         //$this->middleware('auth');
     }
 
+    public function eliminar_template($marca){
+    	Marca::where('_id', $marca);
+    	dd($marca);
+        $marca->delete();
+        return redirect()->route('/panel'); 
+    }
+
     public function Clase($ind)
     {
     	$ind='App\\'.$ind;
     	return $tmodelo=new $ind;
     }
 
-    public function addItemPre_recepcion(Request $request)
-	    {
-	    	$todo=Pre_recepcion::where('codigo',$request->codigo)->first();
-	    	if ($todo) {$todo->update($request->all());}	
-	      	else {$todo=Pre_recepcion::create($request->all());}
-	        return View('inventario.Pre_recepcion')->with('lista',$todo);;
-	    }
-
  	public function BorraItem(Request $request)
 	 	{
 	 		$Clase=$this->Clase($request->clase);
-	 		$condicion=explode ( ',' ,$request->condicion , 6 );   										 
+	 		$condicion=explode ( ',' ,$request->condicion , 6 );   		 
 	 		$todo=$Clase::where($condicion[0],$condicion[1])->delete();
 	 		return $todo;
 	 	}
+
+
 
 	public function GuardaProducto(Request $request)
 		{	 
@@ -209,7 +210,7 @@ public function Listas($clase, $vista)
 	    		$todo=$Clase::where('codigo', $request->codigo)->first();
 		    } else {
 		    			$todo=$Clase::orderBy('codigo', 'desc')->first();	
-		    			$nuevoID=str_pad($todo->codigo+1, 3, "0", STR_PAD_LEFT);
+		    			$nuevoID=str_pad($todo->codigo+1, 4, "0", STR_PAD_LEFT);
 		    			$todo=new $Clase;
 		    			$todo->codigo=$nuevoID;
 		    			$todo->nombre='';
