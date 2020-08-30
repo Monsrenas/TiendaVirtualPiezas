@@ -207,159 +207,16 @@
         <!-- //header-bottom -->
     <marquee><strong>AVISOS IMPORTANTES PARA LOS CLIENTES</strong></marquee>
 
-    <!-- banner -->
-    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-        <!-- Indicators-->
-        <ol class="carousel-indicators">
-            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
-        </ol>
-        <div class="carousel-inner">
-            <div class="carousel-item item1 active">
-                <div class="container">
-                    <div class="w3l-space-banner">
-                        <div class="carousel-caption p-lg-5 p-sm-4 p-3">
-                            <p>Get flat
-                                <span>10%</span> Cashback</p>
-                            <h3 class="font-weight-bold pt-2 pb-lg-5 pb-4">The
-                                <span>Big</span>
-                                Sale
-                            </h3>
-                            <a class="button2" href="product.html">Shop Now </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-item item2">
-                <div class="container">
-                    <div class="w3l-space-banner">
-                        <div class="carousel-caption p-lg-5 p-sm-4 p-3">
-                            <p>advanced
-                                <span>Wireless</span> earbuds</p>
-                            <h3 class="font-weight-bold pt-2 pb-lg-5 pb-4">Best
-                                <span>Headphone</span>
-                            </h3>
-                            <a class="button2" href="product.html">Shop Now </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-item item3">
-                <div class="container">
-                    <div class="w3l-space-banner">
-                        <div class="carousel-caption p-lg-5 p-sm-4 p-3">
-                            <p>Get flat
-                                <span>10%</span> Cashback</p>
-                            <h3 class="font-weight-bold pt-2 pb-lg-5 pb-4">New
-                                <span>Standard</span>
-                            </h3>
-                            <a class="button2" href="product.html">Shop Now </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-item item4">
-                <div class="container">
-                    <div class="w3l-space-banner">
-                        <div class="carousel-caption p-lg-5 p-sm-4 p-3">
-                            <p>Get Now
-                                <span>40%</span> Discount</p>
-                            <h3 class="font-weight-bold pt-2 pb-lg-5 pb-4">Today
-                                <span>Discount</span>
-                            </h3>
-                            <a class="button2" href="product.html">Shop Now </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
-    </div>
-    <!-- //banner -->
-
-    <!-- navigation -->
-    <div class="navbar-inner">
-        <div class="container">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">  
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar navbar-expand-lg navbar-light bg-light">
-                        <li class="nav-item dropdown mr-lg-2 mb-lg-0 mb-2">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                MARCAS                                
-                            </a>
-                            <div class="dropdown-menu">
-                                <div class="agile_inner_drop_nav_info p-4">
-                                    <div class="panel panel-default">
-
-
-                                        <div id="answerThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="questionThree">
-                                            <div class="panel-body" id="Interrogation">
-                                                {{--@include('codificador.Marcas_Modelos');--}}
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </li>
-                        <li class="nav-item dropdown mr-lg-2 mb-lg-0 mb-2">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                CATEGORIAS
-                            </a>
-                            <div class="dropdown-menu">
-                                <div class="agile_inner_drop_nav_info p-4">
-                                    <div class="panel panel-default">
-
-                                        <div id="answerOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="questionOne">
-                                            <div class="panel-body" id="Laboratory"> 
-                                                {{--@include('codificador.categorias');--}}
-                                            </div>
-                                        </div>
-                                    </div>              
-                                </div>
-                            </div>
-                        </li>
-                        <li class="nav-item dropdown mr-lg-2 mb-lg-0 mb-2">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                FABRICANTE
-                            </a>
-                            <div class="dropdown-menu">
-                                <div class="agile_inner_drop_nav_info p-4">
-                                    <div class="panel panel-default">
-
-                                        <div id="answerTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="questionTwo">
-                                            <div class="panel-body" id="Laboratory"> 
-                                                {{--@include('codificador.fabricante');--}}
-                                            </div>
-                                        </div>
-                                    </div>                                   
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-        </div>
-    </div>
-    <!-- //navigation -->
-
     <!-- top Products -->
     <div class="ads-grid py-sm-5 py-4">
         <div class="container py-xl-4 py-lg-2">
+{{--
             <!-- tittle heading -->
             <h3 class="tittle-w3l text-center mb-lg-5 mb-sm-4 mb-3">              
                 <span>N</span>uevos
                 <span>P</span>roductos</h3>
             <!-- //tittle heading -->
+--}}
             <div class="row">
                 <!-- product left -->
 

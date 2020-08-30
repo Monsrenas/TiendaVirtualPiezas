@@ -55,7 +55,7 @@
                                                             <td>{{$patmt['fabricantes']['nombre'] ?? '' }}</td>
                                                             <td>{{$patmt['categoria_detalle']['nombre'] ?? '' }}</td>
                                                             <td style="text-align: center;">
-                                                             @if (!$patmt->existencia->isNotEmpty()) 
+                                                             @if ((isset($patmt->existencia))and(!$patmt->existencia->isNotEmpty())) 
                                                                  <a href="#" id="{{$patmt['_id']}}" class="btn btn-sm fa fa-trash-o"></a>
                                                              @else 
                                                               <i class="fa fa-chain" style="color: gray;"></i>  

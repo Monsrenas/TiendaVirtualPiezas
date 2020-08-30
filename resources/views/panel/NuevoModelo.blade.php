@@ -13,7 +13,7 @@
      
             <div class="row">
             <div class="col-lg-4 card-body text-right" style=" padding: 20px; ">
-                    <input type="text" name="_id" value="{{$lista->_id ?? ''}}">
+                    <input type="text" name="_id" value="{{$lista->_id ?? ''}}" hidden>
                    <input type="text" name="id_marca" value="{{$lista->id_marca ?? ''}}" hidden> 
                    <label>Código:</label>
                    <input type="text" name="id_modelo" value="{{$lista->id_modelo ?? ''}}" readonly>
@@ -33,4 +33,4 @@
    
 </div>
 
-     <script type="text/javascript" src="{{Request::root()}}//jquery/main.js"></script>
+  {{--   <script type="text/javascript" src="{{Request::root()}}//jquery/main.js"></script>--}}

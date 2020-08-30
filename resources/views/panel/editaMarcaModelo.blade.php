@@ -68,7 +68,6 @@
             </div>
         </div>
 
-
         <div class="card">
             <div class="card-header bg-primary" style="color: white; " >
               <div class="row">  
@@ -89,7 +88,6 @@
 </div>
 @include('panel.modal.Auxiliar')
      
-
 <script type="text/javascript" src="/jquery/main.js"></script>
 
 <script type="text/javascript">
@@ -165,6 +163,8 @@
             });     
         });
 
+      }
+
 
         $('#tablamodelos tbody').on( 'click', '.fa-trash-o', function () 
         {
@@ -176,8 +176,8 @@
               $.post('/BorraItem', data, function(subpage){  
               } );   
 
-            } );
-    }
+        } );
+    
 
 
  
@@ -193,13 +193,6 @@
          var data="_token={{ csrf_token()}}&clase=Marca&condicion=_id,"+$(this)[0]['id'];
              $.post('/BorraItem', data, function(subpage){  
                 } );
-          /*
-          $.get('/eliminar_template/'+$(this)[0]['id'], 'token={{ csrf_token()}}', function(subpage){ 
-            console.log(subpage);
-
-        }).fail(function() {
-           console.log('Error en carga de Datos');
-        });*/
 
     } );
 

@@ -28,7 +28,7 @@ class InventarioController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');
+        //$this->middleware('auth');
     }
 
     public function addItemPre_recepcion(Request $request)
@@ -135,7 +135,9 @@ class InventarioController extends Controller
     public function pagina(Request $request)
     {
         //$ListDescuento=$this->DevuelveBase($request);
-        $ListProducto=Inventario::paginate(9); 
+        $ListProducto=Inventario::when((isset($request->almacen)), function($q){
+                                                         return $q->where('almacen',request('almacen'));
+                                                      })->paginate(9); 
          $view = View::make('single');
         return $view->with('lista',$ListProducto);                           
     }

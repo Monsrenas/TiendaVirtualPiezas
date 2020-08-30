@@ -1,6 +1,5 @@
-
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Panel Administrativo</title>
@@ -18,7 +17,7 @@
 
 
 {{-- datatables--}}
-    <script type="text/javascript" src="{{ asset('dataTables-1.10.21/DataTables-1.10.21/js/jquery.dataTables.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('dataTables-1.10.21/DataTables-1.10.21/js/jquery.dataTables.min.js')}}"></script>
 
 
   
@@ -53,7 +52,7 @@
                         </a>
 
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#">Mi perfil</a>
+                                <a class="dropdown-item" href="{{ url('/Perfil') }}">Mi perfil</a>
                           
                                 <div class="dropdown-divider"></div>
                                
@@ -79,28 +78,38 @@
     <div class="area"></div>
     <nav class="main-menu" style="color: black; color: black; margin-top: 57px; position: fixed;">
             <ul>     
+
                 <li>
                     <span  class='caret'>
                         <a href="#" >
-                            <i class="fa fa-book fa-2x"></i>
+                            <i class="fa fa-users  fa-2x"></i>
                             <span class="fa">
-                                Inventario
+                                Personas
                             </span>
                         </a>
                     </span>
                     <ul class='nested'>
-                      @if ( isset(Auth::user()->acceso['or'] ))  
-                        <li><a href="{{url('Pre_recepcion')}}">Recepción</a></li>
-                      @endif
+                       @if (( isset(Auth::user()->acceso['pp'] ))or( !isset(Auth::user()->acceso )))
+                        <li>
+                           
+                           <a href="{{url('Listas/Persona/auth.personas.Lista_personas')}}" style="float: left;" >Personas </a>
+                            <a href="javascript:Registros('auth.personas.registraPersona', 'Usuario', '_id')">
+                                  <i class="fa fa-plus-square-o text-right" style=" font-size: 0.98em; vertical-align: middle; height: 21px; width: 121px; padding-right: 2px; color: white;"></i>
+                            </a> 
+                        </li>
+                        @endif   
 
-                      @if ( isset(Auth::user()->acceso['om'] ))      
-                        <li><a href="{{url('ListadoRecepciones')}}">Movimientos</a></li> 
-                      @endif
+                       @if (( isset(Auth::user()->acceso['pp'] ))or( !isset(Auth::user()->acceso )))
+                        <li>
+                           
+                           <a href="{{url('Listas/Usuario/auth.personas.Lista_usuarios')}}" style="float: left;" >Usuarios </a>
+                            <a href="javascript:Registros('auth.personas.registraUsuario', 'Usuario', '_id')">
+                                  <i class="fa fa-plus-square-o text-right" style=" font-size: 0.98em; vertical-align: middle; height: 21px; width: 121px; padding-right: 2px; color: white;"></i>
+                            </a> 
+                        </li>
+                        @endif     
 
-                      @if ( isset(Auth::user()->acceso['oe'] )) 
-                        <li><a href="{{url('ListadoInventario ')}}">Existencia</a></li> 
-                      @endif                   
-                    </ul>       
+                    </ul>           
                 </li>
 
                 <li>
@@ -108,7 +117,7 @@
                         <a href="#" >
                             <i class="fa fa-list fa-2x"></i>
                             <span class="fa" >
-                                Catálogo
+                                Catálogos
                             </span>
                         </a>
                     </span>
@@ -139,29 +148,35 @@
                     </ul>       
                 </li>
 
+ 
+
 
                 <li>
                     <span  class='caret'>
                         <a href="#" >
-                            <i class="fa fa-users  fa-2x"></i>
+                            <i class="fa fa-book fa-2x"></i>
                             <span class="fa">
-                                Personas
+                                Inventario
                             </span>
                         </a>
                     </span>
                     <ul class='nested'>
-                       @if (( isset(Auth::user()->acceso['pp'] ))or( !isset(Auth::user()->acceso )))
-                        <li>
-                           
-                           <a href="{{url('Listas/Usuario/panel.Lista_personas')}}" style="float: left;" >Personas </a>
-                            <a href="javascript:Registros('panel.registraPersona', 'Usuario', '_id,'', '')">
-                                  <i class="fa fa-plus-square-o text-right" style=" font-size: 0.98em; vertical-align: middle; height: 21px; width: 121px; padding-right: 2px; color: white;"></i>
-                            </a> 
-                        </li>
-                        @endif     
-                    </ul>           
+                      @if ( isset(Auth::user()->acceso['or'] ))  
+                        <li><a href="{{url('Pre_recepcion')}}">Ingreso</a></li>
+                      @endif
+
+                      @if ( isset(Auth::user()->acceso['om'] ))      
+                        <li><a href="{{url('ListadoRecepciones')}}">Movimientos</a></li> 
+                      @endif
+
+                      @if ( isset(Auth::user()->acceso['oe'] )) 
+                        <li><a href="{{url('ListadoInventario ')}}">Existencia</a></li> 
+                      @endif                   
+
+                      <li><a href="{{url('/Listas/Almacen/inventario.lista_almacen')}}">Almacenes</a></li>
+                    </ul>       
                 </li>
- 
+
 
                 <li>
                     <span  class='caret'>
@@ -173,10 +188,8 @@
                         </a>
                     </span>
                     <ul class='nested'>
-                        <li><a href="#">Datos de la empresa</a></li>
-                        <li><a href="#">Opciones de búsqueda</a></li>
-                        <li><a href="#">Parametros de visualización</a></li>
-                        <li><a href="#">Modulos Instalados</a></li>                 
+                        <li><a href="{{url('/editaEmpresa')}}">Datos de la empresa</a></li>
+                        <li><a href="{{url('/configuracion')}}">Tienda Virtual</a></li>                 
                     </ul>       
                 </li>
 
@@ -247,26 +260,48 @@ function productos($id)
 }
 
 
-function Registros(vista, coleccion, condiciones, columnas)
+function Registros(...args)
 {
+  const vista = (args.length > 0) ? args.shift() : null;
+  const coleccion = (args.length > 0) ? args.shift() : null;
+  const condiciones = (args.length > 0) ? args.shift() : null;
+  const columnas = (args.length > 0) ? args.shift() : null;
+  const destino = (args.length > 0) ? args.shift() : null;
 
   let aux=['',''];
   if (condiciones) {
                       aux=condiciones.split(',');
-
                     }
 
   $data="vista="+vista+"&coleccion="+coleccion+"&indice="+aux[0]+"&ocurrencia="+aux[1];
    
   $.get('/Resgistro', $data, function(subpage){ 
-     $('#EspacioAccion').html(subpage);
 
-    }).fail(function() {
+     if (destino) {   $('#'+destino).html(subpage);       }
+      else        {   $('#EspacioAccion').html(subpage);  }
+
+  }).fail(function() {
        console.log('Error en carga de Datos');
   });}
 
+function borraItem(controlador, clase, condicion)
+  {
+      $data="_token={{ csrf_token()}}&clase="+clase+"&condicion="+condicion;
+ 
+      $.post('/'+controlador, $data, function(subpage){ 
+            console.log(subpage);
+      }).fail(function() {
+           console.log('Error en carga de Datos');
+      });
+  }
 
-
+  $('body').on( 'click', '.fa-trash-o', function () {  
+                                                                            $tablaMarcas
+                                                                                .row( $(this).parents('tr') )
+                                                                                .remove()
+                                                                                .draw();
+                                                                            } );
+  
 //Activar boton de guardar para el formulario activo 
 $('body').on('change', 'input', function()
 {

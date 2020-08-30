@@ -19,13 +19,12 @@ cargarListaProductos('');
 function cargarListaProductos(condiciones)
   {   
 
-     console.log(condiciones);
      var $dataCond='';
-   for (const prop in condiciones){
-      if ((condiciones[prop]).length>0){  
-            $dataCond+='&'+prop+'='+condiciones[prop];
-      }
-   }
+     for (const prop in condiciones){
+        if ((condiciones[prop]).length>0){  
+              $dataCond+='&'+prop+'='+condiciones[prop];
+        }
+     }
       
      $data=$dataCond; 
 

@@ -2,6 +2,7 @@
 @extends('panel.menu')
 @section('operaciones')
 
+ 
 <div id="Centro"  style="font-size: 0.8em;">
 	<form  method="POST"  action="" class="form-horizontal md-form" id="datosproducto" style="font-size: .85em;">
 
@@ -18,7 +19,7 @@
              
               <div class="row">  
                <strong class="col-lg-10" style="font-size: 1.6em;" ><i class="fa fa-list"></i> Personas </strong>
-              <div class="col-lg-1"><a href="javascript:Registros('panel.registraPersona', 'Usuario', '_id', '')" class="btn fa fa-plus btn-success"></a></div>
+              <div class="col-lg-1"><a href="javascript:Registros('auth.personas.registraPersona', 'Persona', '_id', '')" class="btn fa fa-plus btn-success"></a></div>
               </div>
            
 
@@ -48,7 +49,7 @@
                                                 <tbody>
                                                     @foreach($lista as $indice =>$patmt)
                                                         <tr>
-                                                            <td width="5"><a href="javascript:Registros('panel.registraPersona', 'Usuario', '_id,{{$patmt['_id']}}', '')" class="btn btn-sm" style="font-size: 0.8em;"><i class="fa fa-pencil" style="font-size: 1.3em;"></i></a>  </td>
+                                                            <td width="5"><a href="javascript:Registros('auth.personas.registraPersona', 'Persona', '_id,{{$patmt['_id']}}', '')" class="btn btn-sm" style="font-size: 0.8em;"><i class="fa fa-pencil" style="font-size: 1.3em;"></i></a>  </td>
                                                 
                                                             <td style="font-size: 0.8em;">{{$patmt['idpersonal'] ?? ''}}</td>
                                                             <td>{{$patmt['rol'] ?? '' }}</td>

@@ -15,7 +15,7 @@
 
 </script>
 <div class="modal" id="xVersiones" data-backdrop="false"  >
-  <div class="modal-dialog" style="width: 1200px; max-width: 600px;">
+  <div class="modal-dialog" style="width: 1200px; max-width: 1000px;">
     <div class="modal-content">
 
       <!-- Modal Header -->
@@ -27,32 +27,54 @@
 
       <!-- Modal body -->
       <div class="modal-body row" id="VersionADC">
+            <table id="tablaMarMod" class="table table-striped">
+              <thead>
+                  <th></th>
+                  <th>Marca</th>
+                  <th>Modelo</th>
+                  <th>Cilindraje</th>
+                  <th>Año</th>
+                  <th>Motor</th>
+                  <th>Obervaciones</th>
+              </thead>
+              <tbody>
+                <tr>
+                  <td></td>
+                  <td>
+                    <select class="form-control-sm form-control" id="slctMarca" onchange="cargaSeleccion(this, 'id_marca')" style="width: 110px;">
+                      <option selected></option>
+                    </select>
+                  </td>
+                  <td>
+                    <select class="form-control-sm form-control" id="slctModelo" onchange="cargaSeleccion(this, 'id_modelo')" style="width: 110px;">
+                      <option selected></option>
+                    </select>                    
+                  </td>
+                  <td>
+                     <input type="number" class="form-control form-control-sm" id="cilindraje" size="2">
+                  </td>
+                  <td>
+                    <input type="number" class="form-control form-control-sm" id="tiempo" size="2">
+                  </td>
+                  <td>
+                    <select class="form-control-sm form-control" id="motor"  style="width: 80px;">
+                       <option > </option>
+                       <option >PE</option>
+                       <option >ZY</option>
+                       <option >ZF</option>
+                       <option>2TR</option>
+                    </select>
+                  </td>
+                  <td>
+                    <input type="text" class="form-control form-control-sm" id="observaciones" size="100">
+                  </td>
+
+                </tr>
+              </tbody>
+            </table>
+        <div class="row">
+                      
  
-        <div class="row " style="margin-bottom: 8px; padding-left: 4px;">
-            <div class="col-md-4 control-sm">
-              <div class="input-group  ">
-                <select class="custom-select col-12" id="slctMarca" onchange="cargaSeleccion(this, 'id_marca')">
-                  <option  value=0 selected>Marca...</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="col-md-4 control-sm">
-       
-              <div class="input-group  ">
-                <select class="custom-select col-12" id="slctModelo" onchange="cargaSeleccion(this, 'id_modelo')">
-                  <option selected>Modelo...</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="col-md-4 control-sm">
-              <div class="input-group  ">
-                <select class="custom-select col-12" id="slctVersion">
-                  <option selected>Versión...</option>
-                </select>
-              </div>
-            </div>
         </div>
  
             @if (isset($lista->modelos))	
@@ -94,7 +116,15 @@
       
       var NewCateg="<div style='margin-top:4px' class='row col-md-12'><div class='col-md-12'><input type='text' class='col-md-2' name='modelos[]' value='"+$seleccionado+"' readonly> <label class='col-md-8'>"+$CadDescr+"</label><span class='col-md-2 control-sm'><button class='btn btn-default fa fa-trash-o' type='button'></button></span></div></div>";
 
-      $('#VersionADC').append(NewCateg);
+      var marca=$('#slctMarca option:selected').html();
+      var modelo=$('#slctModelo option:selected').html();
+      var motor=$('#motor option:selected').html();
+
+      NewCateg="<td>"+marca+"</td><td>"+modelo+"</td><td>"+$("#cilindraje").val()+"</td> <td>"+$("#tiempo").val()+"</td> <td>"+motor+"</td> <td>"+$("#observaciones").val()+"</td></tr>";
+      
+      NewCateg="<tr><td><button type='button' class='btn btn-sm btn-outline-danger fa fa-trash-o' style='font-size: .9em'> </button></td>"+NewCateg;
+      $('#tablaMarMod tr:last').after(NewCateg);
+      //$('#VersionADC').append(NewCateg);
       $("#slctMarca").val('0');
       vaciaSelecct('slctModelo');
        $seleccionado='';

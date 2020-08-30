@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Empresa;
+use App\Configuracion;
+use App\Usuario;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -79,7 +81,7 @@ Route::group(['middleware' => 'auth'], function()
 
 		 
 		Route::get('Resgistro','MongoController@Resgistro');
-		Route::post('GuardaProducto','MongoController@GuardaProducto');
+		Route::post('GuardaCodigo','MongoController@GuardaCodigo');
 		Route::get('productos', 'MongoController@EditaProducto');
 
 		Route::get('EdicionMarcaModelo','MongoController@ListaMarcas');
@@ -94,7 +96,7 @@ Route::group(['middleware' => 'auth'], function()
 
 		//Inventario
 		Route::get('Pre_recepcion', function () { return view('inventario.Pre_recepcion'); });
-		Route::post('AddProductoRecepcion','InventarioController@addItemPre_recepcion')->name('Pre_recepcion');
+		Route::post('AddProductoRecepcion','InventarioController@addItemPre_recepcion');
 		Route::post('Recepcionar','InventarioController@Recepcionar');
 		Route::get('ListadoRecepciones','InventarioController@ListadoRecepciones');
 		Route::get('ListadoInventario','InventarioController@ListadoInventario');
@@ -103,11 +105,27 @@ Route::group(['middleware' => 'auth'], function()
 		
 
 		//Usuarios
-		
+		  Route::get('Perfil', function () { 
+													$lista=Usuario::find(Auth::user()->_id); 
+													return view('auth.personas.perfilUsuario')->with('lista', $lista)->with('rol',['Super Administrador','Administrador de sistema','Administrador de Sucursal','Empleado']); 
+												}); 
+
+		//Empresa
+		Route::get('editaEmpresa', function () { 
+													$lista=Empresa::first(); 
+													return view('panel.editaEmpresa')->with('lista', $lista); 
+												});
+
+		Route::post('Empresa','MongoController@GuardaEmpresa');
+		Route::get('configuracion', function () { 
+													$lista=Configuracion::first(); 
+													return view('panel.configuracion')->with('lista', $lista); 
+												});
+		Route::post('configura','MongoController@GuardaConfiguracion');
 		
 		//Operaciones Comunes
 		Route::post('BorraItem','MongoController@BorraItem'); 
-
+		
 		Route::get('CadenaMarcaModelo','MongoController@CadenaMarcaModelo');
 });
 
@@ -115,15 +133,11 @@ Route::group(['middleware' => 'auth'], function()
 Auth::routes();
 
 Route::get('/admin', 'HomeController@index')->name('admin');
-Route::post('RegistrarUsuario','MongoController@RegistrarUsuario');
+Route::post('RegistrarUsuario','PersonaController@RegistrarUsuario');
 
 
 
 Route::get('Listas/{clase}/{vista}/{condicion?}', 'MongoController@Listas');
-
-
-Route::get('/eliminar_template/{marca}', 'MongoController@eliminar_template');
-
 
 
 //Gabriel

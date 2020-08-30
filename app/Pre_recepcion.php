@@ -19,12 +19,24 @@ class Pre_recepcion extends Eloquent
               'almacen',
               'codigo',
               'cantidad',
-              'precio',
+              'costo',
+              'utilidad',
+              'precio'
     ];
 
       public function producto()
       {
-          return $this->belongsTo(Producto::class);
+          return $this->belongsTo(Producto::class, 'codigo','codigo');
+      }
+
+      public function almacenes()
+      {
+          return $this->belongsTo(Almacen::class, 'almacen','codigo');
+      }
+
+      public function proveedores()
+      {
+          return $this->belongsTo(Persona::class, 'proveedor','_id');
       }
 
 }

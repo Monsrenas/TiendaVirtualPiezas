@@ -53,7 +53,7 @@ class KaizenController extends Controller
 
     public function MongoStore(Request $request)
     {
-        dd($request);
+         
      /*   $a=false;
         $todo=Marca:: when($a, function($q){
             return $q->whereHas('modelos', function($query){$query->where('nombre', 'Golf Plus'); });
@@ -458,7 +458,7 @@ class KaizenController extends Controller
         return $Vista;
     } 
 
-    public   function getImageRelativePathsWfilenames()
+    public function getImageRelativePathsWfilenames()
     {
         $lista=array_merge(glob("*.jp*"),glob("*.png"));
      

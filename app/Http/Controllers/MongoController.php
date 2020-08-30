@@ -26,13 +26,6 @@ class MongoController extends Controller
         //$this->middleware('auth');
     }
 
-    public function eliminar_template($marca){
-    	Marca::where('_id', $marca);
-    	dd($marca);
-        $marca->delete();
-        return redirect()->route('/panel'); 
-    }
-
     public function Clase($ind)
     {
     	$ind='App\\'.$ind;
@@ -43,19 +36,44 @@ class MongoController extends Controller
 	 	{
 	 		$Clase=$this->Clase($request->clase);
 	 		$condicion=explode ( ',' ,$request->condicion , 6 );   		 
-	 		$todo=$Clase::where($condicion[0],$condicion[1])->delete();
+	 		$todo=$Clase::orderBy($condicion[0])->where($condicion[0],$condicion[1])->first();
+	 		$todo->delete();
 	 		return $todo;
 	 	}
 
 
 
-	public function GuardaProducto(Request $request)
+	public function GuardaCodigo(Request $request)
 		{	 
-			$todo=Producto::where('codigo',$request->codigo)->first();
+			$Clase=$this->Clase($request->clase);
+			$todo=$Clase::where('codigo',$request->codigo)->first();
 			if (!$todo) {
-				Producto::create($request->all());
+				$Clase::create($request->all());
 			} else { $todo->update($request->all()); }
+			return redirect()->back();
 		}
+
+	public function GuardaEmpresa(Request $request)
+		{	 
+			$Clase=$this->Clase('Empresa');
+			$todo=$Clase::first();
+
+			if (!$todo) {
+				$Clase::create($request->all());
+			} else { $todo->update($request->all()); }
+			return View('panel.editaEmpresa')->with('lista',$todo);
+		}
+
+	public function GuardaConfiguracion(Request $request)
+		{	 
+			$Clase=$this->Clase('Configuracion');
+			$todo=$Clase::first();
+
+			if (!$todo) {
+				$Clase::create($request->all());
+			} else { $todo->update($request->all()); }
+			return View('panel.configuracion')->with('lista',$todo);
+		}		
 
    public function EditaProducto(Request $request)
 	    {  
@@ -97,6 +115,7 @@ public function Listas($clase, $vista)
 	      	
 	      $rol=Auth::user()->rol;
 	      $cond='';
+	      $rol='';
 	      switch ($clase) {
           					case 'Usuario': $condicion='rol,>,'.$rol ; break;
         				  }
@@ -115,7 +134,11 @@ public function Listas($clase, $vista)
         											  })->
 	      					get();
 
-	      return View($vista)->with('lista',$todo);  
+	      if ($clase=='Usuario') {$rol=['Super Administrador','Administrador de sistema','Administrador de Sucursal','Empleado'];}
+	      if ($clase=='Persona') {$rol=['Cliente','Proveedor'];} 					
+
+
+	      return View($vista)->with('lista',$todo)->with('rol',$rol);  
 	    }
 
 //Marcas y Modelos 
@@ -229,23 +252,6 @@ public function Listas($clase, $vista)
 
 		return redirect('/Listas/Fabricante/panel.lista_fabricante');
 	}
-
-	public function RegistrarUsuario(Request $request)
-	{	
-		$request['password']=Hash::make($request->password);
-		$Clase=$this->Clase('Usuario');
-
-	 	$todo=$Clase::orderBy('email')->where('email', $request->email)->first();
-	 	if (!$todo) {
-	 					$Clase::create($request->all());
-	 				} 
-	 	else { $todo->update($request->all()); }
-	 	
-
-		return redirect('/Listas/Usuario/panel.Lista_personas');	
-	}
- 
-
 
 	//Ficheros
 	public function saveFiles(Request $request)

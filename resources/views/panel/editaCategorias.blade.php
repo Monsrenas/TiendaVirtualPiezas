@@ -28,22 +28,18 @@
 
 <script type="text/javascript">
 
-
-
-    $('#tablamarcas tbody').on( 'click', '.fa-trash-o', function () {
+  $('#tablamarcas tbody').on( 'click', '.fa-trash-o', function () {
       $tablaMarcas.row( $(this).parents('tr') ).remove().draw();
            var data="_token={{ csrf_token()}}&clase=Producto&condicion=_id,"+$(this)[0]['id'];
             $.post('/BorraItem', data, function(subpage){  
             } );
-      }); 
+  }); 
    
-
   $( document ).ready(function() {
-    addCategoria('002007', "Prueba de categoria nueva <i class='btn fa fa-plus-square-o'></i><i class='btn fa fa-trash-o' style='color: red;'></i>");
-    addCategoria('001005', 'Otra categoria nueva');
-});  
-
-
+     activaCategoria();
+    //addCategoria('002007', "Prueba de categoria nueva <i class='btn fa fa-plus-square-o'></i><i class='btn fa fa-trash-o' style='color: red;'></i>");
+    //addCategoria('001005', 'Otra categoria nueva');
+  });
 
 </script>
 @endsection

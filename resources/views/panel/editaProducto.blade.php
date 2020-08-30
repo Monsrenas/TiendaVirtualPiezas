@@ -4,7 +4,7 @@
   </div>
   <form  id="RegProducto" method="POST"  action="javascript:GuardarProducto()" class="form-horizontal md-form" id="datosproducto" style="font-size: .85em;">
   @csrf
-
+    <input type="text" name="clase" value="Producto" hidden>
     <div class="card-header card">
          <div class="row">  
                <strong class="col-lg-10" style="font-size: 1.6em;" >Registro de productos</strong>
@@ -158,7 +158,26 @@
      </form>
 </div>
 
-  
+  <div id="MediaItem" hidden>
+                <div id="medidaBorra">
+                  <button type="button" class="btn btn-sm btn-outline-danger fa fa-trash-o" style="font-size: .9em"> </button>
+                </div>
+                <div id="medidaNombre">
+                  <input type="text" class="form-control form-control-sm mds" size="80" name="medidas[nombre][]"   required>
+                </div>
+                <div id="medidaValor">
+                  <input type="text" class="form-control form-control-sm mds" size="10" name="medidas[valor][]" required>
+                </div>
+                <div id="medidaUnidad">
+                   <select class="form-control form-control-sm mds" name="medidas[unidad][]" style="width: 110px">
+                        <option  value=0>Unidad</option>
+                        <option  value=1>Milimetro</option>
+                        <option  value=2>Centimetro</option>
+                        <option  value=3>Metro</option>
+                        <option  value=4>Pulgada</option>
+                    </select>
+                </div>
+</div>
 
 <script type="text/javascript">
     $('body').on('click', '.fa-trash-o', function()  //Boton que borra categoria
@@ -194,7 +213,7 @@ function GuardarProducto()
 {
   var data=$('#RegProducto').serialize();
      var data="_token={{ csrf_token()}}&"+data;
-      $.post('/GuardaProducto', data, function(subpage){  
+      $.post('/GuardaCodigo', data, function(subpage){  
         
               $('#btGuardaProd').attr("disabled",true);
               $("#codigo_producto").focus();

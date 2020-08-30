@@ -8,13 +8,20 @@
 </script>
 <div id="Centro" style="font-size: 0.8em;">
   <div class="header">
-    <h4>Registro de Personas</h4>
+    <h4>Registro de Usuarios</h4>
   </div>
   <form  id="RegPersona" method="POST"  action="{{ url('RegistrarUsuario') }}" class="form-horizontal md-form" id="RegPersona" style="font-size: .85em;">
   @csrf
-    <input type="password" name="password" value="clave123456789" hidden>
+    <input type="text" name="clase" value="Usuario" hidden>
+
+    @if (!isset($lista[0]->_id)) 
+      <input type="password" name="password" value="clave123456789" hidden>
+    @endif
+
+
+
     <div class="card-header card">
-        <h5>Datos de la persona</h5>
+        <h5>Datos del usuario</h5>
       </div>
     <div class="col-lg-12 card" style="background: white; padding: 20px; ">
 

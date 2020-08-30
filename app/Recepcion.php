@@ -20,6 +20,8 @@ class Recepcion extends Eloquent
               'almacen',
               'codigo',
               'cantidad',
+              'costo',
+              'utilidad',
               'precio',
     ];
 
