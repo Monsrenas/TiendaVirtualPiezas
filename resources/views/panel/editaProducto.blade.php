@@ -2,8 +2,10 @@
   <div class="header">
     
   </div>
-  <form  id="RegProducto" method="POST"  action="javascript:GuardarProducto()" class="form-horizontal md-form" id="datosproducto" style="font-size: .85em;">
+ 
+  <form  id="RegProducto" method="POST"  action="javascript:GuardarProducto()" class="form-horizontal md-form" id="datosproducto" style="font-size: .85em;" accept-charset="UTF-8" enctype="multipart/form-data">
   @csrf
+    <input id="fotoUpl" type="file" style="display:none" name="ImgsTL" accept="image/*">
     <input type="text" name="clase" value="Producto" hidden>
     <div class="card-header card">
          <div class="row">  
@@ -126,10 +128,11 @@
              <div class="form-group row" style="margin-bottom: 3px; ">
                   <label class="col-lg-2 col-form-label text-md-left text-lg-right " for="foto">Fotos:</label>
                   <div class="col-sm-3 input-group">
-                    
-                      <input id="fotoNombre" class="form-control form-control-sm" type="text" placeholder="(0)" disabled>
+                    <input id="fotoNombre" class="form-control form-control-sm" type="text" placeholder="(0)" disabled>
                     <div class="input-group-btn input-group-append">
-                      <button type="button" class="btn btn-info btn-sm"data-toggle="modal" data-target="#xFotos"><i class="fa fa-th"></i></button>
+                      <button type="button" class="btn btn-info btn-sm"data-toggle="modal" data-target="#xFotos">
+                         <i class="fa fa-th"></i>
+                      </button>
                     </div>
                   </div>
               </div>
@@ -180,7 +183,8 @@
 </div>
 
 <script type="text/javascript">
-    $('body').on('click', '.fa-trash-o', function()  //Boton que borra categoria
+
+$('body').on('click', '.fa-trash-o', function()  //Boton que borra categoria
 {
     $(this).parent().parent().remove();  
     $("#btGuardaProd").attr('disabled',false);
@@ -199,16 +203,25 @@ $('body').on('change paste', '#codigo_producto', function()
        console.log('Error en carga de Datos');
   });
 });
+
+$('body').on('blur', '#codigo_producto', function()
+{
+    if ($(this).val()==''){ $(this).focus() } ; 
+    
+});
+
 $('body').on('change', 'input', function()
 {
      
       $("#btGuardaProd").attr('disabled',false);
 });
+
 $('#RegProducto').on('input', function()
 {
      
       $("#btGuardaProd").attr('disabled',false);
 });
+
 function GuardarProducto()
 {
   var data=$('#RegProducto').serialize();

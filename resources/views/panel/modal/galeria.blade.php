@@ -10,8 +10,8 @@
               box-shadow: 1px 1px 5px rgba(50,50,50 0.5);
               text-align: center;
 
-              margin: 1px;
-              padding: 1px;
+              margin: 0px;
+              padding: 0px;
               background: white;
           }
 
@@ -28,7 +28,8 @@ transition-duration:0.2s;
 .marco_elemento a:hover { background: white; }
 
   .marco_foto {
-      width: 88%;
+      
+      width: 100%;
       height: 60px;
       text-align: center;
       padding: 2px;
@@ -36,12 +37,12 @@ transition-duration:0.2s;
       overflow: hidden;
   }
 
-  @supports(object-fit: cover){
+  @supports(object-fit: contain){
     .marco_foto img{
       height: 100%;
-      object-fit: cover;
-      object-position: center center;
-      padding: 4px;
+      object-fit: contain;
+      object-position: center;
+      padding: 0px;
     }      
 
   .descripcion {  padding: 5px;
@@ -70,7 +71,7 @@ transition-duration:0.2s;
 
     function XcargarListaImagen()
   {
-     $data='{{ csrf_token()}}&referencia=productos';  
+     $data='{{ csrf_token()}}&referencia=productos&codigo='+$('#codigo_producto').val();  
      $('#xCentro').empty();
 
      $.get('/ListaImagenes', $data, function(subpage){ 
@@ -89,7 +90,7 @@ transition-duration:0.2s;
 function xinsertaImagen($imagen)
 {   
   
-  $Marco="<div class='marco_elemento'> <a class='btn btn-sm '><div class='marco_foto'><img class='foto' id='imagen' src='{{Request::root()}}/"+$imagen+"'/></div><div class='descripcion'><p></p> </div></a></div>";
+  $Marco="<div class='marco_elemento'> <a class='btn btn-sm '><div class='marco_foto'><img class='marco_foto foto' id='imagen' src='{{Request::root()}}/"+$imagen+"'/></div><div class='descripcion'><button type='button' class='btn btn-sm btn-outline-danger fa fa-trash-o' style='font-size: .9em'> </button></div></a></div>";
 
       var txt = document.getElementById('xCentro');
       txt.insertAdjacentHTML('beforeend', $Marco);

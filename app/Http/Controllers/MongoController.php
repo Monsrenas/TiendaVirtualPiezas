@@ -112,7 +112,7 @@ class MongoController extends Controller
 
 public function Listas($clase, $vista)
 	    {
-	      	
+	      if (!isset(Auth::user()->rol)) { return redirect('/panel');}	 	
 	      $rol=Auth::user()->rol;
 	      $cond='';
 	      $rol='';
@@ -154,13 +154,13 @@ public function Listas($clase, $vista)
 		if (strlen($request->codigo)==6)
 		{
 			$modelo=Modelo::where('id_modelo',$request->codigo)->first();
-			return $modelo->marca->nombre.": ".$modelo->nombre;	
+			return [$modelo->marca->nombre, $modelo->nombre];	
 		}
 
 		if (strlen($request->codigo)==3)
 		{
 			$modelo=Marca::where('id_marca',$request->codigo)->first();
-			return $modelo->nombre;	
+			return [$modelo->nombre];	
 		}
 	}   
 
@@ -254,27 +254,37 @@ public function Listas($clase, $vista)
 	}
 
 	//Ficheros
+
+	public function getImageRelativePathsWfilenames(Request $request)
+    {
+
+        $lista=array_merge(glob($request->codigo."*.jp*"),glob($request->codigo."*.png"));
+     
+        //foreach ($lista as $filename) {
+        //echo "$filename -------- size " . filesize($filename) . "<br>";}
+     
+        return $lista;
+    }
+
+
 	public function saveFiles(Request $request)
 		{      
-		       //for ($y=0; $y<count($request->file('ImgsTL')); $y++) 
-		        foreach ($request->ImgsTL as $y => $value)
-		        {     
-		            if (isset($request->file('ImgsTL')[$y]))
-		            {
-		                 //obtenemos el campo file definido en el formulario
-		             $file = $request->file('ImgsTL')[$y];
+		        
+			$id=strftime("%G%m%d%H%M%S").$request->codigo;
+		      
+		             //obtenemos el campo file definido en el formulario
+		             $file = $request->file('ImgsTL');
 		            
 		             //obtenemos el nombre del archivo
 		             //$nombre = $file->getClientOriginalName();
 
-		             $nombre = $request->images[$y][1];
-		             
+		             //$nombre = $file->getClientOriginalName();
+		             $nombre=$request->codigo.strftime("%G%m%d%H%M%S").".".$file->extension();
+
 		             //indicamos que queremos guardar un nuevo archivo en el disco local
 		             \Storage::disk('public')->put($nombre,  \File::get($file));
-		            }
-		            
-		       }
-		       return;
+		          
+		       return $nombre;
 		}
 
 }

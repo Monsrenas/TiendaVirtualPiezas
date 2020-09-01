@@ -42,7 +42,7 @@ Route::get('login', function () {
 
 Route::get('pagina','InventarioController@pagina');
 
-Route::get('ListaImagenes','KaizenController@getImageRelativePathsWfilenames');
+Route::get('ListaImagenes','MongoController@getImageRelativePathsWfilenames');
 Route::get('firebase','KaizenController@index');
 
 Route::get('Leerbase','KaizenController@Leerbase');
@@ -127,6 +127,8 @@ Route::group(['middleware' => 'auth'], function()
 		Route::post('BorraItem','MongoController@BorraItem'); 
 		
 		Route::get('CadenaMarcaModelo','MongoController@CadenaMarcaModelo');
+
+		Route::post('saveFiles','MongoController@saveFiles');
 });
 
 //Usuarios
