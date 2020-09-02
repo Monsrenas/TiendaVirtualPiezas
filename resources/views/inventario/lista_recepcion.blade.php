@@ -35,14 +35,16 @@
                                     <tbody>    
                                         @foreach ($lista as $recp)
                                             <tr>
+
+                                                 
                                                 <td width="5">{{$i++}}</td>
-                                                <td><button  type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" onclick="Modal('inventario.detalle_recepcion','{{ $recp->id ?? ''}}','descr_producto')" style="background: none; border: none; color: black;"><i class="fa fa-eye" ></i></button>
+                                                <td width="30"><button  type="button" class="btn btn-sm btn-outline-primary fa fa-eye" data-toggle="modal" data-target="#myModal" onclick="Modal('inventario.detalle_recepcion','{{ $recp->id ?? ''}}','descr_producto')"  style="font-size: .9em"></button>
                                                 </td>
                                                 <td >{{ $recp->created_at ?? '' }}</td>
                                                 <td>{{ substr($recp->id,0,14) ?? ''}}</td>
-                                                <td >{{ $recp->proveedor ?? ''}}</td>
-                                                <td >{{ $recp->persona->nombre ?? ''}}</td>
-                                                <td width="5"> {{ $recp->almacen ?? ''}}</td>
+                                                <td >{{ $recp->proveedores->nombre ?? ''}}</td>
+                                                <td>{{ $recp->persona->nombre ?? ''}}</td>
+                                                <td > {{ $recp->almacenes->nombre ?? ''}}</td>
                                             </tr>
                                         @endforeach                  
                                     </tbody>        

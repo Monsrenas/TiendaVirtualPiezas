@@ -12,7 +12,9 @@ use App\Generacion;
 use App\Medida;
 use App\Producto;
 use App\Pre_recepcion;
-
+use MongoDB\BSON\Regex;
+ 
+ 
 
 use Illuminate\Support\Facades\Auth;
 
@@ -24,6 +26,7 @@ class MongoController extends Controller
     public function __construct()
     {
         //$this->middleware('auth');
+		
     }
 
     public function Clase($ind)
@@ -253,6 +256,34 @@ public function Listas($clase, $vista)
 		return redirect('/Listas/Fabricante/panel.lista_fabricante');
 	}
 
+
+	public function nuevaCategoria(Request $request)
+	{
+		$Clase=$this->Clase('Categoria');
+		$l=strlen($request->codigo)+3;
+		$numero=1;
+		$todo=$Clase::where('codigo','like',$request->codigo.'%')->where('codigo', 'regex', new Regex('^\w{'.$l.'}$', 'i'))->orderBy('codigo', 'desc')->first();
+
+		if ($todo){
+					$numero=substr($todo->codigo, -3, 3)+1;
+				  } 
+
+		$nuevoID=$request->codigo.str_pad($numero, 3, "0", STR_PAD_LEFT);
+		$todo=new $Clase;
+		$todo->codigo=$nuevoID;
+		$todo->nombre='';
+		//$todo=Categoria::whereRaw(['$where' => 'this.codigo.length == 3'])->get();
+
+		$rama='/';
+		for ($i=1; $i <($l)/3 ; $i++) { 
+			$cmn=$Clase::where('codigo',substr($request->codigo, 0, $i*3))->first();
+			$rama=$rama.$cmn->nombre.'/';
+		}
+
+		$view = View::make('panel.NuevaCategoria');
+		return $view->with('lista',$todo)->with('rama',$rama);	
+	}
+
 	//Ficheros
 
 	public function getImageRelativePathsWfilenames(Request $request)
@@ -260,31 +291,27 @@ public function Listas($clase, $vista)
 
         $lista=array_merge(glob($request->codigo."*.jp*"),glob($request->codigo."*.png"));
      
-        //foreach ($lista as $filename) {
-        //echo "$filename -------- size " . filesize($filename) . "<br>";}
-     
         return $lista;
     }
 
 
 	public function saveFiles(Request $request)
 		{      
-		        
 			$id=strftime("%G%m%d%H%M%S").$request->codigo;
-		      
-		             //obtenemos el campo file definido en el formulario
-		             $file = $request->file('ImgsTL');
-		            
-		             //obtenemos el nombre del archivo
-		             //$nombre = $file->getClientOriginalName();
+	         //obtenemos el campo file definido en el formulario
+	         $file = $request->file('ImgsTL');
+	        
+	         //obtenemos el nombre del archivo
+	         //$nombre = $file->getClientOriginalName();
+	         $nombre=$request->codigo.strftime("%G%m%d%H%M%S").".".$file->extension();
 
-		             //$nombre = $file->getClientOriginalName();
-		             $nombre=$request->codigo.strftime("%G%m%d%H%M%S").".".$file->extension();
-
-		             //indicamos que queremos guardar un nuevo archivo en el disco local
-		             \Storage::disk('public')->put($nombre,  \File::get($file));
-		          
-		       return $nombre;
+	         //indicamos que queremos guardar un nuevo archivo en el disco local
+	         \Storage::disk('public')->put($nombre,  \File::get($file)); 
+	       return $nombre;
 		}
 
+	public function delFiles(Request $request)
+	{	
+		\Storage::delete($request->fichero);
+	}	
 }

@@ -14,16 +14,18 @@
               padding: 0px;
               background: white;
           }
-
-     .marco_elemento:hover {
-  transform: scale(2.02); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
- /* -webkit-box-shadow: 1px 3px 2px 2px rgba(58,58,58,0.79); 
-box-shadow: 1px 3px 2px 2px rgba(58,58,58,0.79);  */
+ 
+.marco_elemento:hover {
+  transform: scale(1.4); 
 transition-duration:0.2s;
   
     
-}
-
+  }
+ 
+.todoITM:hover>.descripcion {
+          display: block;
+          
+      }
 
 .marco_elemento a:hover { background: white; }
 
@@ -32,7 +34,7 @@ transition-duration:0.2s;
       width: 100%;
       height: 60px;
       text-align: center;
-      padding: 2px;
+      padding: 1px;
        
       overflow: hidden;
   }
@@ -44,16 +46,17 @@ transition-duration:0.2s;
       object-position: center;
       padding: 0px;
     }      
+  }
 
   .descripcion {  padding: 5px;
           font-size: .8em;
-          text-align: justify;
+          text-align: left;
           
           height: 60px;
           overflow: hidden;
+          display: none;
+          
          }
-  .descripcion p { color: #0055ff; 
-           margin-top: 0px;}
 </style>
 
  
@@ -90,7 +93,7 @@ transition-duration:0.2s;
 function xinsertaImagen($imagen)
 {   
   
-  $Marco="<div class='marco_elemento'> <a class='btn btn-sm '><div class='marco_foto'><img class='marco_foto foto' id='imagen' src='{{Request::root()}}/"+$imagen+"'/></div><div class='descripcion'><button type='button' class='btn btn-sm btn-outline-danger fa fa-trash-o' style='font-size: .9em'> </button></div></a></div>";
+  $Marco="<div class='marco_elemento'> <a class='btn btn-sm todoITM'><div class='marco_foto'><img class='marco_foto foto' id='imagen' src='{{Request::root()}}/"+$imagen+"'/></div><div class='descripcion'><button type='button' class='btn btn-sm btn-outline-danger fa fa-trash-o fotoBorra' style='font-size: .9em'> </button></div></a></div>";
 
       var txt = document.getElementById('xCentro');
       txt.insertAdjacentHTML('beforeend', $Marco);

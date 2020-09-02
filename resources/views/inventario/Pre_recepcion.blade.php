@@ -31,12 +31,7 @@ td {
         
           <div class="col-lg-2 text-md-left text-lg-right ">
             <button class="btn btn-success btn-sm" id="GuardarForm" type="submit"><i class="fa fa-plus"></i></button>
-            <form action="{{url('Recepcionar')}}" method="post">
-            @csrf
-              <button  type="submit" class="btn btn-success btn-sm">
-                  <i class="fa fa-save"></i>
-              </button>
-             </form>
+            
           </div> 
        
       </div>  
@@ -125,13 +120,14 @@ td {
             </div>
         </div>
                              
-        <div class="card" id="ListaPrerecepcion"  style="margin-top: 20px;">
- 
-        </div>		  
+        	  
     </div>
     </div>  
   </form>
 </div>
+<div class="card" id="ListaPrerecepcion"  style="margin-top: 20px;">
+ 
+        </div>  
  <script type="text/javascript">
    
 

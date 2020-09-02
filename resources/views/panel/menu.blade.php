@@ -23,7 +23,7 @@
   
 
 <link rel="stylesheet" href="{{asset('css/style.css')}}">
-
+ 
 </head>
 <body style="background: #ECF0F1;">
 <!-- partial:index.partial.html -->

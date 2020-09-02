@@ -35,32 +35,35 @@
                                                 <table id="tablamarcas" class="table table-striped table-bordered">
                                                 <thead id="cuerpo">
                                                     <tr>
+                                                        <th> </th>
                                                         <th>Código</th>
                                                         <th>Nombre</th>
                                                         <th>Fabricante</th>
                                                         <th>Categoria</th>
-                                                        <th style="text-align: center; font-size: 1.4em;">
-                                                          <i class="fa fa-trash-o" ></i>
-                                                        </th>
+                                                        
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     @foreach($lista as $indice =>$patmt)
                                                    
                                                         <tr codigo='{{$patmt['_id']}}'>
+                                                            <td width="60">
+                                                              <button onclick="javascript:productos('{{$patmt['codigo']}}')"  type="button" class="btn btn-sm fa btn-outline-primary fa-pencil" style="font-size: .9em" ></button> 
+                                                    
+                                                              @if ((isset($patmt->existencia))and(!$patmt->existencia->isNotEmpty())) 
+                                                              <button  type="button" id="{{$patmt['_id']}}"  class="btn btn-sm btn-outline-danger fa fa-trash-o" style="font-size: .9em"> </button> 
+                                                              @else 
+                                                              <i class="fa fa-chain" style="color: gray;"></i>  
+                                                             @endif 
+                                                            </td>
+
+
                                                             <td style="font-size: 0.8em;"> 
                                                              <a href="javascript:productos('{{$patmt['codigo']}}')">{{$patmt['codigo']}}</a> 
                                                             </td>
                                                             <td>{{$patmt['nombre'] ?? '' }}</td>                             
                                                             <td>{{$patmt['fabricantes']['nombre'] ?? '' }}</td>
                                                             <td>{{$patmt['categoria_detalle']['nombre'] ?? '' }}</td>
-                                                            <td style="text-align: center;">
-                                                             @if ((isset($patmt->existencia))and(!$patmt->existencia->isNotEmpty())) 
-                                                                 <a href="#" id="{{$patmt['_id']}}" class="btn btn-sm fa fa-trash-o"></a>
-                                                             @else 
-                                                              <i class="fa fa-chain" style="color: gray;"></i>  
-                                                             @endif 
-                                                             </td>
                                                         </tr>
                                                     @endforeach                                      
                                                 </tbody>        

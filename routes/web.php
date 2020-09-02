@@ -123,12 +123,16 @@ Route::group(['middleware' => 'auth'], function()
 												});
 		Route::post('configura','MongoController@GuardaConfiguracion');
 		
+		//Categorias
+		Route::get('nuevaCategoria','MongoController@nuevaCategoria');
+
 		//Operaciones Comunes
 		Route::post('BorraItem','MongoController@BorraItem'); 
 		
 		Route::get('CadenaMarcaModelo','MongoController@CadenaMarcaModelo');
 
 		Route::post('saveFiles','MongoController@saveFiles');
+		Route::get('delFiles','MongoController@delFiles');
 });
 
 //Usuarios

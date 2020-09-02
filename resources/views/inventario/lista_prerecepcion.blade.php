@@ -5,19 +5,27 @@
         text-align: center;
     }
 </style>
-<div id="Centro"  style="font-size: 1.2em;">
+<div id="Centro"  style="font-size: 0.8em;">
   <div class="card card-sm">
-    <div class="card-header">
-        <h6>Pre-recepción</h6>
+    <div class="card-header  ">
+        <div class="row">
+                <h6 class="col-lg-10" >Pre-recepción</h6>
+                <form action="{{url('Recepcionar')}}" method="post">
+                    @csrf
+                    <button  type="submit" class="btn btn-success btn-sm">
+                          <i class="fa fa-save"></i>
+                    </button>
+                </form>
+        </div>     
     </div>
     <div class="card-body">
        
-            <div class="col-lg-12 card-body" style="background: white; padding: 20px; ">
+          
                                                
                 <!--Ejemplo tabla con DataTables-->
-                <div class="container">
-                    <div class="row">
-                            <div class="col-lg-12">
+                
+                    
+                          
                                 <div class="table-responsive">     
                                     <?php $i=1;?> 
                                     <table id="tablamarcas" class="table table-striped table-bordered" style="">
@@ -76,10 +84,10 @@
                                     </tbody>        
                                    </table>
                                 </div>
-                            </div>
-                    </div>  
-                </div>    
-            </div>
+                            
+                  
+                   
+          
       
     </div>
   </div>    

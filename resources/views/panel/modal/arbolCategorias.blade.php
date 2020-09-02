@@ -8,7 +8,12 @@ ul, #catUL {
         padding: 0;
         color: black;
       }
-
+li .btn { 
+          display: none; 
+          font-size: .4em; 
+          margin-left:6px;
+        }
+li:hover>.btn{ display: inline; }
 .xNmodel { color: black; }
 .xNmodel :hover { color: white;
                   background: black; 
@@ -85,15 +90,20 @@ ul, #catUL {
              addCategoria(subpage[prop]['codigo'], subpage[prop]['nombre']);
 
             }
-            activaCategoria();      
-        
+             
+            editables();
+            activaCategoria();
     }).fail(function() {
        console.log('Error en carga de Datos');
   });
 	}
 
+
+
   function addCategoria(codigo, nombre)
   {
+ 
+
     var xSub=codigo.length/3;
     for (var i = 0; i < xSub; i++) 
      {  
@@ -109,13 +119,33 @@ ul, #catUL {
             {  
               $("#pdr"+padre).removeClass("xcaretX");
               $("#pdr"+padre).addClass("caretX");
+
               return "<li><span id='pdr"+cod+"' class='xcaretX' >"+nombre+"</span><ul class='nestedX' id='cat"+cod+"' ></ul></li>";
             });
           } 
-          else {         
+          else {          
                 $('#catUL').append("<li><span id='pdr"+cod+"' class='xcaretX'>"+nombre+"</span><ul  class='nestedX' id='cat"+cod+"'></ul></li>");
                }
         }
+      }
+  }
+
+  function editables( ) 
+  {
+    var $editar="<button data-toggle='modal' data-target='#ModalAuxiliar' type='button' class='btn btn-sm fa btn-outline-primary fa-pencil'></button>";
+    var $agregar="<button data-toggle='modal' data-target='#ModalAuxiliar' type='button' class='btn btn-sm fa btn-outline-primary fa-plus'></button>";
+    var $borrar="</button><button type='button' class='btn btn-sm fa btn-outline-danger fa fa-trash-o'></button>";
+
+      var lmnts=$('.xcaretX');  
+
+      for (var i = 0; i < lmnts.length; i++) {
+        $('#'+lmnts[i]['id']).after( $editar+$agregar+$borrar);
+      }
+
+    var lmnts=$('.caretX');  
+
+      for (var i = 0; i < lmnts.length; i++) {
+        $('#'+lmnts[i]['id']).after( $editar+$agregar);
       }
   }
 
@@ -131,6 +161,50 @@ ul, #catUL {
               });
             }
   }
+
+   $('body').on( 'click', 'li .fa-trash-o', function () {
+      
+       var data="_token={{ csrf_token()}}&clase=Categoria&condicion=codigo,"+($(this).parent().find('span')[0]['id']).substr(3);
+
+            $.post('/BorraItem', data, function(subpage){  
+              $('#catUL').empty();
+              arbolCategorias();
+            } );
+    }); 
+
+    $('body').on( 'click', 'li .fa-pencil', function () {
+      $codigo=($(this).parent().find('span')[0]['id']).substr(3);
+      Registros('panel.NuevaCategoria', 'Categoria', 'codigo,'+$codigo ,'','modal-cuerpo-AUX');
+
+    }); 
+
+    $('body').on( 'click', '.fa-plus', function () {
+        nuevoCategoria('');
+    });
+
+   $('body').on( 'click', 'li .fa-plus', function () {
+        $codigo=($(this).parent().find('span')[0]['id']).substr(3);
+        nuevoCategoria($codigo);
+
+    }); 
+
+  
+
+
+   function nuevoCategoria(codigo)
+   {
+        console.log('Va: '+codigo);
+        $data='codigo='+codigo;
+
+        $.get('/nuevaCategoria', $data, function(subpage){ 
+             
+             $('#modal-cuerpo-AUX').empty().append(subpage);
+    
+
+        }).fail(function() {
+           console.log('Error en carga de Datos');
+        });
+   }
 
 </script>
 

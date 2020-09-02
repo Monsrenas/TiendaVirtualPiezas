@@ -34,4 +34,14 @@ class Recepcion extends Eloquent
       {
           return $this->belongsTo(Usuario::class,'usuario','_id');
       }
+
+      public function proveedores()
+      {
+          return $this->belongsTo(Persona::class, 'proveedor','_id');
+      }
+
+      public function almacenes()
+      {
+          return $this->belongsTo(Almacen::class, 'almacen','codigo');
+      }
 }

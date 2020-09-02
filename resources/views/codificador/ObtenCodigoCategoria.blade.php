@@ -1,7 +1,7 @@
 
 
 <div class="container">
-    <div class=""  style="background: white;margin-top: 5%; max-height: 600px; overflow: scroll;">
+    <div class=""  style="background: white; margin-top: 5%; max-height: 600px; overflow: scroll;">
      @include('codificador.categorias')
     </div>
 </div>

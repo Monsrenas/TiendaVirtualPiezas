@@ -15,8 +15,8 @@
                     <li><strong>Realizada por: </strong>{{$lista[0]->persona->nombre}}   </li>
                 </th>
                 <th>
-                   <li> <strong>Destino: </strong> {{ $lista[0]->almacen}}</li>
-                   <li> <strong>Proveedor: </strong> {{ $lista[0]->proveedor}}</li> 
+                   <li> <strong>Destino: </strong> {{ $lista[0]->almacenes->nombre ?? ''}}</li>
+                   <li> <strong>Proveedor: </strong> {{ $lista[0]->proveedores->nombre ?? ''}}</li> 
                 </th>
 
                 </table>     

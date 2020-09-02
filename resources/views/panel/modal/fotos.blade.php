@@ -36,7 +36,10 @@
                   </td>
 
                   <td style="vertical-align: middle; text-align: center;">
-                    <input type="checkbox" name="fotos[funcion][]">
+                    <?php $iluIndi=substr($lista->fotos['nombre'][$i], strrpos($lista->fotos['nombre'][$i], '.')-14,14); ?>
+                    
+                    <input type="checkbox" name="fotos[funcion][{{$iluIndi}}]" 
+                    <?php if ( isset($lista->fotos['funcion'][ $iluIndi ]) ) {echo 'checked';}  ?>>
                   </td>  
                 </tr>  
               @endfor
@@ -78,7 +81,6 @@ $('body').on('click', '.foto', function(){
     $camino=decodeURIComponent($(this)[0]['src']);
     $posicion=$camino.lastIndexOf("/"); 
     $fichero=($camino.substring($posicion+1));
-
     
     agregaFoto($fichero);
     //$('#'+$descr).text($(this)[0].innerText);
@@ -86,12 +88,33 @@ $('body').on('click', '.foto', function(){
    //   FiltrarCategoria($(this)['0']['id']);    }   
 
  });
+
+$('body').on('click', '.fotoBorra', function(){      
+
+    $camino=decodeURIComponent($(this).parent().parent().find('img')[0]['src']);
+    $posicion=$camino.lastIndexOf("/"); 
+    $fichero=($camino.substring($posicion+1));
+
+      
+    $data="fichero="+$fichero;  
+    $.get('/delFiles', $data, function(subpage){ 
+
+                                                  CargaGaleria();
+                                              }).fail(function() {
+                                                                    console.log('Error en carga de Datos');
+                                                                  });
+
+ });
+
   
    function agregaFoto(imagenName)
   {
+      //20200902001907
       $ItmFoto=imagenName;
-      var NewCateg="<tr><td style='vertical-align: middle;'><button type='button' class='btn btn-sm btn-outline-danger fa fa-trash-o' style='font-size: .9em'> </button><input type='text' class='col-md-8' name='fotos[nombre][]' value='"+$ItmFoto+"' hidden></td><td><div class='marco_foto'><img class='marco_foto' src='{{Request::root()}}/"+$ItmFoto+"'></div></td><td style='vertical-align: middle; text-align: center;'><input type='checkbox' name='fotos[funcion][]'></td></tr>"
-      console.log(NewCateg);
+      $iluIndi=imagenName.substring( imagenName.lastIndexOf(".")-14,imagenName.lastIndexOf("."));
+      
+      var NewCateg="<tr><td style='vertical-align: middle;'><button type='button' class='btn btn-sm btn-outline-danger fa fa-trash-o' style='font-size: .9em'> </button><input type='text' class='col-md-8' name='fotos[nombre][]' value='"+$ItmFoto+"' hidden></td><td><div class='marco_foto'><img class='marco_foto' src='{{Request::root()}}/"+$ItmFoto+"'></div></td><td style='vertical-align: middle; text-align: center;'><input type='checkbox' name='fotos[funcion]["+$iluIndi+"]'></td></tr>"
+    
       $('#tablaFotos tr:last').after(NewCateg);
       
       ActNumero('FotoADC', 'fotoNombre'); 
@@ -102,7 +125,6 @@ $('body').on('click', '.foto', function(){
 function CargaGaleria()
 {
   $data='{{ csrf_token()}}&url=panel.modal.galeria&campo=&descripcion=';
-  console.log($data);
          $.get('/Vista', $data, function(subpage){ 
                                 $('#FotoGaleria').empty().append(subpage);
                                     }).fail(function() {
@@ -127,7 +149,7 @@ function CargaGaleria()
 
 $('#fotoUpl').on('change', function(e){ 
     nombre=$(this).val();
-    console.log(nombre);
+    
     var NameGenerate=NewImgName(nombre);
 
     var miForm=document.getElementById('RegProducto');   

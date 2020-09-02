@@ -104,27 +104,7 @@
                       
  
         </div>
- {{--
-            @if (isset($lista->modelos))	
-            	@foreach ($lista->modelos as $xItem)
-        
-                 <div style='margin-top:4px' class="row col-md-12">
-                  <div class="col-md-12">
-                    <input type='text' class='col-md-2' name='modelos[]' value='{{$xItem}}'  placeholder='Código' readonly>
-                    <label class="col-md-8" id="MMV{{$xItem}}"></label>
-                    <script type="text/javascript">CadenaMarcaModelo('{{$xItem}}');</script>
-                    <span class="col-md-2 control-sm">
-                      <button class='btn btn-default fa fa-trash-o' type='button'></button>
-                    </span>
-                  </div>  
-                </div>
 
-            
-
-              @endforeach 
-            @endif  
---}}
-           
       </div>
 
       <!-- Modal footer -->
@@ -144,15 +124,12 @@
 
   function CerrarMedidas()
   {
-    $('#agregaVersion').click();    
+    //$('#agregaVersion').click();    
     ActNumero('VersionADC', 'codigo_modelo');
   }
 
   $('#agregaVersion').on('click', function(){
   	  if (! $seleccionado) {return;}
-      
-      var NewCateg="<div style='margin-top:4px' class='row col-md-12'><div class='col-md-12'><input type='text' class='col-md-2' name='modelos[]' value='"+$seleccionado+"' readonly> <label class='col-md-8'>"+$CadDescr+"</label><span class='col-md-2 control-sm'><button class='btn btn-default fa fa-trash-o' type='button'></button></span></div></div>";
-
       var marca=$('#slctMarca option:selected').html();
       var modelo=$('#slctModelo option:selected').html();
       var motor=$('#motor option:selected').html();
@@ -180,19 +157,15 @@
 
       $('#tablaMarMod tr:last').before(NewCateg);
 
-      $("#slctMarca").val('0');
-      $("#cilindraje").val('');
-      $('#motor').val('');
+      //$("#slctMarca").val('0');
+      //$("#cilindraje").val('');
+      //$('#motor').val('');
       $('#tiempo').val('');
-      $('#observaciones').val('');
-      vaciaSelecct('slctModelo');
+      //$('#observaciones').val('');
+      //vaciaSelecct('slctModelo');
 
-
-
-       $seleccionado='';
-       $CadDescr='';
-
-
+       //$seleccionado='';
+       //$CadDescr='';
        ActNumero('VersionADC', 'codigo_modelo'); 
   });
 
@@ -262,6 +235,18 @@
         for (let i = x.options.length; i >= 1; i--) {
                                                           x.remove(i);
                                                     }
+        
+
+
+
+      
+      $("#cilindraje").val('');
+      $('#motor').val('');
+      $('#tiempo').val('');
+      $('#observaciones').val('');
+
+
+
         return x;
     }
 

@@ -31,7 +31,22 @@
                 <tbody>
                   @foreach($lista as $indice =>$patmt)
                     <tr>
-                      <td width="5"><a href="#" data-toggle="modal" data-target="#ModalAuxiliar" onclick="javascript:EditaFabricante('{{ $patmt['codigo'] }}', '/nuevaFabricante')" class="btn btn-sm" style="font-size: em;"><i class="fa fa-pencil" ></i></a>  </td>
+
+
+
+                                                    
+                                                   
+                        
+
+
+                      <td width="60">
+
+                        <button data-toggle="modal" data-target="#ModalAuxiliar" onclick="javascript:EditaFabricante('{{ $patmt['codigo'] }}', '/nuevaFabricante')"   type="button" class="btn btn-sm fa btn-outline-primary fa-pencil" style="font-size: .9em" >
+                        </button> 
+                        <button onclick="javascript:borraItem('BorraItem', 'Fabricante', ['_id','{{ $patmt->_id}}'])" type="button"   class="btn btn-sm btn-outline-danger fa fa-trash-o" style="font-size: .9em"> 
+                        </button>
+
+                      </td>
                       <td >{{$patmt['codigo'] ?? ''}}</td>
                       <td>{{$patmt['nombre'] ?? '' }}</td>                             
                     </tr>
